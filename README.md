@@ -1,16 +1,16 @@
 # Agora Voice Web
 
-Agora Voice, yapay zeka destekli müzik asistanı web uygulaması.
+Agora Voice, an AI-powered music assistant web application.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- Modern ve etkileşimli kullanıcı arayüzü
-- Hover efektleri ve animasyonlar
-- Sesli asistan entegrasyonu
-- Responsive tasarım
-- Docker desteği
+- Modern and interactive user interface
+- Hover effects and animations
+- Voice assistant integration
+- Responsive design
+- Docker support
 
-## 🛠️ Teknolojiler
+## 🛠️ Technologies
 
 - React.js
 - TypeScript
@@ -18,52 +18,52 @@ Agora Voice, yapay zeka destekli müzik asistanı web uygulaması.
 - Docker
 - Node.js
 
-## 📋 Gereksinimler
+## 📋 Prerequisites
 
-- Node.js (v18 veya üzeri)
-- Docker ve Docker Compose
-- npm veya yarn
+- Node.js (v18 or higher)
+- Docker and Docker Compose
+- npm or yarn
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-### Yerel Geliştirme Ortamı
+### Local Development Environment
 
-1. Projeyi klonlayın:
+1. Clone the repository:
 ```bash
-git clone https://github.com/[kullanıcı-adınız]/agoravoiceweb.git
+git clone https://github.com/[your-username]/agoravoiceweb.git
 cd agoravoiceweb
 ```
 
-2. Bağımlılıkları yükleyin:
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Uygulamayı başlatın:
+3. Start the application:
 ```bash
 npm start
 ```
 
-### Docker ile Çalıştırma
+### Running with Docker
 
-1. Docker imajını oluşturun ve başlatın:
+1. Build and start the Docker image:
 ```bash
 docker-compose up --build
 ```
 
-2. Uygulama http://localhost:3000 adresinde çalışmaya başlayacaktır.
+2. The application will be available at http://localhost:3000
 
-## 🎨 Özelleştirme
+## 🎨 Customization
 
-### Ses Dosyası Değiştirme
+### Changing Sound File
 
-`public` klasöründeki `signore-trial.mp3` dosyasını değiştirerek hover sesini özelleştirebilirsiniz.
+You can customize the hover sound by replacing the `signore-trial.mp3` file in the `public` directory.
 
-### Tema Renkleri
+### Theme Colors
 
-Tailwind CSS kullanıldığı için, `tailwind.config.js` dosyasından renk şemasını özelleştirebilirsiniz.
+Since Tailwind CSS is used, you can customize the color scheme from the `tailwind.config.js` file.
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 agoravoiceweb/
@@ -78,47 +78,47 @@ agoravoiceweb/
 └── package.json
 ```
 
-## 🔧 Docker Komutları
+## 🔧 Docker Commands
 
-- Uygulamayı başlatma:
+- Start the application:
 ```bash
 docker-compose up
 ```
 
-- Arka planda çalıştırma:
+- Run in background:
 ```bash
 docker-compose up -d
 ```
 
-- Uygulamayı durdurma:
+- Stop the application:
 ```bash
 docker-compose down
 ```
 
-- Logları görüntüleme:
+- View logs:
 ```bash
 docker-compose logs -f
 ```
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-1. Bu depoyu fork edin
-2. Yeni bir branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request oluşturun
+1. Fork this repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📝 Lisans
+## 📝 License
 
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 İletişim
+## 📞 Contact
 
 - Instagram: [@agoravoice](https://instagram.com/agoravoice)
 - Website: [agoravoice.com](https://agoravoice.com)
 
-## 🙏 Teşekkürler
+## 🙏 Acknowledgments
 
-- Tüm katkıda bulunanlara
-- Açık kaynak topluluğuna
-- Agora Voice ekibine
+- All contributors
+- Open source community
+- Agora Voice team
