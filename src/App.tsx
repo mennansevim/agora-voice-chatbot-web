@@ -5,9 +5,9 @@ function App() {
   const [showChatbot, setShowChatbot] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const toggleChatbot = () => {
     setShowChatbot(!showChatbot);
@@ -29,14 +29,16 @@ function App() {
 
   useEffect(() => {
     audioRef.current = new Audio('/signore-trial.mp3');
-    audioRef.current.volume = 0.5; // Ses seviyesini %50'ye ayarla
+    audioRef.current.volume = 0.5;
   }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    if (audioRef.current) {
+    if (audioRef.current && hasInteracted) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play();
+      audioRef.current.play().catch(error => {
+        console.log('Ses çalma hatası:', error);
+      });
     }
   };
 
@@ -45,6 +47,15 @@ function App() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+    }
+  };
+
+  const handleFirstInteraction = () => {
+    setHasInteracted(true);
+    if (audioRef.current) {
+      audioRef.current.play().catch(error => {
+        console.log('İlk etkileşim ses çalma hatası:', error);
+      });
     }
   };
 
@@ -62,7 +73,6 @@ function App() {
         {/* Header */}
         <header className="pt-8 pb-4 text-center">
           <div className="flex justify-center items-center mb-4 relative">
-            {/* Sabit müzik notaları */}
             <Music className="absolute left-2 top-10 text-purple-400 opacity-70 z-10" style={{fontSize: '2rem'}} />
             <Music2 className="absolute right-6 top-16 text-blue-400 opacity-60 z-10" style={{fontSize: '1.5rem'}} />
             <Music3 className="absolute left-12 bottom-6 text-pink-400 opacity-60 z-10" style={{fontSize: '1.7rem'}} />
@@ -84,36 +94,28 @@ function App() {
             <div className="text-center flex flex-col items-center justify-center h-full">
               <div className="mb-8">
                 <button
-                  onClick={toggleChatbot}
+                  onClick={() => {
+                    handleFirstInteraction();
+                    toggleChatbot();
+                  }}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   className="group relative w-80 h-80 md:w-96 md:h-96 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 p-1 hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 transform hover:scale-105"
                 >
                   {/* Müzik notaları ve sol anahtarı animasyonu */}
-                  {/* 1. Nota */}
                   <Music className="hidden group-hover:block absolute left-8 top-8 text-pink-300 opacity-0 group-hover:opacity-80 animate-float-up pointer-events-none" style={{fontSize: '2rem'}} />
-                  {/* 2. Nota */}
                   <Music2 className="hidden group-hover:block absolute right-8 top-16 text-blue-300 opacity-0 group-hover:opacity-80 animate-float-right pointer-events-none" style={{fontSize: '1.5rem'}} />
-                  {/* 3. Nota */}
                   <Music3 className="hidden group-hover:block absolute left-16 bottom-8 text-purple-300 opacity-0 group-hover:opacity-80 animate-float-left pointer-events-none" style={{fontSize: '1.8rem'}} />
-                  {/* 4. Nota */}
                   <Music4 className="hidden group-hover:block absolute right-12 bottom-12 text-yellow-300 opacity-0 group-hover:opacity-80 animate-float-diag pointer-events-none" style={{fontSize: '1.2rem'}} />
-                  {/* 5. Nota */}
                   <Music className="hidden group-hover:block absolute left-1/2 top-4 text-green-300 opacity-0 group-hover:opacity-80 animate-float-up pointer-events-none" style={{fontSize: '1.7rem'}} />
-                  {/* 6. Nota */}
                   <Music2 className="hidden group-hover:block absolute right-4 top-1/2 text-pink-200 opacity-0 group-hover:opacity-80 animate-float-right pointer-events-none" style={{fontSize: '1.3rem'}} />
-                  {/* 7. Nota */}
                   <Music3 className="hidden group-hover:block absolute left-4 bottom-1/2 text-blue-200 opacity-0 group-hover:opacity-80 animate-float-left pointer-events-none" style={{fontSize: '1.5rem'}} />
-                  {/* Sol anahtarı (Clef yoksa Music4 ile temsil) */}
                   <Music4 className="hidden group-hover:block absolute left-1/3 top-1/4 text-white opacity-0 group-hover:opacity-80 animate-float-diag pointer-events-none" style={{fontSize: '2.2rem'}} />
                   {/* Inner button */}
                   <div className="w-full h-full rounded-full bg-gradient-to-r from-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
-                    {/* Animated background effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    {/* Pulsing ring effect */}
                     <div className="absolute inset-4 rounded-full border border-purple-400/30 group-hover:border-purple-400/60 transition-colors duration-500"></div>
                     <div className="absolute inset-8 rounded-full border border-purple-400/20 group-hover:border-purple-400/40 transition-colors duration-500 animate-pulse"></div>
-                    {/* Content */}
                     <div className="relative z-10 text-center">
                       <div className="mb-4">
                         <Mic className="w-16 h-16 md:w-20 md:h-20 text-purple-400 mx-auto group-hover:text-white transition-colors duration-300" />
@@ -154,12 +156,12 @@ function App() {
               <div className="relative w-full h-[600px] md:h-[700px] rounded-2xl overflow-hidden shadow-2xl bg-slate-800/50 backdrop-blur-sm">
                 <iframe
                   ref={iframeRef}
-                  src="http://192.168.1.60:3000/chat/7d0SRt4Z3zhUQh8o"
+                  src="https://agoravoice.asistant.keenetic.link/chat/7d0SRt4Z3zhUQh8o"
                   className="w-full h-full border-0 rounded-2xl"
                   title="Agora Voice Assistant Chatbot"
                   sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation"
                 />
-                {/* Fallback content */}
+                {/* Loading indicator */}
                 {isLoading && (
                   <div className="absolute inset-0 flex items-center justify-center text-slate-300 bg-slate-800/50 backdrop-blur-sm">
                     <div className="text-center">
