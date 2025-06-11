@@ -156,7 +156,7 @@ function App() {
               <div className="relative w-full h-[600px] md:h-[700px] rounded-2xl overflow-hidden shadow-2xl bg-slate-800/50 backdrop-blur-sm">
                 <iframe
                   ref={iframeRef}
-                  src="https://chatbot.asistant.keenetic.link/chat/7d0SRt4Z3zhUQh8o"
+                  src="https://www.agoravoice.com.tr/chat/7d0SRt4Z3zhUQh8o"
                   className="w-full h-full border-0 rounded-2xl"
                   title="Agora Voice Assistant Chatbot"
                   sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-presentation"
