@@ -29,13 +29,14 @@ function App() {
 
   useEffect(() => {
     audioRef.current = new Audio('/signore-trial.mp3');
-    audioRef.current.volume = 0.5;
+    audioRef.current.volume = 0.3;
   }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
     if (audioRef.current && hasInteracted) {
       audioRef.current.currentTime = 0;
+      audioRef.current.volume = 0.3;
       audioRef.current.play().catch(error => {
         console.log('Ses çalma hatası:', error);
       });
@@ -53,6 +54,7 @@ function App() {
   const handleFirstInteraction = () => {
     setHasInteracted(true);
     if (audioRef.current) {
+      audioRef.current.volume = 0.3;
       audioRef.current.play().catch(error => {
         console.log('İlk etkileşim ses çalma hatası:', error);
       });
