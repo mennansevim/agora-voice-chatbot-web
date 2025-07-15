@@ -38,7 +38,7 @@ const Secmeler = () => {
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">18 – 50 yaş aralığında olmalısınız</p>
+                <p className="text-agora-muted">20 – 49 yaş aralığında olmalısınız</p>1976 ile 2005
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
@@ -164,7 +164,7 @@ const Secmeler = () => {
               {q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.'},
               {q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.'},
               {q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.'},
-              {q: 'Çalışma koşullarınız nelerdir?', a: 'ütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.'},
+              {q: 'Çalışma koşullarınız nelerdir?', a: 'Bütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.'},
               {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
               {q: 'Koristlerin görev ve sorumlulukları nelerdir?', a: 'Eserle ilgili verilen ödevi yerine getirir. Uyarılar doğrultusunda gerekli düzeltmeleri yapar. Çalışmalara Partisyonunu eksiksiz öğrenerek, hazır gelir. Korunun sanatsal ve sosyal işleyişinde uygun görülen ekiplerde aktif görev alır..'},
               {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
