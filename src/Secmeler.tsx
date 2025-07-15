@@ -37,7 +37,7 @@ const Secmeler = () => {
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">20 – 49 yaş aralığında olmalısınız.</p>1976 ile 2005
+                <p className="text-agora-muted">20 – 49 yaş aralığında olmalısınız.</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
