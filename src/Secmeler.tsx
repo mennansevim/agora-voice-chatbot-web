@@ -72,40 +72,42 @@ const Secmeler = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-terracotta/10 bg-stone-100 rounded-xl p-6 border border-terracotta/20">
-               <h4 className="text-xl font-semibold text-agora-dark mb-3">Duyum Testi (Kulak Eğitimi)</h4>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">1. Müzik Kulağı Testi</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>• Tek ses, çift ses ve üç ses duyum egzersizleri</li>
-                <li>• Kulağınızın aralıklara ve armonik yapıya duyarlılığı ölçülür</li>
+                <li>Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı</li>
+                <li>Adayın müzik kulağı ölçülür</li>
               </ul>
             </div>
 
             <div className="bg-bronze/10 rounded-xl bg-stone-100 p-6 border border-bronze/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">Ritim Tekrarı</h4>
-              <p className="text-agora-muted">
-                Size verilen ritim kalıplarını doğru zamanlama ve vurgu ile tekrar etmeniz beklenir
-              </p>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">2. Ezgi Tekrarı</h4>
+              <ul className="text-agora-muted space-y-2">
+                <li>Verilen iki küçük ezgi piyano ile çalınır</li>
+                <li>Adayın tekrarı istenir</li>
+              </ul>
             </div>
 
             <div className="bg-gold/10 rounded-xl bg-stone-100 p-6 border border-gold/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">Ezgi Tekrarı</h4>
-              <p className="text-agora-muted">
-                Kısa melodik cümleleri doğru tonlama ve entonasyonla tekrar etmeniz istenir
-              </p>
-            </div>
-
-            {/* Serbest Performans ve Solfej Bilgisi yan yana ve eşit genişlikte */}
-            <div className="md:col-span-1 lg:col-span-3  bg-stone-100 bg-olive/10 rounded-xl p-6 border border-olive/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">Serbest Performans</h4>
-              <ul className="text-agora-muted space-y-1">
-                <li>• Size en uygun, sesinizi yansıtan bir parçayı seçerek seslendirmeniz beklenir</li>
-                <li>• A capella olabilir; dil, tür ve tarz serbesttir</li>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">3. Ritim Duygusu</h4>
+              <ul className="text-agora-muted space-y-2">
+                <li>Verilen rehber iki ritmin tekrarı</li>
+                <li>Adayın ritim duygusu ölçülür</li>
               </ul>
             </div>
-            <div className="md:col-span-1 lg:col-span-3 bg-stone-100 rounded-xl p-6 border border-stone-200">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">Solfej Bilgisi</h4>
+
+            <div className="bg-olive/10 rounded-xl bg-stone-100 p-6 border border-olive/20 ">
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">4. Hazırlanan Eser</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>• Solfej biliyorsanız kısa bir nota örneği üzerinden değerlendirileceksiniz</li>
-                <li>• Bilmeseniz bile gözlem yapılır, elenme sebebi değildir</li>
+                <li>Adayın hazırladığı bir eseri seslendirmesi</li>
+                <li>Dil, tür ve tarz serbesttir</li>
+              </ul>
+            </div>
+
+            <div className="bg-stone-100 rounded-xl p-6 border border-stone-200 md:col-span-2">
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">5. Ortak Eser Seslendirme</h4>
+              <ul className="text-agora-muted space-y-2">
+                <li>Belirlenen ortak eserin başvuru sırasında adaya iletilen uygun partisyonu</li>
+                <li>Aday tarafından seslendirilmesi beklenir</li>
               </ul>
             </div>
           </div>
@@ -119,11 +121,11 @@ const Secmeler = () => {
               📍 Prova ve Lokasyon Bilgileri
             </h3>
             <div className="space-y-4">
-              <p className="text-agora-muted">Tüm provalar <span className="text-agora-terracotta font-semibold">Konak / İzmir</span> lokasyonunda yapılacaktır</p>
+              <p className="text-agora-muted">Tüm provalar <span className="text-agora-terracotta font-semibold">Konak / İzmir</span> Türkan Saylan Kültür Merkezi'nde yapılacaktır</p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-agora-terracotta" />
-                  <span className="text-agora-dark font-semibold">🗓️ Cuma 19.30 – 22.00</span>
+                  <span className="text-agora-dark font-semibold">🗓️ Cuma 19.00 – 22.30</span>
                 </div>
        
               </div>
@@ -162,9 +164,11 @@ const Secmeler = () => {
               {q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.'},
               {q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.'},
               {q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.'},
+              {q: 'Çalışma koşullarınız nelerdir?', a: 'ütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.'},
               {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
+              {q: 'Koristlerin görev ve sorumlulukları nelerdir?', a: 'Eserle ilgili verilen ödevi yerine getirir. Uyarılar doğrultusunda gerekli düzeltmeleri yapar. Çalışmalara Partisyonunu eksiksiz öğrenerek, hazır gelir. Korunun sanatsal ve sosyal işleyişinde uygun görülen ekiplerde aktif görev alır..'},
               {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
-              {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Genellikle Cuma 19.30–18.00 saatlerinde yapılır. Yer: İzmir Konak/Türkan Saylan Kültür Merkezi.'},
+              {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Genellikle Cuma 19.30–18.00 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
               {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
               {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
               {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},

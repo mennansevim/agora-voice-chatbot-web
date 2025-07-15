@@ -292,7 +292,7 @@ function App() {
               </div>
              
               <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '14rem' }}>
-                Koromuz, İzmir Antik Agora'nın ruhuyla, yurt içi ve yurt dışındaki sahnelerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlıyoruz.
+                Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlıyoruz.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">
                 <button
@@ -341,9 +341,7 @@ function App() {
                 <span className="text-agora-bronze">Biz Kimiz</span>
               </h2>
               <p className="text-xl text-agora-muted max-w-4xl mx-auto">
-              Biz, farklı korolarda deneyim kazanmış koristlerin bir araya gelerek oluşturduğu, müziğe duyduğumuz ortak tutku ile kurulmuş bir koroyuz. 
-              <br />   <br />
-              Amacımız, sanatı paylaşmak ve sesimizle hem ulusal hem uluslararası sahnelerde iz bırakmaktır.              </p>
+              Farklı yaş ve meslek gruplarından koristlerin, ulusal ve uluslararası festival ve etkinliklerde çalışmalarını profesyonel şekilde sergilemek için Şubat 2025 tarihinde bir araya gelerek kurdukları çok sesli bir korodur.</p>
             </div>
 
         
@@ -402,7 +400,7 @@ function App() {
                 Koromuzun amacı, müzik sevgisini paylaşmak, üyelerimizin ses ve müzikal yeteneklerini geliştirmek ve birlikte kaliteli performanslar sergilemektir. Çalışmalarımızda disiplin ve keyfi bir arada tutmaya özen gösteriyoruz.
               </p>
               <p className="text-agora-muted mb-2">
-                Provalarımızda önce solfej yaparak eserin notalarını ve ritmini öğreniriz; ardından eserin anlamını ve duygusunu kavrayıp provalarda birlikte çalışırız; en sonunda da şarkıyı tam bir uyumla seslendirmeye hazır hale getiririz.
+                Provalarımızda önce nota tekrarı yaparak eserin ritmini ve seslerini öğreniriz; ardından eserin anlamını ve duygusunu kavrayıp provalarda birlikte çalışırız; en sonunda da şarkıyı tam bir uyumla seslendirmeye hazır hale getiririz.
               </p>
               <p className="text-agora-muted">
                 Koromuz düzenli olarak prova yaparak repertuvarını zenginleştirir ve sürekli gelişmeyi hedefler. Ayrıca ekibimiz, yurt içi ve yurt dışı festival ve yarışmalara katılmayı amaçlar. Hep birlikte başarılar elde etmek ve müziğimizi daha geniş kitlelere duyurmak, en büyük motivasyon kaynaklarımızdandır.
