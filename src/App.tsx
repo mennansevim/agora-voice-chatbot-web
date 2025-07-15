@@ -36,22 +36,30 @@ function App() {
 
   // Galeri resimleri - 100 resme kadar genişletilebilir
   const galleryImages = [
-    { src: '/gallery/agora6.jpeg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
-    { src: '/gallery/agora7.JPG', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
-    { src: '/gallery/agora8.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
-
-    { src: '/gallery/agora12.JPG', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
-    { src: '/gallery/agora14.JPG', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
-    { src: '/gallery/agora15.JPG', alt: 'Agora Voice Koro', title: 'Koro performansı' },
-    { src: '/gallery/agora38.png', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
-    { src: '/gallery/agora40.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
-    { src: '/gallery/agora41.png', alt: 'Agora Voice Koro', title: 'Koro performansı' },
-    { src: '/gallery/agora47.JPG', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
-    { src: '/gallery/agora49.JPG', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
-    { src: '/gallery/agora50.JPG', alt: 'Agora Voice Koro', title: 'Koro performansı' },
-    { src: '/gallery/agora53.JPG', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
-    { src: '/gallery/agora55.JPG', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
-    { src: '/gallery/agora56.JPG', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img1.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img2.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
+    { src: '/gallery/img3.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
+    { src: '/gallery/img4.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img5.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
+    { src: '/gallery/img6.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
+    { src: '/gallery/img7.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
+    { src: '/gallery/img8.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img9.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
+    { src: '/gallery/img10.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
+    { src: '/gallery/img11.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
+    { src: '/gallery/img12.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img13.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
+    { src: '/gallery/img14.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
+    { src: '/gallery/img15.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
+    { src: '/gallery/img16.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img17.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
+    { src: '/gallery/img18.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
+    { src: '/gallery/img19.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
+    { src: '/gallery/img20.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
+    { src: '/gallery/img21.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
+    { src: '/gallery/img22.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
+    { src: '/gallery/img23.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
+    { src: '/gallery/img24.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
   ];
 
   const toggleListening = () => {
@@ -292,7 +300,8 @@ function App() {
               </div>
              
               <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '14rem' }}>
-                Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlıyoruz.
+                Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
+                .
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">
                 <button
@@ -361,7 +370,7 @@ function App() {
               </div>
               <div className="flex-shrink-0">
                 {/* Şefin görseli eklenebilir */}
-                <img src="/ozlem-profil.png" alt="Şef Özlem VARIŞLI ATÇEKEN" className="w-40 h-40 object-cover rounded-full border-4 border-bronze-gradient shadow-agora" />
+                <img src="/ozlem-profil.jpg" alt="Şef Özlem VARIŞLI ATÇEKEN" className="w-40 h-40 object-cover rounded-full border-4 border-bronze-gradient shadow-agora" />
               </div>
             </div>
 
@@ -372,7 +381,7 @@ function App() {
                 Korist ekibimiz, yurt içi ve yurt dışında birçok festivale katılmış deneyimli üyelerden oluşuyor. Her birimiz farklı meslek gruplarından geliyoruz; ancak ortak noktamız müziğe duyduğumuz sevgi ve tutkudur. Amacımız, hem ülkemizde hem de uluslararası festivallerde başarılı performanslar sergileyerek ülkemizi gururla temsil etmektir.
               </p>
               <p className="text-agora-muted">
-                Çalışmalarımızda şefimize, piyano öğretmeni, aranjör ve eşi olan <b>Rıza ATÇEKEN</b> korepetitör olarak eşlik etmektedir.
+                Çalışmalarımızda şefimize, piyano öğretmeni, aranjör ve eşi olan <b>Rıza ATÇEKEN</b> korrepeditör olarak eşlik etmektedir.
               </p>
             </div>
 
@@ -632,7 +641,7 @@ function App() {
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-agora-dark">Web Sitesi</h4>
-                      <p className="text-agora-muted">agoravoice.com.tr</p>
+                      <p className="text-agora-muted">www.agoravoice.com.tr</p>
                     </div>
                   </div>
                 </div>

@@ -154,7 +154,7 @@ const Secmeler = () => {
         {/* SSS */}
         <div className="card-agora rounded-2xl p-8 mb-12">
           <h3 className="text-3xl font-bold text-agora-dark mb-8 text-center">❓ Sık Sorulan Sorular</h3>
-          <div className="space-y-6 overflow-y-auto" style={{ maxHeight: '500px' }}>
+          <div className="space-y-6">
             {[
               {q: 'Agora Voice nedir?', a: 'Agora Voice, farklı korolarda deneyim kazanmış koristlerin bir araya gelerek kurduğu, müziğe tutkuyla bağlı bir vokal topluluğudur.'},
               {q: 'Ne zaman kuruldunuz?', a: 'Koromuz, ilk çalışmasını 27 Ocak 2025 tarihinde gerçekleştirmiştir.'},
@@ -220,31 +220,10 @@ const Secmeler = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">Sağlıklı bir sesle gelin :)</p>
+                  <p className="text-agora-muted">15 dakika erken gelin</p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* İletişim */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <div className="card-agora rounded-xl p-6 text-center">
-            <Mail className="w-12 h-12 text-agora-terracotta mx-auto mb-4" />
-            <h4 className="text-lg font-semibold text-agora-dark mb-2">📨 E-posta</h4>
-            <p className="text-agora-terracotta">info@agoravoice.org</p>
-          </div>
-
-          <div className="card-agora rounded-xl p-6 text-center">
-            <Instagram className="w-12 h-12 text-agora-bronze mx-auto mb-4" />
-            <h4 className="text-lg font-semibold text-agora-dark mb-2">📱 Instagram</h4>
-            <p className="text-agora-bronze">@agoravoicechoir</p>
-          </div>
-
-          <div className="card-agora rounded-xl p-6 text-center">
-            <Globe className="w-12 h-12 text-agora-gold mx-auto mb-4" />
-            <h4 className="text-lg font-semibold text-agora-dark mb-2">🌐 Website</h4>
-            <p className="text-agora-gold">www.agoravoice.org</p>
           </div>
         </div>
 
