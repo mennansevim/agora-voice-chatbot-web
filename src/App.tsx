@@ -282,7 +282,7 @@ function App() {
             <img
               src="/arkaplan.jpg"
               alt="Agora Voice Arka Plan"
-              className="w-full h-full object-cover opacity-60"
+              className="w-full h-full object-cover opacity-90"
             />
             {/* Koyu overlay */}
             <div className="absolute inset-0 bg-black/40"></div>
