@@ -385,7 +385,7 @@ function App() {
               <div className="flex-1">
                 <h3 className="text-2xl font-bold text-agora-dark mb-2">Koro Şefimiz</h3>
                 <p className="text-agora-muted mb-2">
-                  <b>Özlem VARIŞLI ATÇEKEN</b>, 1999’dan bu yana birçok koroyu yönetmiş deneyimli bir müzik eğitimcisidir. 2010’dan beri Güzel Sanatlar Liselerinde koro öğretmenliği ve şeflik yapmaktadır. Halen Aydın Yüksel Yalova Güzel Sanatlar Lisesi'nde görevini sürdürmektedir. Yönettiği korolarla çok sayıda festivale katılmış ve ödüller kazanmıştır.
+                  <b>Özlem VARIŞLI ATÇEKEN</b>, 1997’den bu yana birçok koroyu yönetmiş deneyimli bir müzik eğitimcisidir. 2010’dan beri Güzel Sanatlar Liselerinde koro öğretmenliği ve şeflik yapmaktadır. Halen Aydın Yüksel Yalova Güzel Sanatlar Lisesi'nde görevini sürdürmektedir. Yönettiği korolarla çok sayıda festivale katılmış ve ödüller kazanmıştır.
                 </p>
                 <p className="text-agora-muted mb-2">
                   Selçuk Üniversitesi Müzik Eğitimi Bölümü mezunu olup, Necmettin Erbakan Üniversitesi'nde Müzik Eğitimi üzerine yüksek lisans yapmıştır.
