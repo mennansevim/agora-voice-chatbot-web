@@ -376,7 +376,7 @@ function App() {
                 <span className="text-agora-bronze">Biz Kimiz</span>
               </h2>
               <p className="text-xl text-agora-muted max-w-4xl mx-auto">
-              Farklı yaş ve meslek gruplarından koristlerin, ulusal ve uluslararası festival ve etkinliklerde çalışmalarını profesyonel şekilde sergilemek için Şubat 2025 tarihinde bir araya gelerek kurdukları çok sesli bir korodur.</p>
+              Farklı yaş ve meslek gruplarından koristlerin, ulusal ve uluslararası festival ve etkinliklerde çalışmalarını profesyonel şekilde sergilemek için 27 Ocak 2025 tarihinde bir araya gelerek kurdukları çok sesli bir korodur.</p>
             </div>
 
         
@@ -407,7 +407,7 @@ function App() {
                 Korist ekibimiz, yurt içi ve yurt dışında birçok festivale katılmış deneyimli üyelerden oluşuyor. Her birimiz farklı meslek gruplarından geliyoruz; ancak ortak noktamız müziğe duyduğumuz sevgi ve tutkudur. Amacımız, hem ülkemizde hem de uluslararası festivallerde başarılı performanslar sergileyerek ülkemizi gururla temsil etmektir.
               </p>
               <p className="text-agora-muted">
-                Çalışmalarımızda şefimize, piyano öğretmeni, aranjör ve eşi olan <b>Rıza ATÇEKEN</b> korrepeditör olarak eşlik etmektedir.
+                Çalışmalarımızda şefimize, piyano öğretmeni, aranjör <b>Rıza ATÇEKEN</b> korrepeditör olarak eşlik etmektedir.
               </p>
             </div>
 

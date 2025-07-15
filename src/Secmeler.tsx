@@ -18,9 +18,8 @@ const Secmeler = () => {
           </h2>
           <p className="text-xl text-agora-muted max-w-6xl mx-auto leading-relaxed">
            
-            Bu seçmeler, 16 Temmuz -  15 Ağustos 2025 tarihleri arasında yapılacaktır amacımız, 
-            <br />
-            yurtiçi ve yurtdışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
+            Başvurular 16 Temmuz -  15 Ağustos 2025 tarihleri arasında yapılacaktır. 
+            Amacımız yurtiçi ve yurtdışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
             <br />
           
             Katılımcılar, uluslararası bir sahnede çok sesli müziğin coşkusunu paylaşma fırsatı bulacaklardır.
@@ -38,25 +37,25 @@ const Secmeler = () => {
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">20 – 49 yaş aralığında olmalısınız</p>1976 ile 2005
+                <p className="text-agora-muted">20 – 49 yaş aralığında olmalısınız.</p>1976 ile 2005
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Konak/İzmir merkezli provalara düzenli katılım sağlayabilmelisiniz</p>
+                <p className="text-agora-muted">Konak/İzmir merkezli provalara düzenli katılım sağlayabilmelisiniz.</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">2026 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız</p>
+                <p className="text-agora-muted">2026 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.</p>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Temel düzeyde nota bilgisi ve müzik kulağına sahip olmanız beklenir</p>
+                <p className="text-agora-muted">Temel düzeyde nota bilgisi ve müzik kulağına sahip olmanız beklenir.</p>
               </div>
               <div className="flex items-start space-x-3">
                 <Star className="w-6 h-6 text-agora-gold mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Daha önce çok sesli müzik deneyimi edinmiş olmanız avantajdır ancak zorunlu değildir</p>
+                <p className="text-agora-muted">Daha önce çok sesli müzik deneyimi edinmiş olmanız avantajdır ancak zorunlu değildir.</p>
               </div>
             </div>
           </div>
@@ -74,40 +73,40 @@ const Secmeler = () => {
             <div className="bg-terracotta/10 bg-stone-100 rounded-xl p-6 border border-terracotta/20">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">1. Müzik Kulağı Testi</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı</li>
-                <li>Adayın müzik kulağı ölçülür</li>
+                <li>Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı istenir.</li>
+                <li>Adayın müzik kulağı ölçülür.</li>
               </ul>
             </div>
 
             <div className="bg-bronze/10 rounded-xl bg-stone-100 p-6 border border-bronze/20">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">2. Ezgi Tekrarı</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>Verilen iki küçük ezgi piyano ile çalınır</li>
-                <li>Adayın tekrarı istenir</li>
+                <li>Verilen iki küçük ezgi piyano ile çalınır.</li>
+                <li>Adayın tekrarı istenir.</li>
               </ul>
             </div>
 
             <div className="bg-gold/10 rounded-xl bg-stone-100 p-6 border border-gold/20">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">3. Ritim Duygusu</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>Verilen rehber iki ritmin tekrarı</li>
-                <li>Adayın ritim duygusu ölçülür</li>
+                <li>Verilen rehber iki ritmin tekrarı istenir.</li>
+                <li>Adayın ritim duygusu ölçülür.</li>
               </ul>
             </div>
 
             <div className="bg-olive/10 rounded-xl bg-stone-100 p-6 border border-olive/20 ">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">4. Hazırlanan Eser</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>Adayın hazırladığı bir eseri seslendirmesi</li>
-                <li>Dil, tür ve tarz serbesttir</li>
+                <li>Adayın hazırladığı bir eseri seslendirmesi istenir.</li>
+                <li>Dil, tür ve tarz serbesttir.</li>
               </ul>
             </div>
 
             <div className="bg-stone-100 rounded-xl p-6 border border-stone-200 md:col-span-2">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">5. Ortak Eser Seslendirme</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>Belirlenen ortak eserin başvuru sırasında adaya iletilen uygun partisyonu</li>
-                <li>Aday tarafından seslendirilmesi beklenir</li>
+                <li>Belirlenen ortak eserin başvuru sırasında adaya iletilen uygun partisyonu istenir.</li>
+                <li>Aday tarafından seslendirilmesi beklenir.</li>
               </ul>
             </div>
           </div>
@@ -155,36 +154,86 @@ const Secmeler = () => {
         <div className="card-agora rounded-2xl p-8 mb-12">
           <h3 className="text-3xl font-bold text-agora-dark mb-8 text-center">❓ Sık Sorulan Sorular</h3>
           <div className="space-y-6">
-            {[
-              {q: 'Agora Voice nedir?', a: 'Agora Voice, farklı korolarda deneyim kazanmış koristlerin bir araya gelerek kurduğu, müziğe tutkuyla bağlı bir vokal topluluğudur.'},
-              {q: 'Ne zaman kuruldunuz?', a: 'Koromuz, ilk çalışmasını 27 Ocak 2025 tarihinde gerçekleştirmiştir.'},
-              {q: 'Adınızı nereden alıyorsunuz?', a: 'İzmir’in tarihî ve kültürel simgelerinden biri olan Antik Agora’dan ilham alıyoruz.'},
-              {q: 'Koro şefiniz kimdir?', a: 'Şefimiz, deneyimli müzik eğitimcisi Özlem Varışlı Atçeken’dir.'},
-              {q: 'Korepetitörünüz kimdir?', a: 'Piyanist, aranjör ve şefimizin eşi Rıza Atçeken çalışmalarımıza eşlik etmektedir.'},
-              {q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.'},
-              {q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.'},
-              {q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.'},
-              {q: 'Çalışma koşullarınız nelerdir?', a: 'Bütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.'},
-              {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
-              {q: 'Koristlerin görev ve sorumlulukları nelerdir?', a: 'Eserle ilgili verilen ödevi yerine getirir. Uyarılar doğrultusunda gerekli düzeltmeleri yapar. Çalışmalara Partisyonunu eksiksiz öğrenerek, hazır gelir. Korunun sanatsal ve sosyal işleyişinde uygun görülen ekiplerde aktif görev alır..'},
-              {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
-              {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Genellikle Cuma 19.30–18.00 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
-              {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
-              {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
-              {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
-              {q: 'Konser ve turneler hangi dönemlerde oluyor?', a: 'Genellikle hafta sonlarına ve tatil günlerine denk getirilir.'},
-              {q: 'Yıl içinde takvim nasıl işler?', a: 'Prova ve konser takvimi dönem başında paylaşılır. Resmi tatillerde de çalışma olabilir.'},
-              {q: 'Fotoğraf ve videolar nasıl kullanılıyor?', a: 'Tanıtım, sosyal medya ve arşiv amaçlı kullanılabilir. Kullanım için yazılı onay alınır.'},
-              {q: 'Sahne kostümleri nasıl belirleniyor?', a: 'Kostüm detayları üyeliğiniz onaylandıktan sonra paylaşılır. Nereden temin edileceği konusunda bilgilendirme yapılır.'},
-              {q: 'Katkı payı ne zaman ödeniyor?', a: 'Turne kadrosu kesinleşince ödeme tarihleri ve yöntemleri paylaşılır.'},
-              {q: 'Vize ve pasaport işlemleri nasıl yürütülüyor?', a: 'Pasaport başvurusu bireysel olarak yapılır. Vize işlemleri koro yönetimi tarafından yürütülür.'},
-              {q: 'Vize reddi yaşanırsa ne olur?', a: 'Bu durumda maalesef festivale katılım sağlanamaz. Konsolosluk süreci dış etken olduğu için garanti verilemez.'},
-            ].map((item, i) => (
-              <div key={i}>
-                <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
-                <div className="text-agora-muted text-sm mb-4">{item.a}</div>
-              </div>
-            ))}
+            {/* Başvuru ile ilgili sorular */}
+            <div>
+              <div className="text-xl font-bold text-agora-bronze mb-4">Başvuru</div>
+              {[
+                {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
+                {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
+                {q: 'Katkı payı ne zaman ödeniyor?', a: 'Turne kadrosu kesinleşince ödeme tarihleri ve yöntemleri paylaşılır.'},
+                {q: 'Vize ve pasaport işlemleri nasıl yürütülüyor?', a: 'Pasaport başvurusu bireysel olarak yapılır. Vize işlemleri koro yönetimi tarafından yürütülür.'},
+                {q: 'Vize reddi yaşanırsa ne olur?', a: 'Bu durumda maalesef festivale katılım sağlanamaz. Konsolosluk süreci dış etken olduğu için garanti verilemez.'},
+                {q: 'Sahne kostümleri nasıl belirleniyor?', a: 'Kostüm detayları üyeliğiniz onaylandıktan sonra paylaşılır. Nereden temin edileceği konusunda bilgilendirme yapılır.'},
+                {q: 'Fotoğraf ve videolar nasıl kullanılıyor?', a: 'Tanıtım, sosyal medya ve arşiv amaçlı kullanılabilir. Kullanım için yazılı onay alınır.'},
+              ].map((item, i) => (
+                <div key={i}>
+                  <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
+                  <div className="text-agora-muted text-sm mb-4">
+                    {Array.isArray(item.a) ? (
+                      item.a.map((line, j) => (
+                        <div key={j} className="mb-1">{line}</div>
+                      ))
+                    ) : (
+                      item.a
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Seçme ve Prova ile ilgili sorular */}
+            <div>
+              <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Seçme ve Prova</div>
+              {[
+                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her cuma 19.30–18.00 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
+                {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
+                {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
+                {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
+                {q: 'Konser ve turneler hangi dönemlerde oluyor?', a: 'Genellikle hafta sonlarına ve tatil günlerine denk getirilir.'},
+                {q: 'Yıl içinde takvim nasıl işler?', a: 'Prova ve konser takvimi dönem başında paylaşılır. Resmi tatillerde de çalışma olabilir.'},
+              ].map((item, i) => (
+                <div key={i}>
+                  <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
+                  <div className="text-agora-muted text-sm mb-4">
+                    {Array.isArray(item.a) ? (
+                      item.a.map((line, j) => (
+                        <div key={j} className="mb-1">{line}</div>
+                      ))
+                    ) : (
+                      item.a
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Koro ve Korist ile ilgili sorular */}
+            <div>
+              <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Koro</div>
+              {[
+                {q: 'Agora Voice nedir?', a: 'Agora Voice, farklı korolarda deneyim kazanmış koristlerin bir araya gelerek kurduğu, müziğe tutkuyla bağlı bir vokal topluluğudur.'},
+                {q: 'Ne zaman kuruldunuz?', a: 'Koromuz, ilk çalışmasını 27 Ocak 2025 tarihinde gerçekleştirmiştir.'},
+                {q: 'Adınızı nereden alıyorsunuz?', a: 'İzmir’in tarihî ve kültürel simgelerinden biri olan Antik Agora’dan ilham alıyoruz.'},
+                {q: 'Koro şefiniz kimdir?', a: 'Şefimiz, deneyimli müzik eğitimcisi Özlem Varışlı Atçeken’dir.'},
+                {q: 'Korepetitörünüz kimdir?', a: 'Piyanist, aranjör ve şefimizin eşi Rıza Atçeken çalışmalarımıza eşlik etmektedir.'},
+                {q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.'},
+                {q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.'},
+                {q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.'},
+                {q: 'Çalışma koşullarınız nelerdir?', a: 'Bütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.'},
+                {q: 'Koristlerin görev ve sorumlulukları nelerdir?', a: ['1- Eserle ilgili verilen ödevi yerine getirir.', '2- Uyarılar doğrultusunda gerekli düzeltmeleri yapar.', '3- Çalışmalara Partisyonunu eksiksiz öğrenerek, hazır gelir.', '4- Korunun sanatsal ve sosyal işleyişinde uygun görülen ekiplerde aktif görev alır.']},
+              ].map((item, i) => (
+                <div key={i}>
+                  <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
+                  <div className="text-agora-muted text-sm mb-4">
+                    {Array.isArray(item.a) ? (
+                      item.a.map((line, j) => (
+                        <div key={j} className="mb-1">{line}</div>
+                      ))
+                    ) : (
+                      item.a
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
