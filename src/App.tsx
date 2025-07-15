@@ -361,7 +361,7 @@ function App() {
               </div>
               <div className="flex-shrink-0">
                 {/* Şefin görseli eklenebilir */}
-                <img src="/public/agora.png" alt="Şef Özlem VARIŞLI ATÇEKEN" className="w-40 h-40 object-cover rounded-full border-4 border-bronze-gradient shadow-agora" />
+                <img src="/public/ozlem-profil.png" alt="Şef Özlem VARIŞLI ATÇEKEN" className="w-40 h-40 object-cover rounded-full border-4 border-bronze-gradient shadow-agora" />
               </div>
             </div>
 
