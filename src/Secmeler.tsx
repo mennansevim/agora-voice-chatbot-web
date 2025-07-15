@@ -19,7 +19,7 @@ const Secmeler = () => {
           <p className="text-xl text-agora-muted max-w-6xl mx-auto leading-relaxed">
            
             Başvurular 16 Temmuz -  15 Ağustos 2025 tarihleri arasında yapılacaktır. 
-            Amacımız yurtiçi ve yurtdışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
+            Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
             <br />
           
             Katılımcılar, uluslararası bir sahnede çok sesli müziğin coşkusunu paylaşma fırsatı bulacaklardır.
@@ -105,8 +105,7 @@ const Secmeler = () => {
             <div className="bg-stone-100 rounded-xl p-6 border border-stone-200 md:col-span-2">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">5. Ortak Eser Seslendirme</h4>
               <ul className="text-agora-muted space-y-2">
-                <li>Belirlenen ortak eserin başvuru sırasında adaya iletilen uygun partisyonu istenir.</li>
-                <li>Aday tarafından seslendirilmesi beklenir.</li>
+                <li>Belirlenen ortak eserin başvuru sırasında adaya iletilen uygun partisyonun aday tarafından seslendirmesi beklenir</li>
               </ul>
             </div>
           </div>
@@ -134,16 +133,12 @@ const Secmeler = () => {
           <div className="card-agora rounded-2xl p-8">
             <h3 className="text-2xl font-bold text-agora-dark mb-6 flex items-center">
               <Euro className="w-7 h-7 text-agora-bronze mr-3" />
-              💸 Başvuru ve Katılım Ücreti
+              💸 Başvuru Ücreti
             </h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500" />
-                <span className="text-agora-muted">Seçmelere katılım ücretsizdir</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-500" />
-                <span className="text-agora-muted">Koro aidat bedeli başvuru sürecinde belirlenecektir</span>
+                <span className="text-agora-muted">Seçmelere katılım ücretsizdir.</span>
               </div>
 
             </div>
@@ -156,7 +151,7 @@ const Secmeler = () => {
           <div className="space-y-6">
             {/* Başvuru ile ilgili sorular */}
             <div>
-              <div className="text-xl font-bold text-agora-bronze mb-4">Başvuru</div>
+              <div className="text-xl font-bold text-agora-bronze mb-4">Başvuru ve Seçme</div>
               {[
                 {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
                 {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
@@ -181,7 +176,7 @@ const Secmeler = () => {
             </div>
             {/* Seçme ve Prova ile ilgili sorular */}
             <div>
-              <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Seçme ve Prova</div>
+              <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Prova</div>
               {[
                 {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her cuma 19:00–22:30 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
                 {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
@@ -246,11 +241,11 @@ const Secmeler = () => {
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">1</div>
-                  <p className="text-agora-muted">Başvuru formunu eksiksiz doldurun</p>
+                  <p className="text-agora-muted">Başvuru formunu eksiksiz doldurun.</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">2</div>
-                  <p className="text-agora-muted">Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir</p>
+                  <p className="text-agora-muted">Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir.</p>
                 </div>
               </div>
             </div>
@@ -260,17 +255,27 @@ const Secmeler = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">Hafif bir şeyler yiyip gelin</p>
+                  <p className="text-agora-muted">Hafif bir şeyler yiyip gelin.</p>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">Şarkınızı önceden seçmiş olun</p>
+                  <p className="text-agora-muted">Şarkınızı önceden seçmiş olun.</p>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">15 dakika erken gelin</p>
+                  <p className="text-agora-muted">15 dakika erken gelin.</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Unutmayın Notu */}
+          <div className="mt-8 p-6 bg-gradient-to-r">
+            <div className="text-center">
+              <p className="text-xl text-agora-dark font-semibold italic leading-relaxed">
+                Unutmayın!.. <br />
+                Sizleri sınamak için değil aramızda görmek için orada olacağız.
+              </p>
             </div>
           </div>
         </div>

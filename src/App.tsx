@@ -301,7 +301,6 @@ function App() {
              
               <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '14rem' }}>
                 Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
-                .
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">
                 <button
@@ -450,7 +449,7 @@ function App() {
                 <li>Şefimizin verdiği ödevler, belirtilen sürede eksiksiz olarak gönderilmelidir.</li>
                 <li>Her çalışmada koro dosyanız ve kaleminiz yanınızda olmalıdır.</li>
                 <li>Provalara önemli bir sağlık sorunu olmadıkça eksiksiz ve zamanında katılım gereklidir.</li>
-                <li>Provalara katılamayacak olanlar, öncesinde yoklama alan arkadaşımıza bilgi vermelidir.</li>
+                <li>Provalara katılamayacak olanlar, öncesinde bilgi vermelidir.</li>
               </ul>
             </div>
           </div>
