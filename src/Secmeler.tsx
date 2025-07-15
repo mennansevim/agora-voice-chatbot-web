@@ -160,7 +160,6 @@ const Secmeler = () => {
               {[
                 {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
                 {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
-                {q: 'Katkı payı ne zaman ödeniyor?', a: 'Turne kadrosu kesinleşince ödeme tarihleri ve yöntemleri paylaşılır.'},
                 {q: 'Vize ve pasaport işlemleri nasıl yürütülüyor?', a: 'Pasaport başvurusu bireysel olarak yapılır. Vize işlemleri koro yönetimi tarafından yürütülür.'},
                 {q: 'Vize reddi yaşanırsa ne olur?', a: 'Bu durumda maalesef festivale katılım sağlanamaz. Konsolosluk süreci dış etken olduğu için garanti verilemez.'},
                 {q: 'Sahne kostümleri nasıl belirleniyor?', a: 'Kostüm detayları üyeliğiniz onaylandıktan sonra paylaşılır. Nereden temin edileceği konusunda bilgilendirme yapılır.'},
@@ -184,7 +183,7 @@ const Secmeler = () => {
             <div>
               <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Seçme ve Prova</div>
               {[
-                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her cuma 19.30–18.00 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
+                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her cuma 19:00–22:30 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
                 {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
                 {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
                 {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
@@ -213,7 +212,7 @@ const Secmeler = () => {
                 {q: 'Ne zaman kuruldunuz?', a: 'Koromuz, ilk çalışmasını 27 Ocak 2025 tarihinde gerçekleştirmiştir.'},
                 {q: 'Adınızı nereden alıyorsunuz?', a: 'İzmir’in tarihî ve kültürel simgelerinden biri olan Antik Agora’dan ilham alıyoruz.'},
                 {q: 'Koro şefiniz kimdir?', a: 'Şefimiz, deneyimli müzik eğitimcisi Özlem Varışlı Atçeken’dir.'},
-                {q: 'Korepetitörünüz kimdir?', a: 'Piyanist, aranjör ve şefimizin eşi Rıza Atçeken çalışmalarımıza eşlik etmektedir.'},
+                {q: 'Korepetitörünüz kimdir?', a: 'Piyanist, aranjör Rıza Atçeken çalışmalarımıza eşlik etmektedir.'},
                 {q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.'},
                 {q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.'},
                 {q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.'},
