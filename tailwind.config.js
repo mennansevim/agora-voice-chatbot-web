@@ -9,32 +9,32 @@ export default {
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'ping-slow': 'ping 4s cubic-bezier(0, 0, 0.2, 1) infinite',
-        'float-up': 'floatUp 1.2s ease-in-out infinite',
-        'float-right': 'floatRight 1.2s ease-in-out infinite',
-        'float-left': 'floatLeft 1.2s ease-in-out infinite',
-        'float-diag': 'floatDiag 1.2s ease-in-out infinite',
-        'float-up-delay': 'floatUp 1.5s 0.3s ease-in-out infinite',
+        'fade-in': 'fadeIn 2s ease-in-out',
+        'float-up': 'floatUp 2s ease-in-out infinite',
+        'float-right': 'floatRight 2.5s ease-in-out infinite',
+        'float-left': 'floatLeft 2.2s ease-in-out infinite',
+        'float-diag': 'floatDiag 2.8s ease-in-out infinite',
       },
       keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
         floatUp: {
-          '0%': { transform: 'translateY(0) scale(1)', opacity: '0' },
-          '30%': { opacity: '1' },
-          '100%': { transform: 'translateY(-60px) scale(1.3)', opacity: '0' },
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '50%': { transform: 'translateY(-20px) rotate(10deg)' },
         },
         floatRight: {
-          '0%': { transform: 'translateX(0) scale(1)', opacity: '0' },
-          '30%': { opacity: '1' },
-          '100%': { transform: 'translateX(60px) scale(1.3)', opacity: '0' },
+          '0%, 100%': { transform: 'translateX(0px) rotate(0deg)' },
+          '50%': { transform: 'translateX(15px) rotate(-10deg)' },
         },
         floatLeft: {
-          '0%': { transform: 'translateX(0) scale(1)', opacity: '0' },
-          '30%': { opacity: '1' },
-          '100%': { transform: 'translateX(-60px) scale(1.3)', opacity: '0' },
+          '0%, 100%': { transform: 'translateX(0px) rotate(0deg)' },
+          '50%': { transform: 'translateX(-15px) rotate(10deg)' },
         },
         floatDiag: {
-          '0%': { transform: 'translate(0,0) scale(1)', opacity: '0' },
-          '30%': { opacity: '1' },
-          '100%': { transform: 'translate(40px,-40px) scale(1.3)', opacity: '0' },
+          '0%, 100%': { transform: 'translate(0px, 0px) rotate(0deg)' },
+          '50%': { transform: 'translate(-10px, -15px) rotate(-15deg)' },
         },
       },
       backgroundImage: {
@@ -43,6 +43,9 @@ export default {
       boxShadow: {
         'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
         'glow-lg': '0 0 40px rgba(139, 92, 246, 0.4)',
+      },
+      dropShadow: {
+        'glow': '0 0 10px rgba(139, 92, 246, 0.5)',
       },
     },
   },
