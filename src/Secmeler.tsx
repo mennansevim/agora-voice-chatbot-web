@@ -41,7 +41,7 @@ const Secmeler = () => {
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Konak/İzmir merkezli provalara düzenli katılım sağlayabilmelisiniz.</p>
+                <p className="text-agora-muted">Provalara düzenli katılım sağlayabilmelisiniz.</p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
