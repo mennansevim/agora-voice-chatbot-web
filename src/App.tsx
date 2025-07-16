@@ -66,8 +66,6 @@ function App() {
     { src: '/gallery/img28.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
     { src: '/gallery/img29.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
     { src: '/gallery/img30.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
-    { src: '/gallery/img31.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
-    { src: '/gallery/img32.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
   ];
 
   const toggleListening = () => {
