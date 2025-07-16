@@ -119,7 +119,7 @@ const Secmeler = () => {
               📍 Prova ve Lokasyon Bilgileri
             </h3>
             <div className="space-y-4">
-              <p className="text-agora-muted">Tüm provalar <span className="text-agora-terracotta font-semibold">Konak / İzmir</span> Türkan Saylan Kültür Merkezi'nde yapılacaktır</p>
+              <p className="text-agora-muted">İzmir'in ulaşımı kolay merkezi bir lokasyonda yapılacaktır. <br /> Çok yakında bilgiler paylaşılacaktır.</p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-agora-terracotta" />
@@ -178,7 +178,7 @@ const Secmeler = () => {
             <div>
               <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Prova</div>
               {[
-                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her cuma 19:00–22:30 saatlerinde yapılır. Yer: Türkan Saylan Kültür Merkezi Konak/ İzmir.'},
+                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her cuma 19:00–22:30 saatlerinde yapılır. Yer: Çok yakında bilgiler paylaşılacaktır.'},
                 {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
                 {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
                 {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
