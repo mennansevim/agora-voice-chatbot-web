@@ -69,7 +69,7 @@ const Secmeler = () => {
           </h3>
           <p className="text-lg text-agora-muted mb-8">Agora Voice seçmeleri canlı ve birebir yapılır. Aşamalar aşağıdaki gibidir:</p>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-terracotta/10 bg-stone-100 rounded-xl p-6 border border-terracotta/20">
               <h4 className="text-xl font-semibold text-agora-dark mb-3">1. Müzik Kulağı Testi</h4>
               <ul className="text-agora-muted space-y-2">
@@ -99,13 +99,6 @@ const Secmeler = () => {
               <ul className="text-agora-muted space-y-2">
                 <li>Adayın hazırladığı bir eseri seslendirmesi istenir.</li>
                 <li>Dil, tür ve tarz serbesttir.</li>
-              </ul>
-            </div>
-
-            <div className="bg-stone-100 rounded-xl p-6 border border-stone-200 md:col-span-2">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">5. Ortak Eser Seslendirme</h4>
-              <ul className="text-agora-muted space-y-2">
-                <li>Belirlenen ortak eserin başvuru sırasında adaya iletilen uygun partisyonun aday tarafından seslendirmesi beklenir</li>
               </ul>
             </div>
           </div>
