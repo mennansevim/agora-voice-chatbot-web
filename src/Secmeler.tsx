@@ -71,7 +71,7 @@ const Secmeler = () => {
           
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-terracotta/10 bg-stone-100 rounded-xl p-6 border border-terracotta/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">1. Müzik Kulağı Testi</h4>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">1- Müzik Kulağı Testi</h4>
               <ul className="text-agora-muted space-y-2">
                 <li>Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı istenir.</li>
                 <li>Adayın müzik kulağı ölçülür.</li>
@@ -79,7 +79,7 @@ const Secmeler = () => {
             </div>
 
             <div className="bg-bronze/10 rounded-xl bg-stone-100 p-6 border border-bronze/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">2. Ezgi Tekrarı</h4>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">2- Ezgi Tekrarı</h4>
               <ul className="text-agora-muted space-y-2">
                 <li>Verilen iki küçük ezgi piyano ile çalınır.</li>
                 <li>Adayın tekrarı istenir.</li>
@@ -87,7 +87,7 @@ const Secmeler = () => {
             </div>
 
             <div className="bg-gold/10 rounded-xl bg-stone-100 p-6 border border-gold/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">3. Ritim Duygusu</h4>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">3- Ritim Duygusu</h4>
               <ul className="text-agora-muted space-y-2">
                 <li>Verilen rehber iki ritmin tekrarı istenir.</li>
                 <li>Adayın ritim duygusu ölçülür.</li>
@@ -95,7 +95,7 @@ const Secmeler = () => {
             </div>
 
             <div className="bg-olive/10 rounded-xl bg-stone-100 p-6 border border-olive/20 ">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">4. Hazırlanan Eser</h4>
+              <h4 className="text-xl font-semibold text-agora-dark mb-3">4- Hazırlanan Eser</h4>
               <ul className="text-agora-muted space-y-2">
                 <li>Adayın hazırladığı bir eseri seslendirmesi istenir.</li>
                 <li>Dil, tür ve tarz serbesttir.</li>
