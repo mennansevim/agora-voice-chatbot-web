@@ -112,7 +112,7 @@ const Secmeler = () => {
               📍 Prova ve Lokasyon Bilgileri
             </h3>
             <div className="space-y-4">
-              <p className="text-agora-muted">İzmir'in ulaşımı kolay merkezi bir lokasyonda yapılacaktır. <br /> Çok yakında bilgiler paylaşılacaktır.</p>
+              <p className="text-agora-muted">MUSTAFA NECATİ KÜLTÜR MERKEZİ<br /> Esenlik, 35160 Karabağlar/İzmir.</p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-agora-terracotta" />
