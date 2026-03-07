@@ -284,11 +284,15 @@ function App() {
         <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden w-full">
           {/* Arka plan görseli */}
           <div className="absolute inset-0 w-full h-full">
-            <img
-              src="/arkaplan.jpg"
-              alt="Agora Voice Arka Plan"
-              className="w-full h-full object-cover opacity-90"
-            />
+            <picture>
+              <source srcSet="/arkaplan.webp" type="image/webp" />
+              <img
+                src="/arkaplan.jpg"
+                alt="Agora Voice Arka Plan"
+                className="w-full h-full object-cover opacity-90"
+                loading="eager"
+              />
+            </picture>
             {/* Koyu overlay */}
             <div className="absolute inset-0 bg-black/40"></div>
           </div>
@@ -304,7 +308,7 @@ function App() {
                 </div>
               </div>
              
-              <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '14rem' }}>
+              <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '6rem' }}>
                 Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">

@@ -1,0 +1,23 @@
+---
+description: Raspberry Pi deployment instructions for agora-voice-chatbot-web
+alwaysApply: true
+---
+
+# Raspberry Pi Deploy
+
+After committing and pushing changes to `main`, deploy to the Raspberry Pi:
+
+```bash
+ssh mennano@192.168.1.60
+cd agora-voice-chatbot-web
+git pull origin main
+docker-compose down && docker-compose up -d --build
+```
+
+## Steps
+
+1. `git add` + `git commit` + `git push origin main`
+2. SSH into Raspberry Pi: `ssh mennano@192.168.1.60`
+3. Navigate to project: `cd agora-voice-chatbot-web`
+4. Pull latest: `git pull origin main`
+5. Rebuild containers: `docker-compose down && docker-compose up -d --build`
