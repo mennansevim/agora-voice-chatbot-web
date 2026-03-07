@@ -40,7 +40,6 @@ function App() {
     { src: '/gallery/img2.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
     { src: '/gallery/img3.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
     { src: '/gallery/img4.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
-    { src: '/gallery/img5.jpg', alt: 'Agora Voice Koro', title: 'Koro provası' },
     { src: '/gallery/img6.jpg', alt: 'Agora Voice Koro', title: 'Koro çalışması' },
     { src: '/gallery/img7.jpg', alt: 'Agora Voice Koro', title: 'Koro etkinliği' },
     { src: '/gallery/img8.jpg', alt: 'Agora Voice Koro', title: 'Koro performansı' },
@@ -315,40 +314,21 @@ function App() {
                 >
                   Seçmeler
                 </button>
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSeYlPUKWcF4xTPKk5qiXQVm6dxh7gut2lArcQpXbUtFe-B8Lg/viewform"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center font-bold py-4 px-8 rounded-full text-lg text-white text-center overflow-hidden transition-all duration-500 transform hover:scale-110 animate-glow"
-                  style={{
-                    background: 'linear-gradient(45deg, #e74c3c, #f39c12, #e67e22, #d35400)',
-                    backgroundSize: '400% 400%',
-                    animation: 'gradientShift 3s ease infinite, glow 2s ease-in-out infinite'
-                  }}
-                >
-                  {/* Animasyonlu arka plan */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Parlama efekti */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  
-                  {/* Müzik notaları animasyonu */}
-                  <Music className="absolute -left-4 -top-4 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '1.2rem'}} />
-                  <Music2 className="absolute -right-4 -bottom-4 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '1rem', animationDelay: '0.5s'}} />
-                  <Music3 className="absolute -left-2 top-1/2 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '0.8rem', animationDelay: '1s'}} />
-                  <Music4 className="absolute -right-2 top-1/2 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '0.9rem', animationDelay: '1.5s'}} />
-                  
-                  {/* İçerik */}
-                  <span className="relative z-10 font-bold text-white drop-shadow-lg group-hover:scale-105 transition-transform duration-300">
-                    🎵 Başvuru Formu 🎵
-                  </span>
-                  
-                  {/* Hover efekti için ekstra glow */}
-                  <div className="absolute inset-0 rounded-full bg-white/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
-                  
-                  {/* Pulse efekti */}
-                  <div className="absolute inset-0 rounded-full border-2 border-white/30 opacity-0 group-hover:opacity-100 animate-ping-slow"></div>
-                </a>
+                <div className="relative group">
+                  <div
+                    className="inline-flex items-center justify-center font-bold py-4 px-8 rounded-full text-lg text-white/70 text-center cursor-not-allowed opacity-60"
+                    style={{
+                      background: 'linear-gradient(45deg, #888, #999, #888, #777)',
+                    }}
+                  >
+                    <span className="font-bold text-white/70 drop-shadow-lg">
+                      🎵 Başvuru Formu 🎵
+                    </span>
+                  </div>
+                  <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-agora-dark text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
+                    Başvuru tarihlerimiz için bizi takip edin
+                  </div>
+                </div>
               </div>
               {/* Scroll indicator */}
               <div className="animate-bounce">
