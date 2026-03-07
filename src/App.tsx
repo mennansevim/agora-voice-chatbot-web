@@ -300,13 +300,6 @@ function App() {
           {/* İçerik */}
           <div className="relative z-10 w-full px-6 py-20 flex flex-col items-center justify-center">
             <div className="text-center">
-              <div className="mb-8 animate-fade-in flex flex-col items-center">
-                <div className="relative flex items-center justify-center w-[8.2rem] h-[8.2rem] mx-auto">
-                  {/* Beyaz yarı saydam arka plan */}
-                  <div className="absolute inset-0 bg-white/80 shadow-lg flex items-center justify-center" style={{ borderRadius: '50% / 50%' }}></div>
-                  <img src="/agora.png" alt="Agora Voice Logo" className="w-[8.2rem] h-[8.2rem] relative z-10 shadow-2xl object-contain mx-auto w-14 h-14 rounded-full border-4 border-bronze-gradient shadow-agora" style={{ borderRadius: '50% / 50%' }} />
-                </div>
-              </div>
              
               <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '6rem' }}>
                 Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
