@@ -202,14 +202,6 @@ function App() {
                 Ses Testi
               </button>
               <button
-                onClick={() => scrollToSection('konser-takvimi')}
-                className={`text-sm font-medium transition-colors ${
-                  activeSection === 'konser-takvimi' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
-                }`}
-              >
-                Konser Takvimi
-              </button>
-              <button
                 onClick={() => scrollToSection('gallery')}
                 className={`text-sm font-medium transition-colors ${
                   activeSection === 'gallery' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
@@ -279,14 +271,6 @@ function App() {
                   className="text-left text-sm font-medium text-agora-muted hover:text-agora-dark transition-colors"
                 >
                   Ses Testi
-                </button>
-                <button
-                  onClick={() => scrollToSection('konser-takvimi')}
-                  className={`text-left text-sm font-medium transition-colors ${
-                    activeSection === 'konser-takvimi' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
-                  }`}
-                >
-                  Konser Takvimi
                 </button>
                 <button
                   onClick={() => scrollToSection('gallery')}
@@ -607,8 +591,8 @@ function App() {
           <div className="flex-1 h-px bg-gradient-to-l from-transparent to-agora-terracotta/30"></div>
         </div>
 
-        {/* Konser Takvimi Section */}
-        <section id="konser-takvimi" className="min-h-screen bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460] py-20 flex items-center relative overflow-hidden">
+        {/* Konser Takvimi Section — şimdilik gizli */}
+        <section id="konser-takvimi" className="hidden min-h-screen bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460] py-20 flex items-center relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-20 left-10 w-72 h-72 bg-agora-terracotta rounded-full blur-3xl"></div>
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-agora-bronze rounded-full blur-3xl"></div>
