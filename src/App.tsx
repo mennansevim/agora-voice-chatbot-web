@@ -19,9 +19,11 @@ import {
   Music2,
   Music3,
   Music4,
-  Instagram
+  Instagram,
+  CalendarDays
 } from 'lucide-react';
 import Secmeler from './Secmeler';
+import PitchTest from './PitchTest';
 
 function App() {
   const [isListening, setIsListening] = useState(false);
@@ -31,6 +33,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [showChatbot, setShowChatbot] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [showConcertPopup, setShowConcertPopup] = useState(false);
+  const [showPitchTest, setShowPitchTest] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -192,6 +196,20 @@ function App() {
                 AI Asistan
               </button>
               <button
+                onClick={() => setShowPitchTest(true)}
+                className="text-sm font-medium text-agora-muted hover:text-agora-dark transition-colors"
+              >
+                Ses Testi
+              </button>
+              <button
+                onClick={() => scrollToSection('konser-takvimi')}
+                className={`text-sm font-medium transition-colors ${
+                  activeSection === 'konser-takvimi' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
+                }`}
+              >
+                Konser Takvimi
+              </button>
+              <button
                 onClick={() => scrollToSection('gallery')}
                 className={`text-sm font-medium transition-colors ${
                   activeSection === 'gallery' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
@@ -257,6 +275,20 @@ function App() {
                   AI Asistan
                 </button>
                 <button
+                  onClick={() => { setIsMenuOpen(false); setShowPitchTest(true); }}
+                  className="text-left text-sm font-medium text-agora-muted hover:text-agora-dark transition-colors"
+                >
+                  Ses Testi
+                </button>
+                <button
+                  onClick={() => scrollToSection('konser-takvimi')}
+                  className={`text-left text-sm font-medium transition-colors ${
+                    activeSection === 'konser-takvimi' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
+                  }`}
+                >
+                  Konser Takvimi
+                </button>
+                <button
                   onClick={() => scrollToSection('gallery')}
                   className={`text-left text-sm font-medium transition-colors ${
                     activeSection === 'gallery' ? 'text-agora-terracotta' : 'text-agora-muted hover:text-agora-dark'
@@ -301,7 +333,7 @@ function App() {
           <div className="relative z-10 w-full px-6 py-20 flex flex-col items-center justify-center">
             <div className="text-center">
              
-              <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '6rem' }}>
+              <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '18.5rem' }}>
                 Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">
@@ -310,6 +342,12 @@ function App() {
                   className="btn-agora-primary font-semibold py-4 px-8 rounded-full text-lg text-white"
                 >
                   Seçmeler
+                </button>
+                <button
+                  onClick={() => setShowPitchTest(true)}
+                  className="font-semibold py-4 px-8 rounded-full text-lg text-white border-2 border-white/80 backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  🎤 Ses Aralığı Testi
                 </button>
                 <div className="relative group">
                   <div
@@ -451,6 +489,7 @@ function App() {
 
         {/* Seçmeler Section */}
         <Secmeler />
+        {showPitchTest && <PitchTest onClose={() => setShowPitchTest(false)} />}
 
         {/* AI Assistant Section */}
         <section id="ai-assistant" className="min-h-screen bg-marble py-20 flex items-center">
@@ -567,6 +606,56 @@ function App() {
           </div>
           <div className="flex-1 h-px bg-gradient-to-l from-transparent to-agora-terracotta/30"></div>
         </div>
+
+        {/* Konser Takvimi Section */}
+        <section id="konser-takvimi" className="min-h-screen bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460] py-20 flex items-center relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-agora-terracotta rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-agora-bronze rounded-full blur-3xl"></div>
+          </div>
+          <div className="max-w-5xl mx-auto px-6 w-full relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-agora-terracotta to-agora-bronze rounded-full mb-6 shadow-lg shadow-agora-terracotta/30">
+                <CalendarDays className="w-10 h-10 text-white" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 font-agoravoice">
+                Konser Takvimi 2026
+              </h2>
+              <p className="text-white/60 text-lg">Planlanan konser ve festivallerimiz</p>
+            </div>
+
+            <div className="relative">
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-agora-terracotta/60 via-agora-bronze/40 to-transparent hidden md:block"></div>
+
+              {[
+                { name: 'İzmir Uluslararası Festivali', date: '21 - 24 MAYIS', location: 'İzmir', month: 'MAY', gradient: 'from-rose-500 to-orange-500' },
+                { name: 'IX. Çanakkale Koro Festivali', date: '7 - 12 TEMMUZ', location: 'Çanakkale', month: 'TEM', gradient: 'from-emerald-500 to-teal-500' },
+                { name: 'Makedonya Ohrid Koro Festivali', date: '27 - 31 AĞUSTOS', location: 'Ohrid, Makedonya', month: 'AĞU', gradient: 'from-blue-500 to-indigo-500' },
+              ].map((concert, i) => (
+                <div key={i} className={`relative flex items-center mb-12 last:mb-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  <div className={`w-full md:w-[calc(50%-2rem)] ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8 md:text-left'}`}>
+                    <div className="group bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:bg-white/15 hover:border-white/20 transition-all duration-500 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-1">
+                      <div className={`inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r ${concert.gradient} text-white text-xs font-bold mb-3 shadow-lg`}>
+                        <MapPin className="w-3 h-3 mr-1" />
+                        {concert.location}
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-agora-terracotta transition-colors duration-300">{concert.name}</h3>
+                      <p className="text-white/70 font-medium">{concert.date} 2026</p>
+                    </div>
+                  </div>
+
+                  <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center">
+                    <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${concert.gradient} flex items-center justify-center shadow-lg ring-4 ring-[#16213e]`}>
+                      <span className="text-white text-xs font-bold">{concert.month}</span>
+                    </div>
+                  </div>
+
+                  <div className="hidden md:block w-[calc(50%-2rem)]"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Gallery Section */}
         <section id="gallery" className="min-h-screen bg-stone-50 py-20 flex items-center">
@@ -710,6 +799,63 @@ function App() {
           </div>
         )}
       </main>
+
+      {/* Konser Takvimi Popup */}
+      {showConcertPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md" style={{ animation: 'fadeIn 0.4s ease-out' }}>
+          <div className="relative max-w-md w-full mx-4 rounded-3xl overflow-hidden shadow-2xl" style={{ animation: 'slideUp 0.5s ease-out', background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
+            <button
+              onClick={() => setShowConcertPopup(false)}
+              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-300"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="relative p-8 pb-4 text-center">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-agora-terracotta/20 rounded-full blur-3xl"></div>
+              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-agora-terracotta to-agora-bronze rounded-2xl mb-4 shadow-lg shadow-agora-terracotta/30 rotate-3">
+                <CalendarDays className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-1">Konser Takvimi</h3>
+              <p className="text-white/50 text-sm">2026 Sezonu</p>
+            </div>
+
+            <div className="px-6 pb-2 space-y-3">
+              {[
+                { name: 'İzmir Uluslararası Festivali', date: '21-24 Mayıs', gradient: 'from-rose-500 to-orange-500', location: 'İzmir' },
+                { name: 'IX. Çanakkale Koro Festivali', date: '7-12 Temmuz', gradient: 'from-emerald-500 to-teal-500', location: 'Çanakkale' },
+                { name: 'Makedonya Ohrid Koro Festivali', date: '27-31 Ağustos', gradient: 'from-blue-500 to-indigo-500', location: 'Ohrid' },
+              ].map((concert, i) => (
+                <div
+                  key={i}
+                  className="group flex items-center space-x-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300"
+                >
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${concert.gradient} flex items-center justify-center shadow-lg`}>
+                    <MapPin className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-white font-semibold text-sm truncate">{concert.name}</h4>
+                    <p className="text-white/40 text-xs mt-0.5">{concert.location}</p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <span className={`text-transparent bg-clip-text bg-gradient-to-r ${concert.gradient} font-bold text-sm`}>{concert.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-6 pt-4">
+              <button
+                onClick={() => setShowConcertPopup(false)}
+                className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-agora-terracotta/20 hover:-translate-y-0.5"
+                style={{ background: 'linear-gradient(135deg, #c0392b, #e67e22)' }}
+              >
+                Harika, Tamam!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-agora-dark text-white py-8">
