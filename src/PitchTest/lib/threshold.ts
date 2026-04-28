@@ -9,13 +9,13 @@ import type { TestResultRow } from './db';
 
 export const CHOIR_THRESHOLD = {
   /** Notaları tutturma oranı (%): bu yüzdenin altındaki testler korozaya alınmaz. */
-  minSuccessRate: 20,
+  minSuccessRate: 60,
 
   /** Ses aralığı genişliği (oktav): en az bu kadar oktav genişlik gerekiyor. */
-  minOctaveWidth: 0.4,
+  minOctaveWidth: 1.0,
 
   /** Ulaşılan başarılı nota sayısı: en az bu kadar nota tutturulmalı. */
-  minSuccessfulNotes: 3,
+  minSuccessfulNotes: 5,
 } as const;
 
 export type ThresholdResult = {
