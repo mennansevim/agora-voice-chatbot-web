@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Music2 } from 'lucide-react';
-import { topScoreboard, type ChoirSection } from '../lib/db';
+import { ArrowLeft, Music2, Trash2 } from 'lucide-react';
+import { topScoreboard, clearAllData, type ChoirSection } from '../lib/db';
 import { noteToTurkish } from '../lib/notes';
 import { passesChoirThreshold, CHOIR_THRESHOLD } from '../lib/threshold';
 
@@ -68,13 +68,33 @@ export default function Scoreboard({ onBack }: { onBack: () => void }) {
 
   return (
     <div className="animate-fade-in max-w-3xl mx-auto">
-      <button
-        type="button"
-        onClick={onBack}
-        className="flex items-center gap-2 text-agora-muted hover:text-agora-dark transition-colors mb-6"
-      >
-        <ArrowLeft size={18} /> Geri
-      </button>
+      <div className="flex items-center justify-between mb-6">
+        <button
+          type="button"
+          onClick={onBack}
+          className="flex items-center gap-2 text-agora-muted hover:text-agora-dark transition-colors"
+        >
+          <ArrowLeft size={18} /> Geri
+        </button>
+        <button
+          type="button"
+          onClick={async () => {
+            const pwd = prompt('Sıfırlama şifresi:');
+            if (pwd === null) return;
+            if (pwd !== '945000') {
+              alert('Şifre hatalı.');
+              return;
+            }
+            if (!confirm('Tüm skor tablosu kayıtları silinecek. Emin misin?')) return;
+            await clearAllData();
+            setRows([]);
+          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-red-700 hover:bg-red-50 transition-colors"
+          title="Tüm kayıtları sil (şifre korumalı)"
+        >
+          <Trash2 size={14} /> Sıfırla
+        </button>
+      </div>
 
       <div className="text-center mb-4">
         <h2 className="text-3xl font-bold text-agora-dark mb-1">Koro Kadrosu</h2>

@@ -317,10 +317,10 @@ function App() {
           {/* Arka plan görseli */}
           <div className="absolute inset-0 w-full h-full">
             <picture>
-              <source srcSet="/arkaplan.webp" type="image/webp" />
+              <source srcSet="/koro-main.webp" type="image/webp" />
               <img
-                src="/arkaplan.jpg"
-                alt="Agora Voice Arka Plan"
+                src="/koro-main.jpg"
+                alt="Agora Voice Korosu"
                 className="w-full h-full object-cover opacity-90"
                 loading="eager"
               />
@@ -628,7 +628,7 @@ function App() {
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-agora-terracotta/60 via-agora-bronze/40 to-transparent hidden md:block"></div>
 
               {[
-                { name: 'İzmir Uluslararası Festivali', date: '21 - 24 MAYIS', location: 'İzmir', month: 'MAY', gradient: 'from-rose-500 to-orange-500' },
+                { name: 'İzmir Uluslararası Festivali', date: '21 MAYIS', day: 'PERŞEMBE', venue: 'Küçük Salon', time: '16:30', location: 'İzmir', month: 'MAY', gradient: 'from-rose-500 to-orange-500' },
                 { name: 'IX. Çanakkale Koro Festivali', date: '7 - 12 TEMMUZ', location: 'Çanakkale', month: 'TEM', gradient: 'from-emerald-500 to-teal-500' },
                 { name: 'Makedonya Ohrid Koro Festivali', date: '27 - 31 AĞUSTOS', location: 'Ohrid, Makedonya', month: 'AĞU', gradient: 'from-blue-500 to-indigo-500' },
               ].map((concert, i) => (
@@ -640,7 +640,16 @@ function App() {
                         {concert.location}
                       </div>
                       <h3 className="text-xl font-bold text-white mb-2 group-hover:text-agora-terracotta transition-colors duration-300">{concert.name}</h3>
-                      <p className="text-white/70 font-medium">{concert.date} 2026</p>
+                      <p className="text-white/80 font-semibold">
+                        {concert.date} 2026{('day' in concert) && concert.day ? ` · ${concert.day}` : ''}
+                      </p>
+                      {('venue' in concert && concert.venue) || ('time' in concert && concert.time) ? (
+                        <p className="text-white/60 text-sm mt-1">
+                          {('venue' in concert && concert.venue) ? concert.venue : ''}
+                          {('venue' in concert && concert.venue) && ('time' in concert && concert.time) ? ' · ' : ''}
+                          {('time' in concert && concert.time) ? concert.time : ''}
+                        </p>
+                      ) : null}
                     </div>
                   </div>
 
@@ -822,7 +831,7 @@ function App() {
 
             <div className="px-6 pb-2 space-y-3">
               {[
-                { name: 'İzmir Uluslararası Festivali', date: '21-24 Mayıs', gradient: 'from-rose-500 to-orange-500', location: 'İzmir' },
+                { name: 'İzmir Uluslararası Festivali', date: '21 Mayıs · Perşembe · 16:30', gradient: 'from-rose-500 to-orange-500', location: 'İzmir · Küçük Salon' },
                 { name: 'IX. Çanakkale Koro Festivali', date: '7-12 Temmuz', gradient: 'from-emerald-500 to-teal-500', location: 'Çanakkale' },
                 { name: 'Makedonya Ohrid Koro Festivali', date: '27-31 Ağustos', gradient: 'from-blue-500 to-indigo-500', location: 'Ohrid' },
               ].map((concert, i) => (

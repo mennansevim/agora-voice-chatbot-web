@@ -90,3 +90,9 @@ export async function topScoreboard(limit = 50) {
 export async function updateChoirSection(testResultId: number, section: ChoirSection) {
   await db.testResults.update(testResultId, { choirSection: section });
 }
+
+export async function clearAllData() {
+  await db.attempts.clear();
+  await db.testResults.clear();
+  await db.users.clear();
+}

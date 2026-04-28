@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Award, RefreshCw, Trophy, ChevronRight, CheckCircle2, XCircle } from 'lucide-react';
+import { Award, RefreshCw, Trophy, ChevronRight, CheckCircle2, XCircle, Mail, Phone, Send } from 'lucide-react';
 import { db, type TestResultRow, type ChoirSection, updateChoirSection } from '../lib/db';
 import { noteToTurkish } from '../lib/notes';
 import { getAllVoiceMatches } from '../lib/voiceTypes';
@@ -163,7 +163,7 @@ export default function Result({
           </div>
 
           {/* Choir admission status */}
-          <ChoirAdmissionBadge result={result} />
+          <ChoirAdmissionBadge result={result} user={user} />
 
           {/* Stats */}
           <div className="bg-white/70 backdrop-blur border border-stone-200 rounded-2xl p-5 mb-5">
@@ -225,30 +225,136 @@ export default function Result({
   );
 }
 
-function ChoirAdmissionBadge({ result }: { result: TestResultRow }) {
+function ChoirAdmissionBadge({ result, user }: { result: TestResultRow; user: UserRow | null }) {
   const ev = evaluateThreshold(result);
-  if (ev.passes) {
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  if (!ev.passes) {
     return (
-      <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-300 rounded-2xl p-4 mb-5 flex items-start gap-3">
-        <CheckCircle2 className="text-emerald-600 shrink-0 mt-0.5" size={24} />
-        <div>
-          <div className="font-bold text-emerald-800">Tebrikler! Koroya kabul edildin 🎉</div>
-          <div className="text-sm text-emerald-700/90 mt-0.5">Skor tablosunda yer alıyorsun. Sahnede seni de göreceğiz.</div>
+      <div className="bg-gradient-to-r from-amber-50 to-stone-50 border-2 border-amber-300 rounded-2xl p-4 mb-5 flex items-start gap-3">
+        <XCircle className="text-amber-700 shrink-0 mt-0.5" size={24} />
+        <div className="flex-1">
+          <div className="font-bold text-amber-800">Koroya katılım için biraz daha pratik gerekli</div>
+          <div className="text-sm text-amber-800/80 mt-1 space-y-0.5">
+            {ev.reasons.map((r, i) => (
+              <div key={i}>• {r}</div>
+            ))}
+          </div>
         </div>
       </div>
     );
   }
+
+  const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  const isValidPhone = (v: string) => v.trim().replace(/\D/g, '').length >= 10;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isValidEmail(email)) {
+      setError('Geçerli bir e-posta adresi gir.');
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      setError('Geçerli bir telefon numarası gir (en az 10 hane).');
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
+    try {
+      const payload = {
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        gender: user?.gender,
+        email: email.trim(),
+        phone: phone.trim(),
+        voiceType: result.voiceTypeName,
+        range: result.lowestNote && result.highestNote ? `${result.lowestNote} – ${result.highestNote}` : null,
+        octaveWidth: result.octaveRangeWidth.toFixed(1),
+        score: result.compositeScore.toFixed(0),
+        successRate: result.successRate.toFixed(0),
+        section: result.choirSection,
+      };
+      const res = await fetch('/api/save-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Kayıt başarısız');
+      setSaved(true);
+    } catch {
+      setError('Kayıt sırasında bir sorun oluştu. Tekrar dener misin?');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <div className="bg-gradient-to-r from-amber-50 to-stone-50 border-2 border-amber-300 rounded-2xl p-4 mb-5 flex items-start gap-3">
-      <XCircle className="text-amber-700 shrink-0 mt-0.5" size={24} />
-      <div className="flex-1">
-        <div className="font-bold text-amber-800">Koroya katılım için biraz daha pratik gerekli</div>
-        <div className="text-sm text-amber-800/80 mt-1 space-y-0.5">
-          {ev.reasons.map((r, i) => (
-            <div key={i}>• {r}</div>
-          ))}
+    <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-stone-50 border-2 border-emerald-300 rounded-2xl p-5 mb-5">
+      <div className="flex items-start gap-3 mb-4">
+        <CheckCircle2 className="text-emerald-600 shrink-0 mt-0.5" size={28} />
+        <div>
+          <div className="font-bold text-lg text-emerald-800">Tebrikler! 🎉</div>
+          <div className="text-sm text-emerald-900/90 mt-1 leading-relaxed">
+            Ses aralığın ve hakimiyetin koromuza kabul görecek seviyede.
+            Sizinle iletişime geçebilmemiz için e-posta ve telefon bilgilerinizi bırakabilirsiniz.
+          </div>
         </div>
       </div>
+
+      {saved ? (
+        <div className="flex items-start gap-2 bg-white/70 rounded-xl p-3 border border-emerald-200">
+          <CheckCircle2 className="text-emerald-600 shrink-0 mt-0.5" size={18} />
+          <div>
+            <div className="text-sm font-semibold text-emerald-800">İletişim bilgilerin kaydedildi</div>
+            <div className="text-xs text-emerald-800/70 mt-0.5">
+              Yakında seninle iletişime geçeceğiz. Skor tablosunda da yer aldın!
+            </div>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="relative">
+            <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+            <input
+              type="email"
+              inputMode="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); if (error) setError(null); }}
+              placeholder="E-posta adresin"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-emerald-200 bg-white/80 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm"
+              required
+            />
+          </div>
+          <div className="relative">
+            <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+            <input
+              type="tel"
+              inputMode="tel"
+              value={phone}
+              onChange={(e) => { setPhone(e.target.value); if (error) setError(null); }}
+              placeholder="Telefon numaran (örn. 0532 123 45 67)"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-emerald-200 bg-white/80 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 text-sm"
+              required
+            />
+          </div>
+
+          {error && (
+            <div className="text-xs text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</div>
+          )}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl font-semibold bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700 transition-colors disabled:opacity-60"
+          >
+            <Send size={16} /> {submitting ? 'Kaydediliyor...' : 'Bilgilerimi Gönder'}
+          </button>
+        </form>
+      )}
     </div>
   );
 }
