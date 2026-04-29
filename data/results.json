@@ -634,7 +634,7 @@
       "compositeScore": 54.9438806651138,
       "testDate": 1777470448197,
       "choirSection": "bass",
-      "published": true
+      "published": false
     },
     "attempts": [
       {
@@ -1068,7 +1068,7 @@
       "avgVoicedRatio": 0.7941104646987,
       "testDate": 1777474355112,
       "choirSection": "bass",
-      "published": true
+      "published": false
     },
     "attempts": [
       {
@@ -1825,7 +1825,7 @@
       "avgVoicedRatio": 0.8157916157916159,
       "testDate": 1777476367635,
       "choirSection": "bass",
-      "published": true
+      "published": false
     },
     "attempts": [
       {
@@ -1984,5 +1984,3349 @@
       }
     ],
     "createdAt": 1777476367650
+  },
+  {
+    "id": 13,
+    "user": {
+      "firstName": "Cem",
+      "lastName": "Arslan",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Bas",
+      "voiceTypeMatchPercent": 94.7,
+      "possibleVoiceGroups": "Bas (95%), Bariton (78%), Tenor (40%)",
+      "minFrequency": 116.54,
+      "maxFrequency": 311.13,
+      "rangeWidthHz": 194.59,
+      "octaveRangeWidth": 1.4167,
+      "totalNotesCount": 12,
+      "successfulNotesCount": 10,
+      "successRate": 83.33,
+      "lowestNote": "A#2",
+      "highestNote": "D#4",
+      "compositeScore": 26.253,
+      "choirSection": "bass",
+      "published": true,
+      "avgRms": 0.0479,
+      "avgPitchStability": 15.01,
+      "avgVoicedRatio": 0.666,
+      "testDate": 1775855355833
+    },
+    "attempts": [
+      {
+        "noteName": "F#2",
+        "targetFrequency": 92.5,
+        "detectedFrequency": 84.8763,
+        "octaveNumber": 2,
+        "accuracyPercent": 7.81,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "A#2",
+        "targetFrequency": 116.54,
+        "detectedFrequency": 117.4262,
+        "octaveNumber": 2,
+        "accuracyPercent": 70.65,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "B2",
+        "targetFrequency": 123.47,
+        "detectedFrequency": 123.0978,
+        "octaveNumber": 2,
+        "accuracyPercent": 73.49,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "C3",
+        "targetFrequency": 130.81,
+        "detectedFrequency": 134.928,
+        "octaveNumber": 3,
+        "accuracyPercent": 31.7,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "D#3",
+        "targetFrequency": 155.56,
+        "detectedFrequency": 155.5632,
+        "octaveNumber": 3,
+        "accuracyPercent": 73.46,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "E3",
+        "targetFrequency": 164.81,
+        "detectedFrequency": 166.2409,
+        "octaveNumber": 3,
+        "accuracyPercent": 90.02,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "G3",
+        "targetFrequency": 196,
+        "detectedFrequency": 195.4142,
+        "octaveNumber": 3,
+        "accuracyPercent": 93.43,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": 217.0068,
+        "octaveNumber": 3,
+        "accuracyPercent": 79.7,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 232.3905,
+        "octaveNumber": 3,
+        "accuracyPercent": 78.22,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 262.5206,
+        "octaveNumber": 4,
+        "accuracyPercent": 89.3,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 275.3818,
+        "octaveNumber": 4,
+        "accuracyPercent": 76.79,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 311.0465,
+        "octaveNumber": 4,
+        "accuracyPercent": 96.54,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355833
+      }
+    ],
+    "createdAt": 1777496955834
+  },
+  {
+    "id": 14,
+    "user": {
+      "firstName": "Burak",
+      "lastName": "Özkan",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Bas",
+      "voiceTypeMatchPercent": 84.33,
+      "possibleVoiceGroups": "Bas (95%), Bariton (78%), Tenor (40%)",
+      "minFrequency": 87.31,
+      "maxFrequency": 293.66,
+      "rangeWidthHz": 206.35,
+      "octaveRangeWidth": 1.7499,
+      "totalNotesCount": 9,
+      "successfulNotesCount": 7,
+      "successRate": 77.78,
+      "lowestNote": "F2",
+      "highestNote": "D4",
+      "compositeScore": 27.394,
+      "choirSection": "bass",
+      "published": true,
+      "avgRms": 0.0775,
+      "avgPitchStability": 27.26,
+      "avgVoicedRatio": 0.794,
+      "testDate": 1777237755841
+    },
+    "attempts": [
+      {
+        "noteName": "F2",
+        "targetFrequency": 87.31,
+        "detectedFrequency": 86.8048,
+        "octaveNumber": 2,
+        "accuracyPercent": 95.97,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "F#2",
+        "targetFrequency": 92.5,
+        "detectedFrequency": 92.0486,
+        "octaveNumber": 2,
+        "accuracyPercent": 18.85,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "C3",
+        "targetFrequency": 130.81,
+        "detectedFrequency": 132.1943,
+        "octaveNumber": 3,
+        "accuracyPercent": 91.49,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "C#3",
+        "targetFrequency": 138.59,
+        "detectedFrequency": 140.0285,
+        "octaveNumber": 3,
+        "accuracyPercent": 89.1,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "G3",
+        "targetFrequency": 196,
+        "detectedFrequency": 193.2875,
+        "octaveNumber": 3,
+        "accuracyPercent": 84.79,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 234.6519,
+        "octaveNumber": 3,
+        "accuracyPercent": 84.52,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 273.4503,
+        "octaveNumber": 3,
+        "accuracyPercent": 43.16,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 280.1777,
+        "octaveNumber": 4,
+        "accuracyPercent": 87.84,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777237755841
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 291.6921,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.4,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777237755841
+      }
+    ],
+    "createdAt": 1777496955843
+  },
+  {
+    "id": 15,
+    "user": {
+      "firstName": "Tolga",
+      "lastName": "Kara",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Bas",
+      "voiceTypeMatchPercent": 93.29,
+      "possibleVoiceGroups": "Bas (95%), Bariton (78%), Tenor (40%)",
+      "minFrequency": 103.83,
+      "maxFrequency": 261.63,
+      "rangeWidthHz": 157.8,
+      "octaveRangeWidth": 1.3333,
+      "totalNotesCount": 12,
+      "successfulNotesCount": 10,
+      "successRate": 83.33,
+      "lowestNote": "G#2",
+      "highestNote": "C4",
+      "compositeScore": 26.424,
+      "choirSection": "bass",
+      "published": true,
+      "avgRms": 0.0883,
+      "avgPitchStability": 32.84,
+      "avgVoicedRatio": 0.575,
+      "testDate": 1776200955844
+    },
+    "attempts": [
+      {
+        "noteName": "E2",
+        "targetFrequency": 82.41,
+        "detectedFrequency": null,
+        "octaveNumber": 2,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "G2",
+        "targetFrequency": 98,
+        "detectedFrequency": 97.896,
+        "octaveNumber": 2,
+        "accuracyPercent": 32.1,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "G#2",
+        "targetFrequency": 103.83,
+        "detectedFrequency": 102.6433,
+        "octaveNumber": 2,
+        "accuracyPercent": 89.63,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "C3",
+        "targetFrequency": 130.81,
+        "detectedFrequency": 131.6707,
+        "octaveNumber": 3,
+        "accuracyPercent": 95.05,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "D#3",
+        "targetFrequency": 155.56,
+        "detectedFrequency": 155.3962,
+        "octaveNumber": 3,
+        "accuracyPercent": 85.93,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "E3",
+        "targetFrequency": 164.81,
+        "detectedFrequency": 163.9101,
+        "octaveNumber": 3,
+        "accuracyPercent": 73.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 174.9882,
+        "octaveNumber": 3,
+        "accuracyPercent": 93.52,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "F#3",
+        "targetFrequency": 185,
+        "detectedFrequency": 184.8982,
+        "octaveNumber": 3,
+        "accuracyPercent": 95.26,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 207.6208,
+        "octaveNumber": 3,
+        "accuracyPercent": 94.48,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": 219.2589,
+        "octaveNumber": 3,
+        "accuracyPercent": 73.47,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 248.1861,
+        "octaveNumber": 3,
+        "accuracyPercent": 79.85,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 263.2756,
+        "octaveNumber": 4,
+        "accuracyPercent": 74.26,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776200955844
+      }
+    ],
+    "createdAt": 1777496955844
+  },
+  {
+    "id": 16,
+    "user": {
+      "firstName": "Tolga",
+      "lastName": "Güneş",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Bas",
+      "voiceTypeMatchPercent": 95.2,
+      "possibleVoiceGroups": "Bas (95%), Bariton (78%), Tenor (40%)",
+      "minFrequency": 82.41,
+      "maxFrequency": 311.13,
+      "rangeWidthHz": 228.72,
+      "octaveRangeWidth": 1.9166,
+      "totalNotesCount": 13,
+      "successfulNotesCount": 10,
+      "successRate": 76.92,
+      "lowestNote": "E2",
+      "highestNote": "D#4",
+      "compositeScore": 31.331,
+      "choirSection": "bass",
+      "published": true,
+      "avgRms": 0.0412,
+      "avgPitchStability": 47.72,
+      "avgVoicedRatio": 0.872,
+      "testDate": 1775855355845
+    },
+    "attempts": [
+      {
+        "noteName": "E2",
+        "targetFrequency": 82.41,
+        "detectedFrequency": 82.2922,
+        "octaveNumber": 2,
+        "accuracyPercent": 82.68,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "G#2",
+        "targetFrequency": 103.83,
+        "detectedFrequency": 103.3871,
+        "octaveNumber": 2,
+        "accuracyPercent": 70.75,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "A2",
+        "targetFrequency": 110,
+        "detectedFrequency": 111.3471,
+        "octaveNumber": 2,
+        "accuracyPercent": 86.09,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "C#3",
+        "targetFrequency": 138.59,
+        "detectedFrequency": 126.7588,
+        "octaveNumber": 3,
+        "accuracyPercent": 27.68,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "D#3",
+        "targetFrequency": 155.56,
+        "detectedFrequency": 153.4125,
+        "octaveNumber": 3,
+        "accuracyPercent": 83.95,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 194.9921,
+        "octaveNumber": 3,
+        "accuracyPercent": 49.78,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": 219.4109,
+        "octaveNumber": 3,
+        "accuracyPercent": 80.78,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 231.9282,
+        "octaveNumber": 3,
+        "accuracyPercent": 89.46,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 259.8301,
+        "octaveNumber": 4,
+        "accuracyPercent": 87.28,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 281.0497,
+        "octaveNumber": 4,
+        "accuracyPercent": 83.59,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 292.0507,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.02,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 309.1497,
+        "octaveNumber": 4,
+        "accuracyPercent": 88.22,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      },
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": 357.1051,
+        "octaveNumber": 4,
+        "accuracyPercent": 40.73,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775855355845
+      }
+    ],
+    "createdAt": 1777496955846
+  },
+  {
+    "id": 17,
+    "user": {
+      "firstName": "Kaan",
+      "lastName": "Özkan",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Tenor",
+      "voiceTypeMatchPercent": 93.33,
+      "possibleVoiceGroups": "Tenor (94%), Bariton (70%), Bas (35%)",
+      "minFrequency": 138.59,
+      "maxFrequency": 440,
+      "rangeWidthHz": 301.41,
+      "octaveRangeWidth": 1.6667,
+      "totalNotesCount": 13,
+      "successfulNotesCount": 10,
+      "successRate": 76.92,
+      "lowestNote": "C#3",
+      "highestNote": "A4",
+      "compositeScore": 29.008,
+      "choirSection": "tenor",
+      "published": true,
+      "avgRms": 0.1204,
+      "avgPitchStability": 50.54,
+      "avgVoicedRatio": 0.637,
+      "testDate": 1777324155847
+    },
+    "attempts": [
+      {
+        "noteName": "C#3",
+        "targetFrequency": 138.59,
+        "detectedFrequency": 138.2641,
+        "octaveNumber": 3,
+        "accuracyPercent": 76.73,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "D3",
+        "targetFrequency": 146.83,
+        "detectedFrequency": 147.8498,
+        "octaveNumber": 3,
+        "accuracyPercent": 98.44,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 176.9006,
+        "octaveNumber": 3,
+        "accuracyPercent": 94.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "F#3",
+        "targetFrequency": 185,
+        "detectedFrequency": 183.955,
+        "octaveNumber": 3,
+        "accuracyPercent": 71.66,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "G3",
+        "targetFrequency": 196,
+        "detectedFrequency": 196.7587,
+        "octaveNumber": 3,
+        "accuracyPercent": 71.84,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 204.8706,
+        "octaveNumber": 3,
+        "accuracyPercent": 7.64,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": 217.6501,
+        "octaveNumber": 3,
+        "accuracyPercent": 90.92,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 291.2323,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.03,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 312.6428,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.9,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": 387.1858,
+        "octaveNumber": 4,
+        "accuracyPercent": 97.75,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 444.6553,
+        "octaveNumber": 4,
+        "accuracyPercent": 25.49,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 437.1873,
+        "octaveNumber": 4,
+        "accuracyPercent": 70.46,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777324155847
+      }
+    ],
+    "createdAt": 1777496955849
+  },
+  {
+    "id": 18,
+    "user": {
+      "firstName": "Ahmet",
+      "lastName": "Öztürk",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Tenor",
+      "voiceTypeMatchPercent": 93.69,
+      "possibleVoiceGroups": "Tenor (94%), Bariton (70%), Bas (35%)",
+      "minFrequency": 155.56,
+      "maxFrequency": 440,
+      "rangeWidthHz": 284.44,
+      "octaveRangeWidth": 1.5,
+      "totalNotesCount": 11,
+      "successfulNotesCount": 10,
+      "successRate": 90.91,
+      "lowestNote": "D#3",
+      "highestNote": "A4",
+      "compositeScore": 28.589,
+      "choirSection": "tenor",
+      "published": true,
+      "avgRms": 0.107,
+      "avgPitchStability": 51.31,
+      "avgVoicedRatio": 0.897,
+      "testDate": 1776978555850
+    },
+    "attempts": [
+      {
+        "noteName": "D#3",
+        "targetFrequency": 155.56,
+        "detectedFrequency": 153.4671,
+        "octaveNumber": 3,
+        "accuracyPercent": 87.29,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "E3",
+        "targetFrequency": 164.81,
+        "detectedFrequency": 164.5322,
+        "octaveNumber": 3,
+        "accuracyPercent": 95.7,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 175.8689,
+        "octaveNumber": 3,
+        "accuracyPercent": 92.22,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 209.453,
+        "octaveNumber": 3,
+        "accuracyPercent": 98.17,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 234.4994,
+        "octaveNumber": 3,
+        "accuracyPercent": 83.45,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 250.4259,
+        "octaveNumber": 3,
+        "accuracyPercent": 81.75,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 262.5447,
+        "octaveNumber": 4,
+        "accuracyPercent": 72.33,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 315.1394,
+        "octaveNumber": 4,
+        "accuracyPercent": 82.26,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 345.5524,
+        "octaveNumber": 4,
+        "accuracyPercent": 93.48,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776978555850
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 444.943,
+        "octaveNumber": 4,
+        "accuracyPercent": 97.9,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555850
+      }
+    ],
+    "createdAt": 1777496955851
+  },
+  {
+    "id": 19,
+    "user": {
+      "firstName": "Ali",
+      "lastName": "Arslan",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Tenor",
+      "voiceTypeMatchPercent": 90.9,
+      "possibleVoiceGroups": "Tenor (94%), Bariton (70%), Bas (35%)",
+      "minFrequency": 164.81,
+      "maxFrequency": 415.3,
+      "rangeWidthHz": 250.49,
+      "octaveRangeWidth": 1.3334,
+      "totalNotesCount": 12,
+      "successfulNotesCount": 11,
+      "successRate": 91.67,
+      "lowestNote": "E3",
+      "highestNote": "G#4",
+      "compositeScore": 27.258,
+      "choirSection": "tenor",
+      "published": true,
+      "avgRms": 0.1043,
+      "avgPitchStability": 42.4,
+      "avgVoicedRatio": 0.906,
+      "testDate": 1776978555852
+    },
+    "attempts": [
+      {
+        "noteName": "E3",
+        "targetFrequency": 164.81,
+        "detectedFrequency": 163.9718,
+        "octaveNumber": 3,
+        "accuracyPercent": 75.79,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 172.5422,
+        "octaveNumber": 3,
+        "accuracyPercent": 87.02,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "G3",
+        "targetFrequency": 196,
+        "detectedFrequency": 195.7847,
+        "octaveNumber": 3,
+        "accuracyPercent": 95.21,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 210.5233,
+        "octaveNumber": 3,
+        "accuracyPercent": 74.38,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": null,
+        "octaveNumber": 3,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 232.3781,
+        "octaveNumber": 3,
+        "accuracyPercent": 93.16,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 247.1414,
+        "octaveNumber": 3,
+        "accuracyPercent": 76.02,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 278.7972,
+        "octaveNumber": 4,
+        "accuracyPercent": 74.38,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 289.5972,
+        "octaveNumber": 4,
+        "accuracyPercent": 79.91,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 373.9702,
+        "octaveNumber": 4,
+        "accuracyPercent": 78.13,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": 389.0915,
+        "octaveNumber": 4,
+        "accuracyPercent": 92.37,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 414.37,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.86,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555852
+      }
+    ],
+    "createdAt": 1777496955853
+  },
+  {
+    "id": 20,
+    "user": {
+      "firstName": "Berk",
+      "lastName": "Özkan",
+      "gender": "male"
+    },
+    "result": {
+      "voiceTypeName": "Tenor",
+      "voiceTypeMatchPercent": 86.95,
+      "possibleVoiceGroups": "Tenor (94%), Bariton (70%), Bas (35%)",
+      "minFrequency": 146.83,
+      "maxFrequency": 369.99,
+      "rangeWidthHz": 223.16,
+      "octaveRangeWidth": 1.3333,
+      "totalNotesCount": 9,
+      "successfulNotesCount": 8,
+      "successRate": 88.89,
+      "lowestNote": "D3",
+      "highestNote": "F#4",
+      "compositeScore": 25.287,
+      "choirSection": "tenor",
+      "published": true,
+      "avgRms": 0.0939,
+      "avgPitchStability": 29.48,
+      "avgVoicedRatio": 0.915,
+      "testDate": 1776805755855
+    },
+    "attempts": [
+      {
+        "noteName": "D3",
+        "targetFrequency": 146.83,
+        "detectedFrequency": 145.713,
+        "octaveNumber": 3,
+        "accuracyPercent": 79.9,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "E3",
+        "targetFrequency": 164.81,
+        "detectedFrequency": 165.0521,
+        "octaveNumber": 3,
+        "accuracyPercent": 88.93,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "G3",
+        "targetFrequency": 196,
+        "detectedFrequency": 198.3827,
+        "octaveNumber": 3,
+        "accuracyPercent": 92.53,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": 218.0876,
+        "octaveNumber": 3,
+        "accuracyPercent": 94.78,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 249.9177,
+        "octaveNumber": 3,
+        "accuracyPercent": 89.59,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 274.6624,
+        "octaveNumber": 4,
+        "accuracyPercent": 4.65,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 310.6965,
+        "octaveNumber": 4,
+        "accuracyPercent": 78.88,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 345.2767,
+        "octaveNumber": 4,
+        "accuracyPercent": 87.68,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776805755855
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 365.1015,
+        "octaveNumber": 4,
+        "accuracyPercent": 76.04,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776805755855
+      }
+    ],
+    "createdAt": 1777496955855
+  },
+  {
+    "id": 21,
+    "user": {
+      "firstName": "Ceren",
+      "lastName": "Şahin",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 82.05,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 207.65,
+      "maxFrequency": 698.46,
+      "rangeWidthHz": 490.81,
+      "octaveRangeWidth": 1.75,
+      "totalNotesCount": 9,
+      "successfulNotesCount": 7,
+      "successRate": 77.78,
+      "lowestNote": "G#3",
+      "highestNote": "F5",
+      "compositeScore": 26.583,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0536,
+      "avgPitchStability": 39.81,
+      "avgVoicedRatio": 0.806,
+      "testDate": 1775509755856
+    },
+    "attempts": [
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": null,
+        "octaveNumber": 3,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 208.4396,
+        "octaveNumber": 3,
+        "accuracyPercent": 70.39,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": null,
+        "octaveNumber": 3,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 280.9646,
+        "octaveNumber": 4,
+        "accuracyPercent": 96.76,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 294.634,
+        "octaveNumber": 4,
+        "accuracyPercent": 70.74,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": 329.9705,
+        "octaveNumber": 4,
+        "accuracyPercent": 78.11,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 369.4617,
+        "octaveNumber": 4,
+        "accuracyPercent": 96.76,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 434.0564,
+        "octaveNumber": 4,
+        "accuracyPercent": 88.52,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775509755856
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 690.9931,
+        "octaveNumber": 5,
+        "accuracyPercent": 85.95,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775509755856
+      }
+    ],
+    "createdAt": 1777496955857
+  },
+  {
+    "id": 22,
+    "user": {
+      "firstName": "Begüm",
+      "lastName": "Acar",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 92.46,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 185,
+      "maxFrequency": 698.46,
+      "rangeWidthHz": 513.46,
+      "octaveRangeWidth": 1.9167,
+      "totalNotesCount": 13,
+      "successfulNotesCount": 11,
+      "successRate": 84.62,
+      "lowestNote": "F#3",
+      "highestNote": "F5",
+      "compositeScore": 32.218,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0587,
+      "avgPitchStability": 50.72,
+      "avgVoicedRatio": 0.802,
+      "testDate": 1776460155858
+    },
+    "attempts": [
+      {
+        "noteName": "F#3",
+        "targetFrequency": 185,
+        "detectedFrequency": 183.5217,
+        "octaveNumber": 3,
+        "accuracyPercent": 84.56,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 207.3034,
+        "octaveNumber": 3,
+        "accuracyPercent": 79.35,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 230.025,
+        "octaveNumber": 3,
+        "accuracyPercent": 82.44,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 246.1931,
+        "octaveNumber": 3,
+        "accuracyPercent": 85.07,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 264.3875,
+        "octaveNumber": 4,
+        "accuracyPercent": 79.82,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 295.2028,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.06,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": 386.6055,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.31,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 410.9533,
+        "octaveNumber": 4,
+        "accuracyPercent": 84.68,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "B4",
+        "targetFrequency": 493.88,
+        "detectedFrequency": 499.1797,
+        "octaveNumber": 4,
+        "accuracyPercent": 98.04,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 572.4186,
+        "octaveNumber": 5,
+        "accuracyPercent": 35.11,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "E5",
+        "targetFrequency": 659.26,
+        "detectedFrequency": 665.0406,
+        "octaveNumber": 5,
+        "accuracyPercent": 78.72,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776460155858
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 699.8732,
+        "octaveNumber": 5,
+        "accuracyPercent": 86.98,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776460155858
+      }
+    ],
+    "createdAt": 1777496955858
+  },
+  {
+    "id": 23,
+    "user": {
+      "firstName": "Aslı",
+      "lastName": "Erdoğan",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 85.69,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 196,
+      "maxFrequency": 659.26,
+      "rangeWidthHz": 463.26,
+      "octaveRangeWidth": 1.75,
+      "totalNotesCount": 12,
+      "successfulNotesCount": 10,
+      "successRate": 83.33,
+      "lowestNote": "G3",
+      "highestNote": "E5",
+      "compositeScore": 30.049,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0451,
+      "avgPitchStability": 21.27,
+      "avgVoicedRatio": 0.632,
+      "testDate": 1775682555859
+    },
+    "attempts": [
+      {
+        "noteName": "G3",
+        "targetFrequency": 196,
+        "detectedFrequency": 195.7003,
+        "octaveNumber": 3,
+        "accuracyPercent": 90.44,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 258.1595,
+        "octaveNumber": 4,
+        "accuracyPercent": 82.56,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 278.4012,
+        "octaveNumber": 4,
+        "accuracyPercent": 87.38,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 274.0429,
+        "octaveNumber": 4,
+        "accuracyPercent": 9.26,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 311.8448,
+        "octaveNumber": 4,
+        "accuracyPercent": 90.89,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": 331.3583,
+        "octaveNumber": 4,
+        "accuracyPercent": 84.71,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 375.2189,
+        "octaveNumber": 4,
+        "accuracyPercent": 78.85,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": 386.6604,
+        "octaveNumber": 4,
+        "accuracyPercent": 84.57,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 436.3757,
+        "octaveNumber": 4,
+        "accuracyPercent": 82.73,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "B4",
+        "targetFrequency": 493.88,
+        "detectedFrequency": 500.903,
+        "octaveNumber": 4,
+        "accuracyPercent": 44.17,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "D5",
+        "targetFrequency": 587.33,
+        "detectedFrequency": 582.4753,
+        "octaveNumber": 5,
+        "accuracyPercent": 76.48,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775682555859
+      },
+      {
+        "noteName": "E5",
+        "targetFrequency": 659.26,
+        "detectedFrequency": 663.7481,
+        "octaveNumber": 5,
+        "accuracyPercent": 77.73,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775682555859
+      }
+    ],
+    "createdAt": 1777496955860
+  },
+  {
+    "id": 24,
+    "user": {
+      "firstName": "Deniz",
+      "lastName": "Öztürk",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 98.9,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 174.61,
+      "maxFrequency": 659.26,
+      "rangeWidthHz": 484.65,
+      "octaveRangeWidth": 1.9167,
+      "totalNotesCount": 10,
+      "successfulNotesCount": 8,
+      "successRate": 80,
+      "lowestNote": "F3",
+      "highestNote": "E5",
+      "compositeScore": 28.264,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.1513,
+      "avgPitchStability": 52.36,
+      "avgVoicedRatio": 0.691,
+      "testDate": 1776546555861
+    },
+    "attempts": [
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 174.524,
+        "octaveNumber": 3,
+        "accuracyPercent": 85.56,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "F#3",
+        "targetFrequency": 185,
+        "detectedFrequency": 187.6474,
+        "octaveNumber": 3,
+        "accuracyPercent": 92.08,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 262.5539,
+        "octaveNumber": 4,
+        "accuracyPercent": 92.73,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 348.2173,
+        "octaveNumber": 4,
+        "accuracyPercent": 87.31,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 411.1152,
+        "octaveNumber": 4,
+        "accuracyPercent": 85.24,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "B4",
+        "targetFrequency": 493.88,
+        "detectedFrequency": 491.6588,
+        "octaveNumber": 4,
+        "accuracyPercent": 98.17,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "D#5",
+        "targetFrequency": 622.25,
+        "detectedFrequency": 620.8955,
+        "octaveNumber": 5,
+        "accuracyPercent": 84.07,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776546555861
+      },
+      {
+        "noteName": "E5",
+        "targetFrequency": 659.26,
+        "detectedFrequency": 661.5701,
+        "octaveNumber": 5,
+        "accuracyPercent": 90.77,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776546555861
+      }
+    ],
+    "createdAt": 1777496955862
+  },
+  {
+    "id": 25,
+    "user": {
+      "firstName": "Ece",
+      "lastName": "Tunç",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 85.15,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 185,
+      "maxFrequency": 698.46,
+      "rangeWidthHz": 513.46,
+      "octaveRangeWidth": 1.9167,
+      "totalNotesCount": 11,
+      "successfulNotesCount": 9,
+      "successRate": 81.82,
+      "lowestNote": "F#3",
+      "highestNote": "F5",
+      "compositeScore": 30.175,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0998,
+      "avgPitchStability": 16.58,
+      "avgVoicedRatio": 0.638,
+      "testDate": 1776373755863
+    },
+    "attempts": [
+      {
+        "noteName": "F#3",
+        "targetFrequency": 185,
+        "detectedFrequency": 183.066,
+        "octaveNumber": 3,
+        "accuracyPercent": 73.41,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "A3",
+        "targetFrequency": 220,
+        "detectedFrequency": 236.7251,
+        "octaveNumber": 3,
+        "accuracyPercent": 27.8,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 247.7035,
+        "octaveNumber": 3,
+        "accuracyPercent": 70.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 260.1308,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.38,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 276.54,
+        "octaveNumber": 4,
+        "accuracyPercent": 75.78,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 307.1934,
+        "octaveNumber": 4,
+        "accuracyPercent": 81.86,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 369.1161,
+        "octaveNumber": 4,
+        "accuracyPercent": 97.35,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "C5",
+        "targetFrequency": 523.25,
+        "detectedFrequency": 482.6916,
+        "octaveNumber": 5,
+        "accuracyPercent": 1.16,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 552.725,
+        "octaveNumber": 5,
+        "accuracyPercent": 80.72,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "E5",
+        "targetFrequency": 659.26,
+        "detectedFrequency": 659.2791,
+        "octaveNumber": 5,
+        "accuracyPercent": 89.04,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 694.1951,
+        "octaveNumber": 5,
+        "accuracyPercent": 85.51,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776373755863
+      }
+    ],
+    "createdAt": 1777496955863
+  },
+  {
+    "id": 26,
+    "user": {
+      "firstName": "Cansu",
+      "lastName": "Özkan",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 90.22,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 174.61,
+      "maxFrequency": 698.46,
+      "rangeWidthHz": 523.85,
+      "octaveRangeWidth": 2,
+      "totalNotesCount": 12,
+      "successfulNotesCount": 10,
+      "successRate": 83.33,
+      "lowestNote": "F3",
+      "highestNote": "F5",
+      "compositeScore": 32.588,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.1494,
+      "avgPitchStability": 23.16,
+      "avgVoicedRatio": 0.762,
+      "testDate": 1777496955864
+    },
+    "attempts": [
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 174.7371,
+        "octaveNumber": 3,
+        "accuracyPercent": 75.78,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": null,
+        "octaveNumber": 3,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "A#3",
+        "targetFrequency": 233.08,
+        "detectedFrequency": 234.1235,
+        "octaveNumber": 3,
+        "accuracyPercent": 88.17,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 279.887,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.12,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 312.3863,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.3,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 368.4541,
+        "octaveNumber": 4,
+        "accuracyPercent": 80.22,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 409.6675,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.34,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 434.8376,
+        "octaveNumber": 4,
+        "accuracyPercent": 96.66,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "A#4",
+        "targetFrequency": 466.16,
+        "detectedFrequency": 464.0313,
+        "octaveNumber": 4,
+        "accuracyPercent": 96.93,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "B4",
+        "targetFrequency": 493.88,
+        "detectedFrequency": 490.3541,
+        "octaveNumber": 4,
+        "accuracyPercent": 80.7,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "C5",
+        "targetFrequency": 523.25,
+        "detectedFrequency": 525.1328,
+        "octaveNumber": 5,
+        "accuracyPercent": 51.65,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1777496955864
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 701.8429,
+        "octaveNumber": 5,
+        "accuracyPercent": 91.98,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777496955864
+      }
+    ],
+    "createdAt": 1777496955865
+  },
+  {
+    "id": 27,
+    "user": {
+      "firstName": "Deniz",
+      "lastName": "Koç",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 87.66,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 293.66,
+      "maxFrequency": 698.46,
+      "rangeWidthHz": 404.8,
+      "octaveRangeWidth": 1.25,
+      "totalNotesCount": 8,
+      "successfulNotesCount": 6,
+      "successRate": 75,
+      "lowestNote": "D4",
+      "highestNote": "F5",
+      "compositeScore": 23.157,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0721,
+      "avgPitchStability": 39.5,
+      "avgVoicedRatio": 0.624,
+      "testDate": 1776978555866
+    },
+    "attempts": [
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 176.6169,
+        "octaveNumber": 3,
+        "accuracyPercent": 43.81,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 296.7269,
+        "octaveNumber": 4,
+        "accuracyPercent": 77.61,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 347.6721,
+        "octaveNumber": 4,
+        "accuracyPercent": 74.83,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 435.6865,
+        "octaveNumber": 4,
+        "accuracyPercent": 80.8,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "C5",
+        "targetFrequency": 523.25,
+        "detectedFrequency": 516.9173,
+        "octaveNumber": 5,
+        "accuracyPercent": 77.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "D5",
+        "targetFrequency": 587.33,
+        "detectedFrequency": 592.5484,
+        "octaveNumber": 5,
+        "accuracyPercent": 75.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776978555866
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 691.4318,
+        "octaveNumber": 5,
+        "accuracyPercent": 79.01,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776978555866
+      }
+    ],
+    "createdAt": 1777496955867
+  },
+  {
+    "id": 28,
+    "user": {
+      "firstName": "Ayşe",
+      "lastName": "Şahin",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 92.67,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 174.61,
+      "maxFrequency": 698.46,
+      "rangeWidthHz": 523.85,
+      "octaveRangeWidth": 2,
+      "totalNotesCount": 11,
+      "successfulNotesCount": 10,
+      "successRate": 90.91,
+      "lowestNote": "F3",
+      "highestNote": "F5",
+      "compositeScore": 32.472,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0941,
+      "avgPitchStability": 38.66,
+      "avgVoicedRatio": 0.721,
+      "testDate": 1775077755868
+    },
+    "attempts": [
+      {
+        "noteName": "F3",
+        "targetFrequency": 174.61,
+        "detectedFrequency": 176.5618,
+        "octaveNumber": 3,
+        "accuracyPercent": 86.1,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "G#3",
+        "targetFrequency": 207.65,
+        "detectedFrequency": 209.5983,
+        "octaveNumber": 3,
+        "accuracyPercent": 73.46,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "B3",
+        "targetFrequency": 246.94,
+        "detectedFrequency": 244.5193,
+        "octaveNumber": 3,
+        "accuracyPercent": 73.86,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 309.386,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.04,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 410.4498,
+        "octaveNumber": 4,
+        "accuracyPercent": 88.61,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "A#4",
+        "targetFrequency": 466.16,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "B4",
+        "targetFrequency": 493.88,
+        "detectedFrequency": 491.3264,
+        "octaveNumber": 4,
+        "accuracyPercent": 96.12,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "C5",
+        "targetFrequency": 523.25,
+        "detectedFrequency": 523.8342,
+        "octaveNumber": 5,
+        "accuracyPercent": 83.96,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 548.7586,
+        "octaveNumber": 5,
+        "accuracyPercent": 70.03,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "D#5",
+        "targetFrequency": 622.25,
+        "detectedFrequency": 630.4299,
+        "octaveNumber": 5,
+        "accuracyPercent": 92.64,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 705.1886,
+        "octaveNumber": 5,
+        "accuracyPercent": 95.46,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775077755868
+      }
+    ],
+    "createdAt": 1777496955874
+  },
+  {
+    "id": 29,
+    "user": {
+      "firstName": "Esra",
+      "lastName": "Güneş",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Alto",
+      "voiceTypeMatchPercent": 95,
+      "possibleVoiceGroups": "Alto (96%), Mezzo-Soprano (75%), Soprano (40%)",
+      "minFrequency": 277.18,
+      "maxFrequency": 622.25,
+      "rangeWidthHz": 345.07,
+      "octaveRangeWidth": 1.1667,
+      "totalNotesCount": 12,
+      "successfulNotesCount": 8,
+      "successRate": 66.67,
+      "lowestNote": "C#4",
+      "highestNote": "D#5",
+      "compositeScore": 22.157,
+      "choirSection": "alto",
+      "published": true,
+      "avgRms": 0.0505,
+      "avgPitchStability": 54.21,
+      "avgVoicedRatio": 0.88,
+      "testDate": 1776892155876
+    },
+    "attempts": [
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 278.1115,
+        "octaveNumber": 4,
+        "accuracyPercent": 88.32,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 293.6189,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.97,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 315.5251,
+        "octaveNumber": 4,
+        "accuracyPercent": 82.75,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 344.802,
+        "octaveNumber": 4,
+        "accuracyPercent": 75.34,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 351.1332,
+        "octaveNumber": 4,
+        "accuracyPercent": 14.37,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": 395.6202,
+        "octaveNumber": 4,
+        "accuracyPercent": 72,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 419.0691,
+        "octaveNumber": 4,
+        "accuracyPercent": 78.71,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 436.1616,
+        "octaveNumber": 4,
+        "accuracyPercent": 80.11,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "C5",
+        "targetFrequency": 523.25,
+        "detectedFrequency": 557.9766,
+        "octaveNumber": 5,
+        "accuracyPercent": 16.46,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 611.2447,
+        "octaveNumber": 5,
+        "accuracyPercent": 45.85,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "D#5",
+        "targetFrequency": 622.25,
+        "detectedFrequency": 613.8433,
+        "octaveNumber": 5,
+        "accuracyPercent": 78,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      },
+      {
+        "noteName": "E5",
+        "targetFrequency": 659.26,
+        "detectedFrequency": 601.3335,
+        "octaveNumber": 5,
+        "accuracyPercent": 42.72,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776892155876
+      }
+    ],
+    "createdAt": 1777496955876
+  },
+  {
+    "id": 30,
+    "user": {
+      "firstName": "Hülya",
+      "lastName": "Yıldırım",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Soprano",
+      "voiceTypeMatchPercent": 90.75,
+      "possibleVoiceGroups": "Soprano (97%), Mezzo-Soprano (72%), Alto (38%)",
+      "minFrequency": 293.66,
+      "maxFrequency": 1046.5,
+      "rangeWidthHz": 752.84,
+      "octaveRangeWidth": 1.8334,
+      "totalNotesCount": 9,
+      "successfulNotesCount": 7,
+      "successRate": 77.78,
+      "lowestNote": "D4",
+      "highestNote": "C6",
+      "compositeScore": 28.385,
+      "choirSection": "soprano",
+      "published": true,
+      "avgRms": 0.0792,
+      "avgPitchStability": 44.92,
+      "avgVoicedRatio": 0.826,
+      "testDate": 1775941755879
+    },
+    "attempts": [
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 296.539,
+        "octaveNumber": 4,
+        "accuracyPercent": 91.07,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 350.8437,
+        "octaveNumber": 4,
+        "accuracyPercent": 89.84,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "G4",
+        "targetFrequency": 392,
+        "detectedFrequency": 388.6751,
+        "octaveNumber": 4,
+        "accuracyPercent": 90.43,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 557.5421,
+        "octaveNumber": 5,
+        "accuracyPercent": 97.33,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "E5",
+        "targetFrequency": 659.26,
+        "detectedFrequency": 703.8785,
+        "octaveNumber": 5,
+        "accuracyPercent": 37.85,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 704.8904,
+        "octaveNumber": 5,
+        "accuracyPercent": 86.76,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "G5",
+        "targetFrequency": 783.99,
+        "detectedFrequency": 830.889,
+        "octaveNumber": 5,
+        "accuracyPercent": 31.6,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "G#5",
+        "targetFrequency": 830.61,
+        "detectedFrequency": 819.0244,
+        "octaveNumber": 5,
+        "accuracyPercent": 75.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775941755879
+      },
+      {
+        "noteName": "C6",
+        "targetFrequency": 1046.5,
+        "detectedFrequency": 1047.6979,
+        "octaveNumber": 6,
+        "accuracyPercent": 81.28,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775941755879
+      }
+    ],
+    "createdAt": 1777496955879
+  },
+  {
+    "id": 31,
+    "user": {
+      "firstName": "Yağmur",
+      "lastName": "Yıldırım",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Soprano",
+      "voiceTypeMatchPercent": 85.7,
+      "possibleVoiceGroups": "Soprano (97%), Mezzo-Soprano (72%), Alto (38%)",
+      "minFrequency": 329.63,
+      "maxFrequency": 932.33,
+      "rangeWidthHz": 602.7,
+      "octaveRangeWidth": 1.5,
+      "totalNotesCount": 10,
+      "successfulNotesCount": 7,
+      "successRate": 70,
+      "lowestNote": "E4",
+      "highestNote": "A#5",
+      "compositeScore": 25.127,
+      "choirSection": "soprano",
+      "published": true,
+      "avgRms": 0.0544,
+      "avgPitchStability": 57.48,
+      "avgVoicedRatio": 0.569,
+      "testDate": 1775423355881
+    },
+    "attempts": [
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": null,
+        "octaveNumber": 4,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": 327.399,
+        "octaveNumber": 4,
+        "accuracyPercent": 89.99,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 344.0032,
+        "octaveNumber": 4,
+        "accuracyPercent": 11.87,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 434.9734,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.1,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "D5",
+        "targetFrequency": 587.33,
+        "detectedFrequency": 593.9525,
+        "octaveNumber": 5,
+        "accuracyPercent": 70.18,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "D#5",
+        "targetFrequency": 622.25,
+        "detectedFrequency": 631.1393,
+        "octaveNumber": 5,
+        "accuracyPercent": 77.43,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 629.63,
+        "octaveNumber": 5,
+        "accuracyPercent": 34.74,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "G5",
+        "targetFrequency": 783.99,
+        "detectedFrequency": 787.0275,
+        "octaveNumber": 5,
+        "accuracyPercent": 91.82,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "A5",
+        "targetFrequency": 880,
+        "detectedFrequency": 882.7607,
+        "octaveNumber": 5,
+        "accuracyPercent": 82,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775423355881
+      },
+      {
+        "noteName": "A#5",
+        "targetFrequency": 932.33,
+        "detectedFrequency": 919.3674,
+        "octaveNumber": 5,
+        "accuracyPercent": 74.48,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1775423355881
+      }
+    ],
+    "createdAt": 1777496955882
+  },
+  {
+    "id": 32,
+    "user": {
+      "firstName": "Zeynep",
+      "lastName": "Kaya",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Soprano",
+      "voiceTypeMatchPercent": 93.88,
+      "possibleVoiceGroups": "Soprano (97%), Mezzo-Soprano (72%), Alto (38%)",
+      "minFrequency": 277.18,
+      "maxFrequency": 987.77,
+      "rangeWidthHz": 710.59,
+      "octaveRangeWidth": 1.8334,
+      "totalNotesCount": 11,
+      "successfulNotesCount": 8,
+      "successRate": 72.73,
+      "lowestNote": "C#4",
+      "highestNote": "B5",
+      "compositeScore": 28.23,
+      "choirSection": "soprano",
+      "published": true,
+      "avgRms": 0.0894,
+      "avgPitchStability": 25.05,
+      "avgVoicedRatio": 0.735,
+      "testDate": 1777064955883
+    },
+    "attempts": [
+      {
+        "noteName": "C#4",
+        "targetFrequency": 277.18,
+        "detectedFrequency": 278.6821,
+        "octaveNumber": 4,
+        "accuracyPercent": 75.31,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "D4",
+        "targetFrequency": 293.66,
+        "detectedFrequency": 289.8504,
+        "octaveNumber": 4,
+        "accuracyPercent": 81.02,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "D#4",
+        "targetFrequency": 311.13,
+        "detectedFrequency": 315.6016,
+        "octaveNumber": 4,
+        "accuracyPercent": 75.38,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": 332.3025,
+        "octaveNumber": 4,
+        "accuracyPercent": 4.78,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 415.8494,
+        "octaveNumber": 4,
+        "accuracyPercent": 94.88,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "A#4",
+        "targetFrequency": 466.16,
+        "detectedFrequency": 461.2418,
+        "octaveNumber": 4,
+        "accuracyPercent": 71.22,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 560.2277,
+        "octaveNumber": 5,
+        "accuracyPercent": 97.28,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "D#5",
+        "targetFrequency": 622.25,
+        "detectedFrequency": 627.7982,
+        "octaveNumber": 5,
+        "accuracyPercent": 74.7,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "G5",
+        "targetFrequency": 783.99,
+        "detectedFrequency": null,
+        "octaveNumber": 5,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "A#5",
+        "targetFrequency": 932.33,
+        "detectedFrequency": null,
+        "octaveNumber": 5,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1777064955883
+      },
+      {
+        "noteName": "B5",
+        "targetFrequency": 987.77,
+        "detectedFrequency": 978.1849,
+        "octaveNumber": 5,
+        "accuracyPercent": 73.19,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1777064955883
+      }
+    ],
+    "createdAt": 1777496955884
+  },
+  {
+    "id": 33,
+    "user": {
+      "firstName": "Aslı",
+      "lastName": "Acar",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Soprano",
+      "voiceTypeMatchPercent": 86.36,
+      "possibleVoiceGroups": "Soprano (97%), Mezzo-Soprano (72%), Alto (38%)",
+      "minFrequency": 261.63,
+      "maxFrequency": 1046.5,
+      "rangeWidthHz": 784.87,
+      "octaveRangeWidth": 2,
+      "totalNotesCount": 10,
+      "successfulNotesCount": 8,
+      "successRate": 80,
+      "lowestNote": "C4",
+      "highestNote": "C6",
+      "compositeScore": 31.747,
+      "choirSection": "soprano",
+      "published": true,
+      "avgRms": 0.086,
+      "avgPitchStability": 42.79,
+      "avgVoicedRatio": 0.556,
+      "testDate": 1776632955885
+    },
+    "attempts": [
+      {
+        "noteName": "C4",
+        "targetFrequency": 261.63,
+        "detectedFrequency": 265.1973,
+        "octaveNumber": 4,
+        "accuracyPercent": 77.3,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "F4",
+        "targetFrequency": 349.23,
+        "detectedFrequency": 344.8111,
+        "octaveNumber": 4,
+        "accuracyPercent": 88.38,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 338.8268,
+        "octaveNumber": 4,
+        "accuracyPercent": 40.57,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 417.4576,
+        "octaveNumber": 4,
+        "accuracyPercent": 81.16,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "C#5",
+        "targetFrequency": 554.37,
+        "detectedFrequency": 562.0361,
+        "octaveNumber": 5,
+        "accuracyPercent": 74.88,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "D5",
+        "targetFrequency": 587.33,
+        "detectedFrequency": 592.932,
+        "octaveNumber": 5,
+        "accuracyPercent": 90.77,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "F5",
+        "targetFrequency": 698.46,
+        "detectedFrequency": 691.7665,
+        "octaveNumber": 5,
+        "accuracyPercent": 98.23,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "G5",
+        "targetFrequency": 783.99,
+        "detectedFrequency": 833.3866,
+        "octaveNumber": 5,
+        "accuracyPercent": 46.96,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "G#5",
+        "targetFrequency": 830.61,
+        "detectedFrequency": 834.6999,
+        "octaveNumber": 5,
+        "accuracyPercent": 70.07,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      },
+      {
+        "noteName": "C6",
+        "targetFrequency": 1046.5,
+        "detectedFrequency": 1034.0032,
+        "octaveNumber": 6,
+        "accuracyPercent": 70.8,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776632955885
+      }
+    ],
+    "createdAt": 1777496955886
+  },
+  {
+    "id": 34,
+    "user": {
+      "firstName": "Deniz",
+      "lastName": "Güneş",
+      "gender": "female"
+    },
+    "result": {
+      "voiceTypeName": "Soprano",
+      "voiceTypeMatchPercent": 88.73,
+      "possibleVoiceGroups": "Soprano (97%), Mezzo-Soprano (72%), Alto (38%)",
+      "minFrequency": 329.63,
+      "maxFrequency": 880,
+      "rangeWidthHz": 550.37,
+      "octaveRangeWidth": 1.4167,
+      "totalNotesCount": 11,
+      "successfulNotesCount": 8,
+      "successRate": 72.73,
+      "lowestNote": "E4",
+      "highestNote": "A5",
+      "compositeScore": 25.149,
+      "choirSection": "soprano",
+      "published": true,
+      "avgRms": 0.0483,
+      "avgPitchStability": 39.02,
+      "avgVoicedRatio": 0.664,
+      "testDate": 1776028155888
+    },
+    "attempts": [
+      {
+        "noteName": "E4",
+        "targetFrequency": 329.63,
+        "detectedFrequency": 329.6109,
+        "octaveNumber": 4,
+        "accuracyPercent": 98.77,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "F#4",
+        "targetFrequency": 369.99,
+        "detectedFrequency": 372.6502,
+        "octaveNumber": 4,
+        "accuracyPercent": 83.11,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "G#4",
+        "targetFrequency": 415.3,
+        "detectedFrequency": 411.0338,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.79,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "A4",
+        "targetFrequency": 440,
+        "detectedFrequency": 443.5043,
+        "octaveNumber": 4,
+        "accuracyPercent": 88.27,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "A#4",
+        "targetFrequency": 466.16,
+        "detectedFrequency": 459.8671,
+        "octaveNumber": 4,
+        "accuracyPercent": 73.91,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "D#5",
+        "targetFrequency": 622.25,
+        "detectedFrequency": 623.7596,
+        "octaveNumber": 5,
+        "accuracyPercent": 88.72,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "F#5",
+        "targetFrequency": 739.99,
+        "detectedFrequency": 695.9968,
+        "octaveNumber": 5,
+        "accuracyPercent": 37.88,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "G5",
+        "targetFrequency": 783.99,
+        "detectedFrequency": 783.9788,
+        "octaveNumber": 5,
+        "accuracyPercent": 97.69,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "up",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "G#5",
+        "targetFrequency": 830.61,
+        "detectedFrequency": 868.9223,
+        "octaveNumber": 5,
+        "accuracyPercent": 42.77,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "up",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "A5",
+        "targetFrequency": 880,
+        "detectedFrequency": 887.5986,
+        "octaveNumber": 5,
+        "accuracyPercent": 95.22,
+        "attemptNumber": 1,
+        "isSuccessful": true,
+        "direction": "down",
+        "recordedAt": 1776028155888
+      },
+      {
+        "noteName": "B5",
+        "targetFrequency": 987.77,
+        "detectedFrequency": null,
+        "octaveNumber": 5,
+        "accuracyPercent": 0,
+        "attemptNumber": 1,
+        "isSuccessful": false,
+        "direction": "down",
+        "recordedAt": 1776028155888
+      }
+    ],
+    "createdAt": 1777496955889
   }
 ]

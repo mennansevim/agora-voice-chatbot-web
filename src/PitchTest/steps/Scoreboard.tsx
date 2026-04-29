@@ -294,7 +294,7 @@ function MemberDrawer({ row, onClose }: { row: Row | null; onClose: () => void }
 
   return (
     <div className="fixed inset-0 z-[110] flex justify-end animate-fade-in" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/50" />
       <aside
         className="relative w-full sm:max-w-md bg-white shadow-2xl overflow-y-auto h-full"
         onClick={(e) => e.stopPropagation()}
