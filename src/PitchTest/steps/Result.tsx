@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Award, RefreshCw, Trophy, ChevronRight, CheckCircle2, XCircle, Mail, Phone, Send } from 'lucide-react';
-import { db, type TestResultRow, type ChoirSection, updateChoirSection } from '../lib/db';
+import { Award, RefreshCw, Trophy, ChevronRight, CheckCircle2, XCircle, Mail, Phone, Send, Eye, EyeOff } from 'lucide-react';
+import { getSession, setPublished, type TestResultRow, type ChoirSection, updateChoirSection } from '../lib/db';
 import { noteToTurkish } from '../lib/notes';
 import { getAllVoiceMatches } from '../lib/voiceTypes';
 import type { UserRow } from '../lib/db';
@@ -15,35 +15,141 @@ const SECTION_CONFIG: Record<ChoirSection, { label: string; color: string; bg: s
   bass:    { label: 'Bas',     color: 'text-stone-700', bg: 'bg-stone-100', border: 'border-stone-400' },
 };
 
-function buildCommentary(r: TestResultRow): string[] {
-  const lines: string[] = [];
+type AnalysisSection = { title: string; body: string };
+
+function buildAnalysis(r: TestResultRow): AnalysisSection[] {
+  const sections: AnalysisSection[] = [];
   const oct = r.octaveRangeWidth;
-  const sr = r.successRate;
-  const totalAttempted = r.totalNotesCount;
 
-  if (oct >= 2.5)
-    lines.push(`🏆 ${r.lowestNote && r.highestNote ? `${noteToTurkish(r.lowestNote)} – ${noteToTurkish(r.highestNote)}` : ''} aralığıyla tam ${oct.toFixed(1)} oktav! Bu profesyonel sanatçı düzeyinde bir aralık; senin sesinle pek çok koro eserinin tamamını yalnız başına taşıyabilirsin.`);
-  else if (oct >= 2)
-    lines.push(`✨ ${oct.toFixed(1)} oktav ses aralığı etkileyici! Koro repertuvarındaki eserlerin büyük çoğunluğunu rahatça söyleyebilirsin. Birçok solo parçaya da uyumsun.`);
-  else if (oct >= 1.5)
-    lines.push(`👍 ${oct.toFixed(1)} oktavlık sağlam bir aralık. Standart koro eserlerini eksiksiz seslendirmek için yeterli. Ağırlıklı olarak orta aralık eserlerde en iyi performansı verirsin.`);
-  else if (oct >= 1)
-    lines.push(`🎵 ${oct.toFixed(1)} oktav tespit edildi. Pratik yaparak bu aralığı birkaç nota daha genişletebilirsin; şu anki aralıkla da pek çok eserde yer bulabilirsin.`);
-  else
-    lines.push(`🌱 Dar bir aralık tespit edildi. Daha sessiz bir ortamda ya da kulaklıkla tekrar dene — ya da düzenli ses egzersizleri ile aralığını zaman içinde geliştirebilirsin.`);
+  // 1. SES ARALIĞI
+  const rangeStr = r.lowestNote && r.highestNote
+    ? `${noteToTurkish(r.lowestNote)} – ${noteToTurkish(r.highestNote)}`
+    : '';
+  let rangeText = '';
+  if (oct >= 3) {
+    rangeText = `${rangeStr} arası tam ${oct.toFixed(2)} oktav — bu profesyonel düzey, opera ve oratoryo solistlerinin sahip olduğu genişlik. ${r.successfulNotesCount} farklı notayı temiz şekilde tutturuyorsun.`;
+  } else if (oct >= 2.3) {
+    rangeText = `${rangeStr} aralığı ${oct.toFixed(2)} oktav — solist düzeyine yakın. Koro repertuvarının neredeyse tamamını rahatça taşırsın; bazı solo parçalar da menzilinde.`;
+  } else if (oct >= 1.8) {
+    rangeText = `${rangeStr} arası ${oct.toFixed(2)} oktav — gelişmiş amatör koroda solist sınıfı. Standart koro eserlerinin %95'ini sıkıntısız söylersin.`;
+  } else if (oct >= 1.3) {
+    rangeText = `${rangeStr} arası ${oct.toFixed(2)} oktav — sağlam bir koro üyesi aralığı. Ana melodi çizgilerini tutturursun, ekstrem uçlardaki bazı pasajlar zorlayabilir.`;
+  } else if (oct >= 0.8) {
+    rangeText = `${rangeStr} arası ${oct.toFixed(2)} oktav — şu an dar; pratikle iki yöne de açılabilir. Erken aşamada normal.`;
+  } else {
+    rangeText = `${oct.toFixed(2)} oktav — ortam veya kayıt koşulları dar bir aralık vermiş olabilir. Sessiz ortamda + kulaklıkla tekrar dene.`;
+  }
+  sections.push({ title: '🎵 Ses Aralığı', body: rangeText });
 
-  if (totalAttempted > 0) {
-    if (sr >= 85)
-      lines.push(`🎯 Notaları tutturma oranın %${sr.toFixed(0)} — bu mükemmel bir kulak yeteneği gösteriyor. Ses kontrolün çok güçlü.`);
-    else if (sr >= 70)
-      lines.push(`👂 %${sr.toFixed(0)} başarı oranıyla notaları iyi takip ediyorsun. Düzenli egzersizle bu oran kolayca %85+ çıkar.`);
-    else if (sr >= 50)
-      lines.push(`📈 %${sr.toFixed(0)} başarı oranı gelişime açık. Piyano notalara bakarak şarkı söyleme pratikleri sana çok faydalı olur.`);
-    else
-      lines.push(`💡 Kulak eğitimi bu noktada önemli bir anahtar. Tonlama ve ses yüksekliği çalışmaları doğruluğunu hızla artırır.`);
+  // 2. SES TİPİ & RENK (timbre — voice type'tan + olası gruplardan çıkarım)
+  if (r.voiceTypeName) {
+    const timbreNotes = describeTimbre(r.voiceTypeName);
+    const flexibility = r.possibleVoiceGroups
+      ? ` İkincil eşleşmelerin (${r.possibleVoiceGroups}) sesinin **esnek** ve farklı partiler arası geçişlere uygun olduğunu gösteriyor.`
+      : '';
+    sections.push({
+      title: '🎼 Ses Tipi & Renk',
+      body: `**${r.voiceTypeName}** sınıfında, %${r.voiceTypeMatchPercent.toFixed(0)} eşleşme. ${timbreNotes}${flexibility}`,
+    });
   }
 
-  return lines;
+  // 3. TONAL KONTROL & VİBRATO
+  if (typeof r.avgPitchStability === 'number' && r.avgPitchStability > 0) {
+    const c = r.avgPitchStability;
+    let body = '';
+    if (c < 8) {
+      body = `Ortalama tonal sapma sadece **${c.toFixed(1)} cent** — neredeyse matematiksel kesinlikte. Notayı tutturduğunda merkezde tutuyorsun. Bu, koro içinde uyum kurmayı kolaylaştıran bir özellik; aynı zamanda solist seçilmeyi hak eden bir sıkı kulak göstergesi.`;
+    } else if (c < 18) {
+      body = `**${c.toFixed(1)} cent** ortalama dalgalanma — sağlıklı, doğal bir mikro-titreşim aralığı. Sesinde yapay olmayan bir vibrato karakteri var; bu ifade gücüne ve şarkıya duygusal renk katar. Klasik şarkıcılığa uygun.`;
+    } else if (c < 35) {
+      body = `Cents cinsinden ${c.toFixed(1)} sapma — vibrato genişliği biraz fazla. Sustain egzersizleriyle daraltılırsa daha kontrollü bir ton elde edilir. Şu an ifadeci ama bazen merkezden uzaklaşıyor.`;
+    } else {
+      body = `${c.toFixed(1)} cent dalgalanma yüksek. Tonu sabit tutmakta zorlanıyor olabilirsin. Düzenli "uzun ses" çalışması (mesela 5-10 saniye sabit nota) belirgin fark yaratır.`;
+    }
+    sections.push({ title: '🌊 Tonal Kontrol & Vibrato', body });
+  }
+
+  // 4. ŞİDDET & PROJEKSİYON
+  if (typeof r.avgRms === 'number' && r.avgRms > 0) {
+    const v = r.avgRms;
+    let body = '';
+    if (v < 0.04) {
+      body = `Mikrofona oldukça düşük ses geldiği görülüyor (RMS ≈ ${v.toFixed(3)}). Uzaklık veya çekingen bir çıkış olabilir. Sesini test sırasında daha güvenle ortaya koyman daha doğru sonuç verir.`;
+    } else if (v < 0.10) {
+      body = `Konuşma seviyesinde, doğal bir çıkış (RMS ≈ ${v.toFixed(3)}). Koro içinde dengeli bir sayfa oluşturur; geniş salonda mikrofonsuz öne çıkması için biraz destek gerekir.`;
+    } else if (v < 0.20) {
+      body = `Sağlıklı projeksiyon (RMS ≈ ${v.toFixed(3)}). Sesin salonun orta sıralarına rahatça taşır. Koro önünde güvenle yer alabilirsin.`;
+    } else {
+      body = `Kuvvetli, açık bir ses çıkışı (RMS ≈ ${v.toFixed(3)}). Mikrofonsuz büyük salonda da çekirdek taşıyıcı olabilirsin. Solo veya küçük grup düzenlemelerinde öne çıkabilen bir karakter.`;
+    }
+    sections.push({ title: '🔊 Şiddet & Projeksiyon', body });
+  }
+
+  // 5. NEFES DESTEĞİ
+  if (typeof r.avgVoicedRatio === 'number' && r.avgVoicedRatio > 0) {
+    const v = r.avgVoicedRatio;
+    let body = '';
+    if (v >= 0.85) {
+      body = `Notayı baştan sona kararlı taşıyorsun (sesli oran %${(v * 100).toFixed(0)}). Diafram desteğin sağlam — uzun frazlarda ve pianissimo geçişlerde nefesin yeterli.`;
+    } else if (v >= 0.65) {
+      body = `Sesli oran %${(v * 100).toFixed(0)} — iyi seviye. Çoğu fraz boyunca sürdürebiliyorsun, çok uzun cümlelerde küçük destek molaları gerekebilir.`;
+    } else if (v >= 0.45) {
+      body = `Sesli oran %${(v * 100).toFixed(0)} — notayı orta-yola kadar taşıyıp bırakıyor olabilirsin. Nefes egzersizleri (4-7-8 tekniği, "s" tutma) sürdürmeyi belirgin uzatır.`;
+    } else {
+      body = `Sesli oran %${(v * 100).toFixed(0)} oldukça düşük. Notayı kısa kestiğin söylenebilir; ya da mikrofonun sesi sürekli almıyor. Nefes desteği üzerine çalışmak temel bir kazanım olur.`;
+    }
+    sections.push({ title: '💨 Nefes Desteği & Sürdürme', body });
+  }
+
+  // 6. ÖZET & ÖNERİ
+  const summary = buildSummary(r);
+  if (summary) sections.push({ title: '🎯 Genel Yorum', body: summary });
+
+  return sections;
+}
+
+function describeTimbre(voiceType: string): string {
+  switch (voiceType) {
+    case 'Bas':
+      return 'Karakteristik olarak **karanlık, gövdeli, derin** bir tını taşır. Pes notalarda zengin alt-harmonikler; gövde rezonansı belirgin. Geleneksel klasik koroda kemik partisi.';
+    case 'Bariton':
+      return '**Sıcak ve yuvarlak** bir ton karakteri. Operada en sık ihtiyaç duyulan erkek sesi; tenor parlaklığını tabanın gücüyle birleştirir. Türk Sanat Müziği erkek sololarına da uyumlu.';
+    case 'Tenor':
+      return '**Parlak, mendili andıran**, lirik tını. Yüksek register’da projeksiyon kabiliyeti güçlü; opera tenoru, halk türkülerinde çığırma sesi. Pop/rock erkek vokalde de standart.';
+    case 'Kontralto':
+      return '**Koyu altın**, ten gövdeli kadın sesi. Nadir ve değerli — Bach kantatlarında alt solo sıklıkla bu ses içindir. Caz ve blues estetiğine de uygun.';
+    case 'Mezzo-soprano':
+      return '**Olgun, dolgun** bir kadın tını. Carmen, Octavian, Türk Sanat Müziği kadın sololarının çoğu. Mezzo, koroda alto köprüsünü sopranoya bağlar.';
+    case 'Soprano':
+      return '**Berrak, tiz, genelde parlak** karakter. Opera baş kadın rolleri (Tosca, Mimi, Violetta), Bach koroları üst sesi. Kraliçe arya sesidir.';
+    default:
+      return 'Karakteristik bir tını dağılımı tespit edildi.';
+  }
+}
+
+function buildSummary(r: TestResultRow): string {
+  const parts: string[] = [];
+  // Range bias
+  if (r.octaveRangeWidth >= 2.3) parts.push('geniş aralık');
+  else if (r.octaveRangeWidth >= 1.5) parts.push('sağlam aralık');
+  // Stability
+  if (typeof r.avgPitchStability === 'number') {
+    if (r.avgPitchStability < 8) parts.push('mükemmel tonal kontrol');
+    else if (r.avgPitchStability < 18) parts.push('sağlıklı vibrato');
+  }
+  // Volume
+  if (typeof r.avgRms === 'number') {
+    if (r.avgRms >= 0.20) parts.push('kuvvetli projeksiyon');
+    else if (r.avgRms >= 0.10) parts.push('dengeli ses çıkışı');
+  }
+  // Breath
+  if (typeof r.avgVoicedRatio === 'number' && r.avgVoicedRatio >= 0.85) {
+    parts.push('güçlü nefes desteği');
+  }
+
+  if (parts.length === 0) return '';
+  const strengthsText = parts.join(', ');
+  return `Senin için öne çıkan üç güçlü yön: **${strengthsText}**. Bu kombinasyon ${r.choirSection ? r.choirSection + ' ' : ''}partisinde aktif rol almak için yeterli; pratik üzerine düzenli koro çalışması seni hızla daha üst seviyeye taşır.`;
 }
 
 export default function Result({
@@ -61,14 +167,14 @@ export default function Result({
   const [section, setSection] = useState<ChoirSection | null>(null);
 
   useEffect(() => {
-    db.testResults.get(testResultId).then((r) => {
-      if (!r) return;
-      setResult(r);
-      if (r.choirSection) {
-        setSection(r.choirSection);
+    getSession(testResultId).then((s) => {
+      if (!s) return;
+      setResult(s.result);
+      setUser(s.user);
+      if (s.result.choirSection) {
+        setSection(s.result.choirSection);
         setPhase('analysis');
       }
-      db.users.get(r.userId).then((u) => setUser(u ?? null));
     });
   }, [testResultId]);
 
@@ -162,6 +268,12 @@ export default function Result({
             </div>
           </div>
 
+          {/* Publish to scoreboard prompt */}
+          <PublishCard
+            result={result}
+            onChange={(p) => setResult({ ...result, published: p })}
+          />
+
           {/* Choir admission status */}
           <ChoirAdmissionBadge result={result} user={user} />
 
@@ -195,12 +307,20 @@ export default function Result({
             </div>
           )}
 
-          {/* Commentary */}
+          {/* Detaylı analiz */}
           <div className="bg-gradient-to-br from-amber-50 to-stone-50 border border-amber-200/60 rounded-2xl p-5 mb-5">
-            <div className="text-sm font-semibold text-agora-dark mb-3">🔍 Ses Analizi</div>
-            <div className="space-y-3">
-              {buildCommentary(result).map((line, i) => (
-                <p key={i} className="text-sm text-agora-dark leading-relaxed">{line}</p>
+            <div className="text-sm font-semibold text-agora-dark mb-4">🔍 Detaylı Ses Analizi</div>
+            <div className="space-y-4">
+              {buildAnalysis(result).map((sec, i) => (
+                <div key={i} className="border-l-2 border-amber-300 pl-3">
+                  <div className="text-sm font-bold text-agora-dark mb-1">{sec.title}</div>
+                  <p
+                    className="text-sm text-agora-dark/90 leading-relaxed"
+                    dangerouslySetInnerHTML={{
+                      __html: sec.body.replace(/\*\*(.+?)\*\*/g, '<strong class="text-agora-dark">$1</strong>'),
+                    }}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -219,6 +339,85 @@ export default function Result({
           className="flex-1 py-3 px-5 rounded-xl font-semibold border-2 border-stone-300 text-agora-dark hover:bg-stone-100 transition-colors flex items-center justify-center gap-2"
         >
           <RefreshCw size={18} /> Yeniden Test Et
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PublishCard({ result, onChange }: { result: TestResultRow; onChange: (published: boolean) => void }) {
+  const [pending, setPending] = useState(false);
+  const decide = async (yes: boolean) => {
+    if (!result.id) return;
+    setPending(true);
+    try {
+      await setPublished(result.id, yes);
+      onChange(yes);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  // Karar verilmiş — küçük durum çubuğu
+  if (result.published === true) {
+    return (
+      <div className="flex items-center justify-between gap-3 px-4 py-3 mb-5 rounded-xl bg-emerald-50 border border-emerald-200">
+        <div className="flex items-center gap-2 text-sm font-medium text-emerald-800">
+          <Eye size={16} /> Skor tablosunda yayınlanıyor
+        </div>
+        <button
+          onClick={() => decide(false)}
+          disabled={pending}
+          className="text-xs font-semibold text-emerald-800 hover:underline disabled:opacity-50"
+        >
+          Gizle
+        </button>
+      </div>
+    );
+  }
+  if (result.published === false) {
+    return (
+      <div className="flex items-center justify-between gap-3 px-4 py-3 mb-5 rounded-xl bg-stone-100 border border-stone-300">
+        <div className="flex items-center gap-2 text-sm font-medium text-agora-dark">
+          <EyeOff size={16} /> Skor tablosunda gizli
+        </div>
+        <button
+          onClick={() => decide(true)}
+          disabled={pending}
+          className="text-xs font-semibold text-agora-dark hover:underline disabled:opacity-50"
+        >
+          Yayınla
+        </button>
+      </div>
+    );
+  }
+
+  // Henüz karar verilmemiş — soru kartı
+  return (
+    <div className="bg-gradient-to-br from-amber-50 to-stone-50 border-2 border-amber-300 rounded-2xl p-5 mb-5">
+      <div className="flex items-start gap-3 mb-4">
+        <Trophy className="text-amber-700 shrink-0 mt-0.5" size={22} />
+        <div>
+          <div className="font-semibold text-agora-dark">Skor tablosunda yayınlansın mı?</div>
+          <div className="text-sm text-agora-muted mt-0.5">
+            "Evet" dersen koro kadrosunda görünürsün. "Hayır" dersen kayıt sadece bizde kalır, listede görünmezsin.
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          onClick={() => decide(true)}
+          disabled={pending}
+          className="py-2.5 px-4 rounded-xl font-semibold bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:opacity-95 disabled:opacity-50 transition-opacity"
+        >
+          Evet, yayınla
+        </button>
+        <button
+          onClick={() => decide(false)}
+          disabled={pending}
+          className="py-2.5 px-4 rounded-xl font-semibold border-2 border-stone-300 text-agora-dark hover:bg-stone-100 disabled:opacity-50 transition-colors"
+        >
+          Hayır, gizli kalsın
         </button>
       </div>
     </div>

@@ -30,8 +30,8 @@ export default function PitchTest({ onClose }: { onClose: () => void }) {
         <header className="sticky top-0 z-10 backdrop-blur-md bg-white/70 border-b border-stone-200">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--agora-terracotta)] to-[var(--agora-bronze)] flex items-center justify-center text-white font-bold text-sm">
-                AV
+              <div className="w-9 h-9 rounded-full bg-white border border-stone-200 flex items-center justify-center overflow-hidden shadow-sm">
+                <img src="/agora-transparent.png" alt="Agora Voice" className="w-7 h-7 object-contain" draggable={false} />
               </div>
               <div>
                 <div className="text-sm font-semibold text-agora-dark">Agora Voice</div>
@@ -48,7 +48,7 @@ export default function PitchTest({ onClose }: { onClose: () => void }) {
           </div>
         </header>
 
-        <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 sm:py-6">
           {step === 'intro' && (
             <Intro
               onStart={() => setStep('form')}

@@ -6,7 +6,7 @@ import { getStartNoteForGender, NOTE_FREQUENCIES, noteToTurkish } from '../lib/n
 import { playNote, preloadNotes, stopAllPlayback } from '../lib/audioPlayer';
 import { recordSamples, abortActiveRecording } from '../lib/recorder';
 import { analyzeBuffer, matchToTarget } from '../lib/pitchDetector';
-import { db, upsertUser } from '../lib/db';
+import { saveTestSession } from '../lib/db';
 import { classifyVoiceType } from '../lib/voiceTypes';
 import { compositeScore } from '../lib/classify';
 
@@ -90,8 +90,8 @@ export default function RangeTest({
         }
 
         setPhase('analyzing');
-        const { detectedFreq } = analyzeBuffer(samples, sampleRate);
-        const match = matchToTarget(detectedFreq, note.freq);
+        const pitchResult = analyzeBuffer(samples, sampleRate, note.freq);
+        const match = matchToTarget(pitchResult.detectedFreq, note.freq);
 
         const prevDirection = local.direction;
         local = recordAttempt(local, {
@@ -100,6 +100,9 @@ export default function RangeTest({
           octaveOffset: match.octaveOffset,
           successRate: match.successRate,
           isSuccessful: match.isMatch,
+          rms: pitchResult.rms,
+          pitchStabilityCents: pitchResult.pitchStabilityCents,
+          voicedRatio: pitchResult.voicedRatio,
         });
 
         setLastAttempt(local.log[local.log.length - 1]);
@@ -130,10 +133,11 @@ export default function RangeTest({
   }, []);
 
   async function persistAndFinish(finalState: RangeMachineState) {
-    const userId = await upsertUser(user.firstName, user.lastName, user.gender);
     const bounds = getRangeBounds(finalState);
     const successful = finalState.log.filter((l) => l.isSuccessful).length;
-    const successRate = finalState.log.length > 0 ? (successful / finalState.log.length) * 100 : 0;
+    // Başarısız denemeler hesaplamaya katılmıyor → successRate başarılı varsa 100
+    const successRate = successful > 0 ? 100 : 0;
+    const totalNotes = successful;
 
     let voiceTypeName: string | null = null;
     let voiceTypeMatchPercent = 0;
@@ -158,28 +162,39 @@ export default function RangeTest({
 
     const score = compositeScore(rangeWidthHz, octaveWidth, successful);
 
-    const testResultId = await db.testResults.add({
-      userId,
-      voiceTypeName,
-      voiceTypeMatchPercent,
-      possibleVoiceGroups: possibleGroups,
-      minFrequency: bounds?.lowest.freq ?? 0,
-      maxFrequency: bounds?.highest.freq ?? 0,
-      rangeWidthHz,
-      octaveRangeWidth: octaveWidth,
-      totalNotesCount: finalState.log.length,
-      successfulNotesCount: successful,
-      successRate,
-      lowestNote: lowest,
-      highestNote: highest,
-      compositeScore: score,
-      testDate: Date.now(),
-    });
+    // Başarılı denemelerin ortalaması — ses kalitesi metrikleri
+    const successfulLogs = finalState.log.filter((l) => l.isSuccessful);
+    const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
+    const avgRms = avg(successfulLogs.map((l) => l.rms ?? 0).filter((v) => v > 0));
+    const avgPitchStability = avg(successfulLogs.map((l) => l.pitchStabilityCents ?? 0).filter((v) => v > 0));
+    const avgVoicedRatio = avg(successfulLogs.map((l) => l.voicedRatio ?? 0).filter((v) => v > 0));
 
-    await db.attempts.bulkAdd(
-      finalState.log.map((l) => ({
-        testResultId,
-        userId,
+    const { sessionId } = await saveTestSession({
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        gender: user.gender,
+      },
+      result: {
+        voiceTypeName,
+        voiceTypeMatchPercent,
+        possibleVoiceGroups: possibleGroups,
+        minFrequency: bounds?.lowest.freq ?? 0,
+        maxFrequency: bounds?.highest.freq ?? 0,
+        rangeWidthHz,
+        octaveRangeWidth: octaveWidth,
+        totalNotesCount: totalNotes,
+        successfulNotesCount: successful,
+        successRate,
+        lowestNote: lowest,
+        highestNote: highest,
+        compositeScore: score,
+        avgRms,
+        avgPitchStability,
+        avgVoicedRatio,
+        testDate: Date.now(),
+      },
+      attempts: finalState.log.map((l) => ({
         noteName: l.noteName,
         targetFrequency: l.targetFreq,
         detectedFrequency: l.detectedFreq,
@@ -189,10 +204,10 @@ export default function RangeTest({
         isSuccessful: l.isSuccessful,
         direction: l.direction,
         recordedAt: Date.now(),
-      }))
-    );
+      })),
+    });
 
-    onComplete({ testResultId, userId });
+    onComplete({ testResultId: sessionId, userId: sessionId });
   }
 
   const note = currentNote(state);
@@ -207,9 +222,9 @@ export default function RangeTest({
     phase === 'preparing';
 
   const skipLabel =
-    state.direction === 'down'
-      ? 'Aşağı yönü bitir, yukarıya geç'
-      : 'Yukarı yönü bitir, sonuçları gör';
+    state.direction === 'up'
+      ? 'Yukarı yönü bitir, aşağıya geç'
+      : 'Aşağı yönü bitir, sonuçları gör';
 
   return (
     <div className="animate-fade-in max-w-2xl mx-auto space-y-5">
@@ -227,9 +242,12 @@ export default function RangeTest({
         <StatusBanner phase={phase} lastAttempt={lastAttempt} />
       </div>
 
-      {/* Animated piano key */}
-      <div className="flex justify-center">
-        <PianoKey noteName={note.name} phase={phase} />
+      {/* Listening: Shazam orb · diğer fazlarda: piyano tuşu */}
+      <div className="flex justify-center items-center" style={{ height: '180px' }}>
+        {phase === 'listening'
+          ? <ListeningOrb noteName={note.name} />
+          : <PianoKey noteName={note.name} phase={phase} />
+        }
       </div>
 
       {/* Shazam staircase */}
@@ -244,6 +262,92 @@ export default function RangeTest({
         >
           <SkipForward size={16} /> {skipLabel}
         </button>
+      </div>
+    </div>
+  );
+}
+
+function ListeningOrb({ noteName: _noteName }: { noteName: string }) {
+  // Marka renklerinden uyumlu palet (amber, bronz, gold tonları)
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: '170px', height: '170px' }}>
+      {/* Dış halka dalgaları — sıcak amber */}
+      {[0, 0.55, 1.1].map((d, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            border: '1.5px solid rgba(217,119,6,0.4)',
+            animation: 'orb-ring-pulse 2s cubic-bezier(0,0,0.2,1) infinite',
+            animationDelay: `${d}s`,
+          }}
+        />
+      ))}
+
+      {/* Petal katmanı 1 — amber/sarı, yavaş */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          inset: '10%',
+          background:
+            'conic-gradient(from 0deg,' +
+            'rgba(251,191,36,0.55) 0deg, rgba(251,191,36,0) 40deg,' +
+            'rgba(251,191,36,0.55) 80deg, rgba(251,191,36,0) 120deg,' +
+            'rgba(251,191,36,0.55) 160deg, rgba(251,191,36,0) 200deg,' +
+            'rgba(251,191,36,0.55) 240deg, rgba(251,191,36,0) 280deg,' +
+            'rgba(251,191,36,0.55) 320deg, rgba(251,191,36,0) 360deg)',
+          animation: 'orb-spin-slow 8s linear infinite',
+          filter: 'blur(3px)',
+          mask: 'radial-gradient(circle, transparent 32%, black 36%, black 100%)',
+          WebkitMask: 'radial-gradient(circle, transparent 32%, black 36%, black 100%)',
+        }}
+      />
+
+      {/* Petal katmanı 2 — bronz/turuncu, ters yön */}
+      <div
+        className="absolute rounded-full"
+        style={{
+          inset: '14%',
+          background:
+            'conic-gradient(from 30deg,' +
+            'rgba(217,119,6,0.5) 0deg, rgba(217,119,6,0) 60deg,' +
+            'rgba(217,119,6,0.5) 120deg, rgba(217,119,6,0) 180deg,' +
+            'rgba(217,119,6,0.5) 240deg, rgba(217,119,6,0) 300deg)',
+          animation: 'orb-spin-rev 5s linear infinite',
+          filter: 'blur(2px)',
+          mask: 'radial-gradient(circle, transparent 34%, black 38%, black 100%)',
+          WebkitMask: 'radial-gradient(circle, transparent 34%, black 38%, black 100%)',
+        }}
+      />
+
+      {/* Yumuşak iç glow — sıcak amber */}
+      <div
+        className="absolute rounded-full pointer-events-none"
+        style={{
+          inset: '22%',
+          background: 'radial-gradient(circle, rgba(251,191,36,0.35) 0%, rgba(217,119,6,0.15) 50%, transparent 75%)',
+          animation: 'orb-petals-breathe 1.7s ease-in-out infinite',
+        }}
+      />
+
+      {/* Merkez — Agora logo, beyaz/yumuşak zemin */}
+      <div
+        className="relative rounded-full flex items-center justify-center"
+        style={{
+          width: '92px',
+          height: '92px',
+          background: 'radial-gradient(circle, #ffffff 0%, #fef3c7 70%, #fde68a 100%)',
+          boxShadow: '0 0 22px rgba(217,119,6,0.45), inset 0 -3px 8px rgba(146,64,14,0.18), inset 0 2px 5px rgba(255,255,255,0.7)',
+          animation: 'orb-petals-breathe 1.7s ease-in-out infinite',
+        }}
+      >
+        <img
+          src="/agora-transparent.png"
+          alt="Agora Voice"
+          className="object-contain"
+          style={{ width: '72px', height: '72px' }}
+          draggable={false}
+        />
       </div>
     </div>
   );
@@ -338,24 +442,6 @@ function NoteStaircase({ state, phase }: { state: RangeMachineState; phase: Phas
         ))}
       </div>
 
-      {/* Shazam halo behind current note (listening mode) */}
-      {isListening && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {[1,2,3].map(i => (
-            <div
-              key={i}
-              className="absolute rounded-full border border-[var(--agora-terracotta)]/60"
-              style={{
-                width: `${i * 70}px`,
-                height: `${i * 70}px`,
-                animation: `ping ${0.9 + i * 0.3}s cubic-bezier(0,0,0.2,1) infinite`,
-                animationDelay: `${i * 0.2}s`,
-                opacity: 1 / i,
-              }}
-            />
-          ))}
-        </div>
-      )}
 
       {/* Bars */}
       <div className="flex items-end gap-[3px] h-40 relative z-10">
@@ -403,29 +489,9 @@ function NoteStaircase({ state, phase }: { state: RangeMachineState; phase: Phas
                 />
               )}
 
-              {/* Current note top indicator */}
-              {isCurrent && (
-                <div
-                  className="absolute flex justify-center w-full"
-                  style={{ bottom: `calc(${heightPct}% + 6px)` }}
-                >
-                  <div
-                    className="rounded-full"
-                    style={{
-                      width: '6px', height: '6px',
-                      background: isListening ? 'var(--agora-terracotta)' : 'var(--agora-gold)',
-                      boxShadow: isListening
-                        ? '0 0 0 4px rgba(220,38,38,0.3), 0 0 12px 4px rgba(220,38,38,0.5)'
-                        : '0 0 0 4px rgba(217,119,6,0.3), 0 0 12px 4px rgba(217,119,6,0.5)',
-                      animation: 'pulse 1s ease-in-out infinite',
-                    }}
-                  />
-                </div>
-              )}
-
               {/* The bar */}
               <div
-                className="w-full rounded-t-sm transition-all duration-700"
+                className="relative w-full rounded-t-sm transition-all duration-700 overflow-hidden"
                 style={{
                   height: `${heightPct}%`,
                   background: reached
@@ -439,9 +505,11 @@ function NoteStaircase({ state, phase }: { state: RangeMachineState; phase: Phas
                     ? '0 -2px 8px rgba(251,191,36,0.4)'
                     : isCurrent
                     ? isListening
-                      ? '0 -2px 12px rgba(220,38,38,0.7)'
+                      ? '0 -2px 14px rgba(220,38,38,0.7)'
                       : '0 -2px 12px rgba(217,119,6,0.6)'
                     : 'none',
+                  animation: isCurrent && isListening ? 'soft-pulse-glow 1.6s ease-in-out infinite' : undefined,
+                  transformOrigin: 'bottom',
                 }}
               />
 
@@ -507,7 +575,7 @@ function StatusBanner({ phase, lastAttempt }: { phase: Phase; lastAttempt: Attem
   if (phase === 'playing') return <Pill icon={<Volume2 size={18} className="animate-pulse" />} text="Notayı dinle" tone="bronze" />;
   if (phase === 'listening') return <Pill icon={<Mic size={18} className="animate-pulse" />} text="Şimdi sen söyle (2 sn)" tone="terracotta" />;
   if (phase === 'analyzing') return <Pill text="Analiz ediliyor..." />;
-  if (phase === 'transition') return <Pill text="Yukarı tarama başlıyor — daha tiz notalar 🎵" tone="bronze" />;
+  if (phase === 'transition') return <Pill text="Aşağı tarama başlıyor — daha pes notalar 🎵" tone="bronze" />;
   if (phase === 'saving') return <Pill text="Sonuçlar kaydediliyor..." />;
   return null;
 }

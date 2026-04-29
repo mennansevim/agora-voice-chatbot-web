@@ -12,6 +12,9 @@ export type AttemptLog = {
   isSuccessful: boolean;
   attemptNumber: number;
   direction: Direction;
+  rms?: number;
+  pitchStabilityCents?: number;
+  voicedRatio?: number;
 };
 
 export const MAX_ATTEMPTS = 2;
@@ -32,7 +35,7 @@ export function initState(startNote: string): RangeMachineState {
   return {
     startNote,
     startIndex: idx,
-    direction: 'down',
+    direction: 'up',
     currentIndex: idx,
     attemptInCurrent: 1,
     reachedNotes: new Set(),
@@ -79,11 +82,11 @@ function advance(state: RangeMachineState): RangeMachineState {
 }
 
 function switchOrFinish(state: RangeMachineState): RangeMachineState {
-  if (state.direction === 'down') {
+  if (state.direction === 'up') {
     return {
       ...state,
-      direction: 'up',
-      currentIndex: Math.min(state.startIndex + 1, NOTE_FREQUENCIES.length - 1),
+      direction: 'down',
+      currentIndex: Math.max(state.startIndex - 1, 0),
       attemptInCurrent: 1,
     };
   }
@@ -100,9 +103,10 @@ export function getRangeBounds(state: RangeMachineState) {
   if (indices.length === 0) return null;
   const minIdx = Math.min(...indices);
   const maxIdx = Math.max(...indices);
-  return {
-    lowest: NOTE_FREQUENCIES[minIdx],
-    highest: NOTE_FREQUENCIES[maxIdx],
-    octaveWidth: (maxIdx - minIdx) / 12,
-  };
+  const lowest = NOTE_FREQUENCIES[minIdx];
+  const highest = NOTE_FREQUENCIES[maxIdx];
+  // Oktav = frekans oranının log2'si. Cinsiyetten/aralıktan bağımsız doğru ölçü.
+  // Örn: Do3 (130.81) → Do4 (261.63) = log2(2.0) = 1.0 oktav.
+  const octaveWidth = lowest.freq > 0 ? Math.log2(highest.freq / lowest.freq) : 0;
+  return { lowest, highest, octaveWidth };
 }

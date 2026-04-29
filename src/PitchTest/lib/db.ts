@@ -1,4 +1,8 @@
-import Dexie, { Table } from 'dexie';
+// Sunucu tabanlı paylaşımlı kayıt katmanı.
+// Tüm test sonuçları sunucudaki data/results.json dosyasında tutulur.
+// Eski Dexie/IndexedDB çözümünü tamamen değiştirir.
+
+export type ChoirSection = 'soprano' | 'alto' | 'tenor' | 'bass';
 
 export type UserRow = {
   id?: number;
@@ -7,8 +11,6 @@ export type UserRow = {
   gender: 'male' | 'female';
   createdAt: number;
 };
-
-export type ChoirSection = 'soprano' | 'alto' | 'tenor' | 'bass';
 
 export type TestResultRow = {
   id?: number;
@@ -27,13 +29,17 @@ export type TestResultRow = {
   highestNote: string;
   compositeScore: number;
   choirSection?: ChoirSection;
+  published?: boolean;
+  // Genişletilmiş ses analizi (başarılı denemelerin ortalaması)
+  avgRms?: number;             // 0-1: ses gücü
+  avgPitchStability?: number;  // cents std dev (düşük = daha sabit)
+  avgVoicedRatio?: number;     // 0-1: ne kadar süreyle sesli
   testDate: number;
 };
 
 export type AttemptRow = {
-  id?: number;
-  testResultId: number;
-  userId: number;
+  testResultId?: number;
+  userId?: number;
   noteName: string;
   targetFrequency: number;
   detectedFrequency: number | null;
@@ -45,54 +51,111 @@ export type AttemptRow = {
   recordedAt: number;
 };
 
-class PitchDB extends Dexie {
-  users!: Table<UserRow, number>;
-  testResults!: Table<TestResultRow, number>;
-  attempts!: Table<AttemptRow, number>;
+// Sunucudaki kayıt yapısı (server/store.mjs ile uyumlu)
+type SessionRecord = {
+  id: number;
+  user: { firstName: string; lastName: string; gender: 'male' | 'female' };
+  result: Omit<TestResultRow, 'id' | 'userId'>;
+  attempts: AttemptRow[];
+  createdAt: number;
+};
 
-  constructor() {
-    super('AgoraVoicePitchDB');
-    this.version(1).stores({
-      users: '++id, &[firstName+lastName+gender], createdAt',
-      testResults: '++id, userId, testDate, compositeScore',
-      attempts: '++id, testResultId, userId, recordedAt',
-    });
-    this.version(2).stores({
-      users: '++id, &[firstName+lastName+gender], createdAt',
-      testResults: '++id, userId, testDate, compositeScore, choirSection',
-      attempts: '++id, testResultId, userId, recordedAt',
-    });
+// =============================================================================
+// API client
+// =============================================================================
+
+async function api<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(path, {
+    ...init,
+    headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
+  });
+  if (!res.ok) throw new Error(`API ${path} failed: ${res.status}`);
+  return (await res.json()) as T;
+}
+
+async function fetchAll(): Promise<SessionRecord[]> {
+  try {
+    return await api<SessionRecord[]>('/api/results');
+  } catch {
+    return [];
   }
 }
 
-export const db = new PitchDB();
+// =============================================================================
+// Public surface — eski Dexie API'siyle uyumlu kalacak şekilde
+// =============================================================================
 
-export async function upsertUser(firstName: string, lastName: string, gender: 'male' | 'female'): Promise<number> {
-  const existing = await db.users.where({ firstName, lastName, gender }).first();
-  if (existing?.id) return existing.id;
-  return await db.users.add({ firstName, lastName, gender, createdAt: Date.now() });
+export async function saveTestSession(payload: {
+  user: { firstName: string; lastName: string; gender: 'male' | 'female' };
+  result: Omit<TestResultRow, 'id' | 'userId'>;
+  attempts: AttemptRow[];
+}): Promise<{ sessionId: number }> {
+  const record = await api<SessionRecord>('/api/results', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  return { sessionId: record.id };
 }
 
-export async function topScoreboard(limit = 50) {
-  const all = await db.testResults.orderBy('compositeScore').reverse().toArray();
-  const bestByUser = new Map<number, TestResultRow>();
-  for (const r of all) {
-    if (r.compositeScore <= 0 || !r.lowestNote || !r.highestNote) continue;
-    if (!bestByUser.has(r.userId)) bestByUser.set(r.userId, r);
+export async function getSession(id: number): Promise<{ result: TestResultRow; user: UserRow } | null> {
+  try {
+    const s = await api<SessionRecord>(`/api/results/${id}`);
+    return sessionToView(s);
+  } catch {
+    return null;
   }
-  const rows = [...bestByUser.values()].slice(0, limit);
-  const userIds = rows.map((r) => r.userId);
-  const users = await db.users.bulkGet(userIds);
-  const userMap = new Map(users.filter(Boolean).map((u) => [u!.id!, u!]));
-  return rows.map((r) => ({ result: r, user: userMap.get(r.userId) }));
 }
 
-export async function updateChoirSection(testResultId: number, section: ChoirSection) {
-  await db.testResults.update(testResultId, { choirSection: section });
+export async function updateChoirSection(sessionId: number, section: ChoirSection): Promise<void> {
+  // PATCH only the result.choirSection field
+  await api<SessionRecord>(`/api/results/${sessionId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ result: { choirSection: section } }),
+  });
 }
 
-export async function clearAllData() {
-  await db.attempts.clear();
-  await db.testResults.clear();
-  await db.users.clear();
+export async function setPublished(sessionId: number, published: boolean): Promise<void> {
+  await api<SessionRecord>(`/api/results/${sessionId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ result: { published } }),
+  });
+}
+
+export async function topScoreboard(limit = 50): Promise<{ result: TestResultRow; user: UserRow | undefined; attempts: AttemptRow[] }[]> {
+  const all = await fetchAll();
+  const valid = all.filter(
+    (s) =>
+      s.result.compositeScore > 0 &&
+      s.result.lowestNote &&
+      s.result.highestNote &&
+      s.result.published === true,
+  );
+  // Best-by-user (case-insensitive name + gender)
+  const bestByUser = new Map<string, SessionRecord>();
+  for (const s of [...valid].sort((a, b) => b.result.compositeScore - a.result.compositeScore)) {
+    const key = `${s.user.firstName.trim().toLowerCase()}|${s.user.lastName.trim().toLowerCase()}|${s.user.gender}`;
+    if (!bestByUser.has(key)) bestByUser.set(key, s);
+  }
+  return [...bestByUser.values()].slice(0, limit).map((s) => {
+    const view = sessionToView(s);
+    return { result: view.result, user: view.user, attempts: s.attempts ?? [] };
+  });
+}
+
+export async function clearAllData(password: string): Promise<void> {
+  await api('/api/clear-results', {
+    method: 'POST',
+    body: JSON.stringify({ password }),
+  });
+}
+
+// =============================================================================
+// Helpers
+// =============================================================================
+
+function sessionToView(s: SessionRecord): { result: TestResultRow; user: UserRow } {
+  return {
+    result: { ...s.result, id: s.id, userId: s.id },
+    user: { id: s.id, ...s.user, createdAt: s.createdAt },
+  };
 }

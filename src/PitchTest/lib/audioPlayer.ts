@@ -19,6 +19,7 @@ async function loadBuffer(noteName: string): Promise<AudioBuffer> {
   if (cached) return cached;
   const c = getAudioContext();
   const res = await fetch(`/sounds/piano/${noteName}.wav`);
+  if (!res.ok) throw new Error(`Note file not found: ${noteName}.wav`);
   const arrayBuf = await res.arrayBuffer();
   const audioBuf = await c.decodeAudioData(arrayBuf);
   buffers.set(noteName, audioBuf);
@@ -45,13 +46,35 @@ export async function playNote(noteName: string): Promise<void> {
   const buffer = await loadBuffer(noteName);
   const src = c.createBufferSource();
   src.buffer = buffer;
-  src.connect(c.destination);
+
+  // Anti-click: kısa fade-in + fade-out — WAV sınırlarındaki zero-crossing
+  // problemlerinden kaynaklanan "pop" sesini yok eder, içeriği bozmaz.
+  const FADE_IN = 0.012;   // 12 ms
+  const FADE_OUT = 0.06;   // 60 ms
+  const dur = buffer.duration;
+  const now = c.currentTime;
+
+  const gain = c.createGain();
+  if (dur > FADE_IN + FADE_OUT) {
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(1, now + FADE_IN);
+    gain.gain.setValueAtTime(1, now + dur - FADE_OUT);
+    gain.gain.linearRampToValueAtTime(0, now + dur);
+  } else {
+    // Çok kısa örnek — basit triangular envelope
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(1, now + dur / 2);
+    gain.gain.linearRampToValueAtTime(0, now + dur);
+  }
+
+  src.connect(gain).connect(c.destination);
   activeSource = src;
-  src.start();
+  src.start(now);
 
   return new Promise((resolve) => {
     src.onended = () => {
       if (activeSource === src) activeSource = null;
+      try { gain.disconnect(); } catch { /* noop */ }
       resolve();
     };
   });
