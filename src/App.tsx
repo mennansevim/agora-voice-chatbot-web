@@ -297,63 +297,59 @@ function App() {
       {/* Main Content */}
       <main>
         {/* Hero Section */}
-        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden w-full">
-          {/* Arka plan görseli */}
-          <div className="absolute inset-0 w-full h-full">
+        <section
+          id="home"
+          className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-20 pb-12"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, #1c1611 0%, #0d0a07 60%, #000000 100%)',
+          }}
+        >
+          {/* Sıcak ışık halesi — taş rengi ile harmoni */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[120%] h-[60%] pointer-events-none"
+               style={{ background: 'radial-gradient(ellipse, rgba(217,179,131,0.12) 0%, rgba(180,140,90,0.05) 40%, transparent 70%)' }} />
+
+          <div className="relative w-[88%] max-w-7xl mx-auto flex flex-col items-center z-10">
             <picture>
-              <source srcSet="/koro-main.webp" type="image/webp" />
+              <source srcSet="/hero-collage.webp" type="image/webp" />
               <img
-                src="/koro-main.jpg"
-                alt="Agora Voice Korosu"
-                className="w-full h-full object-cover opacity-90"
+                src="/hero-collage.jpg"
+                alt="Agora Voice — Antik mekânlarda performans kolajı"
+                className="w-full h-auto block drop-shadow-2xl"
                 loading="eager"
               />
             </picture>
-            {/* Koyu overlay */}
-            <div className="absolute inset-0 bg-black/40"></div>
-          </div>
 
-          {/* İçerik */}
-          <div className="relative z-10 w-full px-6 py-20 flex flex-col items-center justify-center">
-            <div className="text-center">
-             
-              <p className="text-xl md:text-2xl text-white mb-12 max-w-3xl mx-auto animate-fade-in" style={{ marginTop: '18.5rem' }}>
-                Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-fade-in mb-16">
-                <button
-                  onClick={() => scrollToSection('secmeler')}
-                  className="btn-agora-primary font-semibold py-4 px-8 rounded-full text-lg text-white"
-                >
-                  Seçmeler
-                </button>
-                <button
-                  onClick={() => setShowPitchTest(true)}
-                  className="font-semibold py-4 px-8 rounded-full text-lg text-white border-2 border-white/80 backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-colors"
-                >
-                  🎤 Ses Aralığı Testi
-                </button>
-                <div className="relative group">
-                  <div
-                    className="inline-flex items-center justify-center font-bold py-4 px-8 rounded-full text-lg text-white/70 text-center cursor-not-allowed opacity-60"
-                    style={{
-                      background: 'linear-gradient(45deg, #888, #999, #888, #777)',
-                    }}
-                  >
-                    <span className="font-bold text-white/70 drop-shadow-lg">
-                      🎵 Başvuru Formu 🎵
-                    </span>
-                  </div>
-                  <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap bg-agora-dark text-white text-sm font-medium py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
-                    Başvuru tarihlerimiz için bizi takip edin
-                  </div>
+            <p className="text-center text-stone-300 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto mt-12 mb-8 px-4">
+              Koromuz, İzmir Antik Agora'nın ruhuyla harmanlanmış ekibi ile birlikte yurt içi ve yurt dışındaki festivallerde başarılı performanslarla ülkemizi gururla temsil etmeyi amaçlamaktadır.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <button
+                onClick={() => scrollToSection('secmeler')}
+                className="font-semibold py-3 px-7 rounded-full text-stone-900 bg-stone-100 hover:bg-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              >
+                Seçmeler
+              </button>
+              <button
+                onClick={() => setShowPitchTest(true)}
+                className="font-semibold py-3 px-7 rounded-full text-stone-100 border-2 border-stone-400/60 bg-white/5 backdrop-blur hover:bg-white/15 transition-colors"
+              >
+                🎤 Ses Aralığı Testi
+              </button>
+              <div className="relative group">
+                <div className="inline-flex items-center justify-center font-medium py-3 px-7 rounded-full text-stone-400 bg-white/5 cursor-not-allowed border-2 border-white/10">
+                  🎵 Başvuru Formu
+                </div>
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-stone-100 text-stone-900 text-xs font-medium py-1.5 px-3 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+                  Başvuru tarihlerimiz için takip edin
                 </div>
               </div>
-              {/* Scroll indicator */}
-              <div className="animate-bounce">
-                <ChevronDown className="w-8 h-8 text-white mx-auto" />
-              </div>
             </div>
+          </div>
+
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce">
+            <ChevronDown className="w-6 h-6 text-stone-500" />
           </div>
         </section>
 

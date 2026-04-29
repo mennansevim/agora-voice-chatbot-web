@@ -13,7 +13,22 @@
       "Bash(cp koro-main.jpg koro-main.original.jpg)",
       "Bash(sips --resampleWidth 1920 -s formatOptions 85 koro-main.jpg --out koro-main.jpg)",
       "Bash(cwebp -q 82 -m 6 koro-main.jpg -o koro-main.webp)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(curl -s http://localhost:5173/api/results)",
+      "Bash(curl -sX POST http://localhost:5173/api/results -H \"Content-Type: application/json\" -d '{\"user\":{\"firstName\":\"test\",\"lastName\":\"user\",\"gender\":\"male\"},\"result\":{\"compositeScore\":42,\"lowestNote\":\"C3\",\"highestNote\":\"E4\",\"octaveRangeWidth\":1.2}}')",
+      "Bash(curl -sX POST http://localhost:5173/api/clear-results -H \"Content-Type: application/json\" -d '{\"password\":\"945000\"}')",
+      "Bash(afinfo C3.wav)",
+      "Bash(afinfo D3.wav)",
+      "Bash(ffmpeg -hide_banner -loglevel error -i C3.wav -af astats=metadata=1:reset=0 -f null -)",
+      "Bash(ffmpeg -hide_banner -loglevel error -i D3.wav -af astats=metadata=1:reset=0 -f null -)",
+      "Bash(ffmpeg -hide_banner -i C3.wav -af astats -f null -)",
+      "Bash(ffmpeg -y -hide_banner -loglevel error -i C3.wav -af \"volume=-2dB,afade=t=in:st=0:d=0.03,afade=t=out:st=2.93:d=0.17\" C3_fixed.wav)",
+      "Bash(ffmpeg -hide_banner -filters)",
+      "Bash(md5 /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/piano/C3.wav /Users/sevimm/Documents/Projects/Personal/cs50-pitch-perfect-analyzer/sounds/piano/C3.wav)",
+      "Bash(cp koro-main.jpg koro-main.bak.jpg)",
+      "Bash(sips --resampleWidth 1920 -s formatOptions 82 koro-main.jpg --out koro-main.jpg)",
+      "Bash(cwebp -q 80 -m 6 koro-main.jpg -o koro-main.webp)",
+      "Bash(grep -n \"^export default\\\\|^}$\" /Users/sevimm/Documents/Projects/agoravoiceweb/src/App.tsx)"
     ]
   }
 }
