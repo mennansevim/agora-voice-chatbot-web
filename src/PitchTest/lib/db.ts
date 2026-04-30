@@ -2,6 +2,8 @@
 // Tüm test sonuçları sunucudaki data/results.json dosyasında tutulur.
 // Eski Dexie/IndexedDB çözümünü tamamen değiştirir.
 
+import { compositeScore } from './classify';
+
 export type ChoirSection = 'soprano' | 'alto' | 'tenor' | 'bass';
 
 export type UserRow = {
@@ -121,8 +123,36 @@ export async function setPublished(sessionId: number, published: boolean): Promi
   });
 }
 
+// Eski kayıtların totalNotesCount/successRate alanları yanlış (her zaman successful'a eşit
+// veya 0/100 flag) yazılmıştı. Doğru değerleri attempts'tan yeniden türetip skoru da
+// güncel formülle yeniden hesaplıyoruz — böylece tüm kayıtlar aynı ölçekte sıralanır.
+function recomputeFromAttempts(s: SessionRecord): SessionRecord {
+  const attempts = s.attempts ?? [];
+  if (attempts.length === 0) return s;
+  const bestByNote = new Map<string, AttemptRow>();
+  for (const a of attempts) {
+    const prev = bestByNote.get(a.noteName);
+    if (!prev || a.accuracyPercent > prev.accuracyPercent) bestByNote.set(a.noteName, a);
+  }
+  const total = bestByNote.size;
+  const successful = [...bestByNote.values()].filter((a) => a.isSuccessful).length;
+  const successRate = total > 0 ? (successful / total) * 100 : 0;
+  const score = compositeScore(s.result.octaveRangeWidth, successful, total);
+  return {
+    ...s,
+    result: {
+      ...s.result,
+      totalNotesCount: total,
+      successfulNotesCount: successful,
+      successRate,
+      compositeScore: score,
+    },
+  };
+}
+
 export async function topScoreboard(limit = 50): Promise<{ result: TestResultRow; user: UserRow | undefined; attempts: AttemptRow[] }[]> {
-  const all = await fetchAll();
+  const raw = await fetchAll();
+  const all = raw.map(recomputeFromAttempts);
   const valid = all.filter(
     (s) =>
       s.result.compositeScore > 0 &&
@@ -139,6 +169,13 @@ export async function topScoreboard(limit = 50): Promise<{ result: TestResultRow
   return [...bestByUser.values()].slice(0, limit).map((s) => {
     const view = sessionToView(s);
     return { result: view.result, user: view.user, attempts: s.attempts ?? [] };
+  });
+}
+
+export async function deleteResult(sessionId: number, password: string): Promise<void> {
+  await api(`/api/results/${sessionId}`, {
+    method: 'DELETE',
+    body: JSON.stringify({ password }),
   });
 }
 

@@ -59,3 +59,11 @@ export function getResult(id) {
 export function clearAll() {
   saveAll([]);
 }
+
+export function deleteResult(id) {
+  const all = loadAll();
+  const next = all.filter((r) => r.id !== id);
+  if (next.length === all.length) return false;
+  saveAll(next);
+  return true;
+}

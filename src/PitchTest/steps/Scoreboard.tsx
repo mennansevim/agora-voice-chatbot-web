@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Music2, Trash2, Check, X as XIcon } from 'lucide-react';
-import { topScoreboard, clearAllData, type ChoirSection, type AttemptRow } from '../lib/db';
+import { ArrowLeft, Trash2, Check, X as XIcon, Music2 } from 'lucide-react';
+import { topScoreboard, clearAllData, deleteResult, setPublished, type ChoirSection, type AttemptRow } from '../lib/db';
 import { noteToTurkish } from '../lib/notes';
 import { passesChoirThreshold, CHOIR_THRESHOLD } from '../lib/threshold';
 
@@ -16,13 +16,13 @@ const SECTION_CFG: Record<ChoirSection, { label: string; gradient: string; text:
 const UNKNOWN_CFG = { label: '?', gradient: 'from-stone-400 to-stone-300', text: 'text-stone-600', ring: 'ring-stone-300' };
 
 // 2x2 sahne yerleşimi:
-//  Arka:  TENOR (sol)  |  BAS (sağ)
-//  Ön:    ALTO  (sol)  |  SOPRANO (sağ)
+//  Arka:  TENOR  (sol) |  BAS (sağ)
+//  Ön:    SOPRANO(sol) |  ALTO (sağ)
 const STAGE_LAYOUT: { section: ChoirSection; row: 'back' | 'front'; col: 'left' | 'right' }[] = [
   { section: 'tenor',   row: 'back',  col: 'left' },
   { section: 'bass',    row: 'back',  col: 'right' },
-  { section: 'alto',    row: 'front', col: 'left' },
-  { section: 'soprano', row: 'front', col: 'right' },
+  { section: 'soprano', row: 'front', col: 'left' },
+  { section: 'alto',    row: 'front', col: 'right' },
 ];
 
 function avgRmsOf(rows: Row[]): number | null {
@@ -44,26 +44,6 @@ const POWER_BADGE: Record<ReturnType<typeof rmsLevel>, { label: string; cls: str
   mid:     { label: 'Dengeli çıkış',         cls: 'bg-emerald-500/25 text-emerald-100 border-emerald-400/50' },
   high:    { label: 'Kuvvetli çıkış',        cls: 'bg-rose-500/25 text-rose-100 border-rose-400/60' },
 };
-
-type ChoralPiece = { title: string; composer: string; era: string; needs: ChoirSection[] };
-const CHORAL_PIECES: ChoralPiece[] = [
-  { title: 'Hallelujah Korosu', composer: 'G.F. Handel',    era: 'Barok',     needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'O Fortuna',         composer: 'C. Orff',         era: 'Modern',    needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'Gloria',            composer: 'A. Vivaldi',      era: 'Barok',     needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'Ave Verum Corpus',  composer: 'W.A. Mozart',     era: 'Klasik',    needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'Lacrimosa',         composer: 'W.A. Mozart',     era: 'Klasik',    needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'Pie Jesu',          composer: 'A. Lloyd Webber', era: 'Çağdaş',   needs: ['soprano', 'alto'] },
-  { title: 'Danny Boy',         composer: 'Geleneksel',      era: 'Halk',      needs: ['tenor', 'bass'] },
-  { title: 'Scarborough Fair',  composer: 'Geleneksel',      era: 'Halk',      needs: ['soprano', 'alto'] },
-  { title: 'Boğaziçi',          composer: 'Türk Halk Müziği', era: 'Halk',    needs: ['tenor', 'bass'] },
-  { title: 'Üsküdar',           composer: 'Türk Halk Müziği', era: 'Halk',    needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'Çanakkale İçinde',  composer: 'Türk Halk Müziği', era: 'Halk',    needs: ['soprano', 'alto', 'tenor', 'bass'] },
-  { title: 'Hisarlıkta Savrulur', composer: 'Türk Halk Müziği', era: 'Halk', needs: ['tenor', 'bass'] },
-];
-
-function recommendPieces(sections: Set<ChoirSection>): ChoralPiece[] {
-  return CHORAL_PIECES.filter((p) => p.needs.every((n) => sections.has(n)));
-}
 
 function getInitials(firstName?: string, lastName?: string): string {
   return `${(firstName?.[0] ?? '?').toUpperCase()}${(lastName?.[0] ?? '').toUpperCase()}`;
@@ -285,7 +265,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function MemberDrawer({ row, onClose }: { row: Row | null; onClose: () => void }) {
+function MemberDrawer({ row, onClose, onDelete }: { row: Row | null; onClose: () => void; onDelete: (id: number) => void }) {
   if (!row) return null;
   const r = row.result;
   const u = row.user;
@@ -293,8 +273,9 @@ function MemberDrawer({ row, onClose }: { row: Row | null; onClose: () => void }
   const cfg = sec ? SECTION_CFG[sec] : UNKNOWN_CFG;
 
   return (
-    <div className="fixed inset-0 z-[110] flex justify-end animate-fade-in" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/50" />
+    <div className="fixed inset-0 z-[110] flex justify-end animate-fade-in">
+      {/* Görünmez tıklama alanı — sağdaki drawer dışına tıklayınca kapatır */}
+      <div className="flex-1 h-full" onClick={onClose} />
       <aside
         className="relative w-full sm:max-w-md bg-white shadow-2xl overflow-y-auto h-full"
         onClick={(e) => e.stopPropagation()}
@@ -314,13 +295,33 @@ function MemberDrawer({ row, onClose }: { row: Row | null; onClose: () => void }
               </div>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-stone-100 text-agora-muted shrink-0"
-            aria-label="Kapat"
-          >
-            <XIcon size={20} />
-          </button>
+          <div className="flex items-center gap-1 shrink-0">
+            <button
+              onClick={async () => {
+                const pwd = prompt('Bu üyeyi skor tablosundan çıkarmak için şifre:');
+                if (pwd === null) return;
+                if (!confirm(`${u ? `${u.firstName} ${u.lastName}` : 'Bu kayıt'} skor tablosundan kalıcı olarak silinecek. Emin misin?`)) return;
+                try {
+                  await deleteResult(r.id!, pwd);
+                  onDelete(r.id!);
+                } catch {
+                  alert('Şifre hatalı veya sunucu hatası.');
+                }
+              }}
+              className="p-2 rounded-full hover:bg-red-50 text-red-600"
+              aria-label="Skor tablosundan çıkar"
+              title="Skor tablosundan çıkar (şifre korumalı)"
+            >
+              <Trash2 size={18} />
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full hover:bg-stone-100 text-agora-muted"
+              aria-label="Kapat"
+            >
+              <XIcon size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="p-4 space-y-4">
@@ -396,9 +397,10 @@ function Field({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function Scoreboard({ onBack }: { onBack: () => void }) {
+export default function Scoreboard({ onBack, onStage }: { onBack: () => void; onStage?: () => void }) {
   const [rows, setRows] = useState<Row[] | null>(null);
   const [selected, setSelected] = useState<Row | null>(null);
+  const [sectionFilter, setSectionFilter] = useState<ChoirSection | 'all'>('all');
 
   useEffect(() => {
     topScoreboard(100).then((all) => setRows(all.filter((r) => passesChoirThreshold(r.result))));
@@ -427,7 +429,6 @@ export default function Scoreboard({ onBack }: { onBack: () => void }) {
   const sectionsPresent = new Set<ChoirSection>(
     rows.map((r) => r.result.choirSection).filter(Boolean) as ChoirSection[]
   );
-  const pieces = recommendPieces(sectionsPresent);
 
   const totalMembers = rows.length;
 
@@ -441,6 +442,36 @@ export default function Scoreboard({ onBack }: { onBack: () => void }) {
         >
           <ArrowLeft size={18} /> Geri
         </button>
+        <div className="flex items-center gap-2">
+        {onStage && (() => {
+          const allSections: ChoirSection[] = ['soprano', 'alto', 'tenor', 'bass'];
+          const missing = allSections.filter((s) => !sectionsPresent.has(s));
+          const ready = missing.length === 0;
+          const missingLabels = missing.map((s) => SECTION_CFG[s].label).join(', ');
+          return (
+            <div className="flex flex-col items-end gap-0.5">
+              <button
+                type="button"
+                onClick={ready ? onStage : undefined}
+                disabled={!ready}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shadow-sm ${
+                  ready
+                    ? 'text-white bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 cursor-pointer'
+                    : 'text-stone-400 bg-stone-100 border border-stone-200 cursor-not-allowed'
+                }`}
+                title={ready ? 'Koroyu sahneye çıkar (deneysel)' : `Eksik parti: ${missingLabels}`}
+              >
+                <Music2 size={14} /> Sahneye Çık
+                <span className={`text-[9px] uppercase tracking-wider px-1 py-0.5 rounded ${ready ? 'bg-white/25' : 'bg-stone-200 text-stone-500'}`}>beta</span>
+              </button>
+              {!ready && (
+                <span className="text-[10px] text-stone-500">
+                  Eksik parti: <span className="font-medium text-stone-600">{missingLabels}</span>
+                </span>
+              )}
+            </div>
+          );
+        })()}
         <button
           type="button"
           onClick={async () => {
@@ -459,6 +490,7 @@ export default function Scoreboard({ onBack }: { onBack: () => void }) {
         >
           <Trash2 size={14} /> Sıfırla
         </button>
+        </div>
       </div>
 
       <div className="text-center mb-4">
@@ -580,46 +612,71 @@ export default function Scoreboard({ onBack }: { onBack: () => void }) {
           <ChoirBalance grouped={grouped} totalMembers={totalMembers} />
 
           {/* Skor sıralaması */}
-          <div className="bg-white/70 backdrop-blur border border-stone-200 rounded-2xl overflow-hidden mb-6">
-            <div className="px-4 py-3 border-b border-stone-200">
-              <div className="text-sm font-semibold text-agora-dark">Skor Sıralaması</div>
-            </div>
-            <div className="divide-y divide-stone-100">
-              {rows.slice(0, 10).map((row, i) => (
-                <ScoreRow key={row.result.id} row={row} rank={i + 1} onSelect={setSelected} />
-              ))}
-            </div>
-          </div>
-
-          {/* Choral piece recommendations */}
-          {pieces.length > 0 && (
-            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200/60 rounded-2xl p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <Music2 size={18} className="text-indigo-600" />
-                <div className="text-sm font-semibold text-agora-dark">Koronun Söyleyebileceği Eserler</div>
-              </div>
-              <div className="space-y-2">
-                {pieces.map((p) => (
-                  <div key={p.title} className="flex items-center justify-between bg-white/70 rounded-xl px-4 py-2.5 border border-indigo-100">
-                    <div>
-                      <div className="text-sm font-medium text-agora-dark">{p.title}</div>
-                      <div className="text-xs text-agora-muted">{p.composer} · {p.era}</div>
-                    </div>
-                    <div className="flex gap-1">
-                      {p.needs.map(n => (
-                        <div key={n} className={`w-4 h-4 rounded-full bg-gradient-to-br ${SECTION_CFG[n].gradient}`} title={SECTION_CFG[n].label} />
-                      ))}
-                    </div>
+          {(() => {
+            const filtered = sectionFilter === 'all'
+              ? rows
+              : rows.filter((r) => r.result.choirSection === sectionFilter);
+            const tabs: { key: ChoirSection | 'all'; label: string }[] = [
+              { key: 'all', label: `Tümü (${rows.length})` },
+              ...(['soprano', 'alto', 'tenor', 'bass'] as ChoirSection[]).map((s) => ({
+                key: s,
+                label: `${SECTION_CFG[s].label} (${grouped.get(s)?.length ?? 0})`,
+              })),
+            ];
+            return (
+              <div className="bg-white/70 backdrop-blur border border-stone-200 rounded-2xl overflow-hidden mb-6">
+                <div className="px-4 py-3 border-b border-stone-200 flex items-center justify-between gap-3 flex-wrap">
+                  <div className="text-sm font-semibold text-agora-dark">Skor Sıralaması</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tabs.map((t) => {
+                      const active = sectionFilter === t.key;
+                      const cfg = t.key !== 'all' ? SECTION_CFG[t.key] : null;
+                      return (
+                        <button
+                          key={t.key}
+                          type="button"
+                          onClick={() => setSectionFilter(t.key)}
+                          className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
+                            active
+                              ? cfg
+                                ? `bg-gradient-to-r ${cfg.gradient} text-white border-transparent`
+                                : 'bg-agora-dark text-white border-transparent'
+                              : 'bg-white text-agora-muted border-stone-200 hover:bg-stone-50'
+                          }`}
+                        >
+                          {t.label}
+                        </button>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
+                <div className="divide-y divide-stone-100">
+                  {filtered.length === 0 ? (
+                    <div className="px-4 py-8 text-center text-xs text-agora-muted italic">
+                      Bu partide kayıt yok.
+                    </div>
+                  ) : (
+                    filtered.slice(0, 10).map((row, i) => (
+                      <ScoreRow key={row.result.id} row={row} rank={i + 1} onSelect={setSelected} />
+                    ))
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
+
         </>
       )}
 
       {/* Detay drawer — admin paneli benzeri */}
-      <MemberDrawer row={selected} onClose={() => setSelected(null)} />
+      <MemberDrawer
+        row={selected}
+        onClose={() => setSelected(null)}
+        onDelete={(id) => {
+          setRows((prev) => (prev ? prev.filter((r) => r.result.id !== id) : prev));
+          setSelected(null);
+        }}
+      />
     </div>
   );
 }

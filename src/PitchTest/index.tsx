@@ -6,13 +6,14 @@ import MicCheck from './steps/MicCheck';
 import RangeTest from './steps/RangeTest';
 import Result from './steps/Result';
 import Scoreboard from './steps/Scoreboard';
+import StagePerformance from './steps/StagePerformance';
 import { releaseMicrophone } from './lib/recorder';
 
 export type Gender = 'male' | 'female';
 export type UserInfo = { firstName: string; lastName: string; gender: Gender };
 export type FinalResult = { testResultId: number; userId: number };
 
-type Step = 'intro' | 'form' | 'mic' | 'test' | 'result' | 'scoreboard';
+type Step = 'intro' | 'form' | 'mic' | 'test' | 'result' | 'scoreboard' | 'stage';
 
 export default function PitchTest({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState<Step>('intro');
@@ -91,7 +92,10 @@ export default function PitchTest({ onClose }: { onClose: () => void }) {
             />
           )}
           {step === 'scoreboard' && (
-            <Scoreboard onBack={() => setStep('intro')} />
+            <Scoreboard onBack={() => setStep('intro')} onStage={() => setStep('stage')} />
+          )}
+          {step === 'stage' && (
+            <StagePerformance onBack={() => setStep('scoreboard')} />
           )}
         </main>
       </div>

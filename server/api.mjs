@@ -3,7 +3,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadAll, addResult, updateResult, getResult, clearAll } from './store.mjs';
+import { loadAll, addResult, updateResult, getResult, clearAll, deleteResult } from './store.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const CONTACTS_FILE = path.join(ROOT, 'data', 'contacts.txt');
@@ -69,6 +69,17 @@ export async function handleApi(req, res) {
       }
       const updated = updateResult(id, patch);
       json(res, 200, updated);
+      return true;
+    }
+
+    // DELETE /api/results/:id  { password }
+    if (singleMatch && req.method === 'DELETE') {
+      const id = parseInt(singleMatch[1], 10);
+      const body = JSON.parse((await readBody(req)) || '{}');
+      if (body.password !== RESET_PASSWORD) { json(res, 403, { error: 'wrong password' }); return true; }
+      const ok = deleteResult(id);
+      if (!ok) { json(res, 404, { error: 'not found' }); return true; }
+      json(res, 200, { ok: true });
       return true;
     }
 

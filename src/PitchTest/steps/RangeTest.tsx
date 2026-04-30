@@ -134,10 +134,15 @@ export default function RangeTest({
 
   async function persistAndFinish(finalState: RangeMachineState) {
     const bounds = getRangeBounds(finalState);
-    const successful = finalState.log.filter((l) => l.isSuccessful).length;
-    // Başarısız denemeler hesaplamaya katılmıyor → successRate başarılı varsa 100
-    const successRate = successful > 0 ? 100 : 0;
-    const totalNotes = successful;
+    // Nota başına en iyi denemeyi al (aynı nota için birden fazla deneme olabilir)
+    const bestByNote = new Map<string, (typeof finalState.log)[number]>();
+    for (const a of finalState.log) {
+      const prev = bestByNote.get(a.noteName);
+      if (!prev || (a.successRate ?? 0) > (prev.successRate ?? 0)) bestByNote.set(a.noteName, a);
+    }
+    const successful = [...bestByNote.values()].filter((a) => a.isSuccessful).length;
+    const totalNotes = bestByNote.size;
+    const successRate = totalNotes > 0 ? (successful / totalNotes) * 100 : 0;
 
     let voiceTypeName: string | null = null;
     let voiceTypeMatchPercent = 0;
@@ -160,7 +165,7 @@ export default function RangeTest({
       }
     }
 
-    const score = compositeScore(rangeWidthHz, octaveWidth, successful);
+    const score = compositeScore(octaveWidth, successful, totalNotes);
 
     // Başarılı denemelerin ortalaması — ses kalitesi metrikleri
     const successfulLogs = finalState.log.filter((l) => l.isSuccessful);

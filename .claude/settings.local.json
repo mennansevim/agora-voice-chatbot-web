@@ -28,7 +28,16 @@
       "Bash(cp koro-main.jpg koro-main.bak.jpg)",
       "Bash(sips --resampleWidth 1920 -s formatOptions 82 koro-main.jpg --out koro-main.jpg)",
       "Bash(cwebp -q 80 -m 6 koro-main.jpg -o koro-main.webp)",
-      "Bash(grep -n \"^export default\\\\|^}$\" /Users/sevimm/Documents/Projects/agoravoiceweb/src/App.tsx)"
+      "Bash(grep -n \"^export default\\\\|^}$\" /Users/sevimm/Documents/Projects/agoravoiceweb/src/App.tsx)",
+      "Bash(cp \"/Users/sevimm/Library/CloudStorage/OneDrive-Commencis/Agora Voices/FilmoraProjects/Lacrimosa-Voices/soprano-lacrimosa.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/lacrimosa/soprano.mp3)",
+      "Bash(cp \"/Users/sevimm/Library/CloudStorage/OneDrive-Commencis/Agora Voices/FilmoraProjects/Lacrimosa-Voices/alto-lacrimosa.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/lacrimosa/alto.mp3)",
+      "Bash(cp \"/Users/sevimm/Library/CloudStorage/OneDrive-Commencis/Agora Voices/FilmoraProjects/Lacrimosa-Voices/tenor-lacrimosa.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/lacrimosa/tenor.mp3)",
+      "Bash(cp \"/Users/sevimm/Library/CloudStorage/OneDrive-Commencis/Agora Voices/FilmoraProjects/Lacrimosa-Voices/bass-lacrimosa.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/lacrimosa/bass.mp3)",
+      "Bash(md5 /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/lacrimosa/*.mp3)",
+      "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/soprano.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/soprano.mp3)",
+      "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/alto.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/alto.mp3)",
+      "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/tenor.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/tenor.mp3)",
+      "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/bass.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/bass.mp3)"
     ]
   }
 }
