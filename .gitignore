@@ -45,3 +45,8 @@ dist-ssr
 *.sw?
 .env
 devops/deploy.sh
+
+# Runtime data — production'da server tarafından yazılır.
+# Seed için data/results.seed.json kullanılır; ilk açılışta server kopyalar.
+data/results.json
+data/contacts.txt
