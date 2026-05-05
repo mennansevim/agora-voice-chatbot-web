@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Mic, 
   MicOff, 
   Volume2, 
   VolumeX, 
   Settings, 
-  Users, 
   Bot,
   Menu,
   X,
@@ -24,6 +23,62 @@ import {
 } from 'lucide-react';
 import Secmeler from './Secmeler';
 import PitchTest from './PitchTest';
+import AdminPanel from './Admin';
+
+const CONCERT_WORKS = [
+  'Signore Delle',
+  'Dere Kenarı',
+  'Yolcu',
+  'Dremle',
+  'Pirlere Niyaz Ederiz',
+  'Quizas',
+  'Köprüden Geçemedim',
+  'İzmir’in Kavakları',
+  'Doşla Moma',
+  'Let it be',
+  'Siyahamba',
+] as const;
+
+const KORistler_BY_PART = {
+  SOPRANO: [
+    'Azize DEMİRHAN',
+    'Beren ÖCAL',
+    'Cansu KESKİN',
+    'Deniz KÖRÜKÇÜ',
+    'Duygu DUMANLI',
+    'İmran ÖZAL ŞENTÜRK',
+    'Sıla YANIK',
+  ],
+  ALTO: [
+    'Arzu GERÇEK',
+    'Betül TORUN',
+    'Cansu ÖZTÜRK',
+    'Dilşat TURGAY ÖZDEN',
+    'Elvan ÖZKERVANCI',
+    'Gökçe UZUNALİ ŞENOL',
+    'Güzin AKTAŞ',
+    'Nesrin AKSUNGUR DUMAN',
+    'Şebnem AKSU',
+    'Tuğba YAVUZ',
+    'Yasemin YILMAZ',
+  ],
+  TENOR: ['Emrah EMNİYET', 'Emre KÖKPINAR', 'Engin YÜMLÜ', 'Mehmet Ali KAPLAN'],
+  BAS: ['Alper KAYA', 'Bülent KARAÇİL', 'Mennan SEVİM', 'Tansel ASRAK'],
+} as const;
+
+const VOICE_PART_BORDER: Record<keyof typeof KORistler_BY_PART, string> = {
+  SOPRANO: 'border-l-4 border-l-red-600',
+  ALTO: 'border-l-4 border-l-amber-800',
+  TENOR: 'border-l-4 border-l-amber-600',
+  BAS: 'border-l-4 border-l-stone-600',
+};
+
+/** Üretimde: 8 ve 9 Mayıs (yerel saat). Geliştirmede: her açılışta (`import.meta.env.DEV`). */
+function shouldShowConcertInfoPopup(): boolean {
+  if (import.meta.env.DEV) return true;
+  const d = new Date();
+  return d.getMonth() === 4 && (d.getDate() === 8 || d.getDate() === 9);
+}
 
 function App() {
   const [isListening, setIsListening] = useState(false);
@@ -34,6 +89,10 @@ function App() {
   const [showChatbot, setShowChatbot] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showConcertPopup, setShowConcertPopup] = useState(false);
+
+  const dismissConcertPopup = useCallback(() => {
+    setShowConcertPopup(false);
+  }, []);
   const [showPitchTest, setShowPitchTest] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -149,6 +208,25 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || window.location.pathname === '/yonetim') return;
+    if (!shouldShowConcertInfoPopup()) return;
+    setShowConcertPopup(true);
+  }, []);
+
+  useEffect(() => {
+    if (!showConcertPopup) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismissConcertPopup();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [showConcertPopup, dismissConcertPopup]);
+
+  if (typeof window !== 'undefined' && window.location.pathname === '/yonetim') {
+    return <AdminPanel />;
+  }
 
   return (
     <div className="min-h-screen bg-marble">
@@ -337,14 +415,14 @@ function App() {
               >
                 🎤 Ses Aralığı Testi
               </button>
-              <div className="relative group">
-                <div className="inline-flex items-center justify-center font-medium py-3 px-7 rounded-full text-stone-400 bg-white/5 cursor-not-allowed border-2 border-white/10">
-                  🎵 Başvuru Formu
-                </div>
-                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-stone-100 text-stone-900 text-xs font-medium py-1.5 px-3 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
-                  Başvuru tarihlerimiz için takip edin
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() => setShowConcertPopup(true)}
+                className="animate-concert-info-cta inline-flex items-center justify-center gap-2 font-semibold py-3 px-7 rounded-full text-stone-900 bg-gradient-to-r from-amber-200 via-amber-50 to-amber-200 border-2 border-amber-400/90 hover:brightness-110 transition-[filter,transform]"
+              >
+                <Music className="h-4 w-4 shrink-0 text-amber-950/80" strokeWidth={2.25} aria-hidden />
+                Konser Dinletisi
+              </button>
             </div>
           </div>
 
@@ -789,58 +867,102 @@ function App() {
         )}
       </main>
 
-      {/* Konser Takvimi Popup */}
+      {/* Konser Dinletisi — program kitapçığı; localde her zaman; prod 8–9 Mayıs */}
       {showConcertPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md" style={{ animation: 'fadeIn 0.4s ease-out' }}>
-          <div className="relative max-w-md w-full mx-4 rounded-3xl overflow-hidden shadow-2xl" style={{ animation: 'slideUp 0.5s ease-out', background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6 bg-stone-950/40 backdrop-blur-[2px] animate-[fadeIn_0.35s_ease-out]"
+          role="presentation"
+          onClick={dismissConcertPopup}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="concert-info-title"
+            className="relative max-h-[min(88dvh,820px)] w-full max-w-[41.6rem] overflow-y-auto overscroll-contain rounded-2xl shadow-[0_25px_80px_-12px_rgba(28,25,23,0.35)] ring-1 ring-stone-200/80 sm:max-w-[54.6rem] animate-[slideUp_0.45s_ease-out]"
+            style={{
+              background:
+                'linear-gradient(180deg, #fffefb 0%, #f7f2ea 48%, #f3eee6 100%)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-stone-300/60 to-transparent" aria-hidden />
+
             <button
-              onClick={() => setShowConcertPopup(false)}
-              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-300"
+              type="button"
+              onClick={dismissConcertPopup}
+              className="absolute right-3 top-3 z-10 rounded-full p-2 text-stone-400 transition hover:bg-stone-900/5 hover:text-agora-dark"
+              aria-label="Kapat"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" strokeWidth={1.75} />
             </button>
 
-            <div className="relative p-8 pb-4 text-center">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 bg-agora-terracotta/20 rounded-full blur-3xl"></div>
-              <div className="relative inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-agora-terracotta to-agora-bronze rounded-2xl mb-4 shadow-lg shadow-agora-terracotta/30 rotate-3">
-                <CalendarDays className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-1">Konser Takvimi</h3>
-              <p className="text-white/50 text-sm">2026 Sezonu</p>
-            </div>
+            <header className="border-b border-stone-200/60 px-6 pb-8 pt-10 text-center sm:px-10 sm:pt-12">
+              <img
+                src="/agora.png"
+                alt=""
+                className="mx-auto h-[4.5rem] w-[4.5rem] rounded-full border-[3px] border-white object-cover shadow-md ring-1 ring-stone-200/80"
+              />
+              <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-agora-bronze">Agora Voice</p>
+              <h3
+                id="concert-info-title"
+                className="font-agoravoice mt-2 text-[1.65rem] font-bold leading-[1.15] tracking-tight text-agora-dark sm:text-4xl sm:leading-[1.1]"
+              >
+                Konser Dinletisi
+              </h3>
+              <p className="mx-auto mt-3 max-w-md text-sm italic leading-relaxed text-stone-500">
+                Konser programı ve ses gruplarına göre korist kadromuz.
+              </p>
 
-            <div className="px-6 pb-2 space-y-3">
-              {[
-                { name: 'İzmir Uluslararası Festivali', date: '21 Mayıs · Perşembe · 16:30', gradient: 'from-rose-500 to-orange-500', location: 'İzmir · Küçük Salon' },
-                { name: 'IX. Çanakkale Koro Festivali', date: '7-12 Temmuz', gradient: 'from-emerald-500 to-teal-500', location: 'Çanakkale' },
-                { name: 'Makedonya Ohrid Koro Festivali', date: '27-31 Ağustos', gradient: 'from-blue-500 to-indigo-500', location: 'Ohrid' },
-              ].map((concert, i) => (
-                <div
-                  key={i}
-                  className="group flex items-center space-x-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all duration-300"
-                >
-                  <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${concert.gradient} flex items-center justify-center shadow-lg`}>
-                    <MapPin className="w-5 h-5 text-white" />
+              <div className="mx-auto mt-8 max-w-lg border-t border-stone-200/70 pt-6 text-sm">
+                <div className="grid grid-cols-1 gap-5 text-center sm:grid-cols-2 sm:gap-8">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-agora-bronze">Koro şefi</p>
+                    <p className="mt-1.5 font-medium leading-snug text-agora-dark">Özlem Varışlı ATÇEKEN</p>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-white font-semibold text-sm truncate">{concert.name}</h4>
-                    <p className="text-white/40 text-xs mt-0.5">{concert.location}</p>
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                    <span className={`text-transparent bg-clip-text bg-gradient-to-r ${concert.gradient} font-bold text-sm`}>{concert.date}</span>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-agora-bronze">Aranjör & Korrepetitör</p>
+                    <p className="mt-1.5 font-medium leading-snug text-agora-dark">Rıza ATÇEKEN</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            </header>
 
-            <div className="p-6 pt-4">
-              <button
-                onClick={() => setShowConcertPopup(false)}
-                className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-agora-terracotta/20 hover:-translate-y-0.5"
-                style={{ background: 'linear-gradient(135deg, #c0392b, #e67e22)' }}
-              >
-                Harika, Tamam!
-              </button>
+            <div className="px-6 py-8 sm:px-10 sm:py-10">
+              <section>
+                <h4 className="mb-6 flex items-center gap-3 text-center">
+                  <span className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-300 to-stone-200/80" aria-hidden />
+                  <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.28em] text-agora-bronze">Program</span>
+                  <span className="h-px flex-1 bg-gradient-to-l from-transparent via-stone-300 to-stone-200/80" aria-hidden />
+                </h4>
+                <ol className="mx-auto max-w-xl list-none space-y-0 sm:max-w-none sm:columns-2 sm:gap-x-12">
+                  {CONCERT_WORKS.map((title, i) => (
+                    <li key={title} className="flex break-inside-avoid gap-3 border-b border-stone-200/50 py-2.5 sm:py-3">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-red-50 to-stone-50 text-xs font-semibold tabular-nums text-red-700 ring-1 ring-red-100/80">
+                        {i + 1}
+                      </span>
+                      <span className="min-w-0 pt-1 text-[15px] font-medium leading-snug text-agora-dark sm:text-base">{title}</span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+
+              <section className="mt-12 border-t border-stone-200/50 pt-10">
+                <h4 className="mb-8 flex items-center gap-3 text-center">
+                  <span className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-300 to-stone-200/80" aria-hidden />
+                  <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.28em] text-agora-bronze">Kadro</span>
+                  <span className="h-px flex-1 bg-gradient-to-l from-transparent via-stone-300 to-stone-200/80" aria-hidden />
+                </h4>
+                <div className="mx-auto max-w-2xl space-y-6">
+                  {(Object.entries(KORistler_BY_PART) as [keyof typeof KORistler_BY_PART, readonly string[]][]).map(
+                    ([part, names]) => (
+                      <div key={part} className={`rounded-lg border border-stone-200/60 bg-white/50 px-4 py-3.5 pl-5 shadow-sm sm:px-5 sm:py-4 ${VOICE_PART_BORDER[part]}`}>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-agora-bronze">{part}</p>
+                        <p className="mt-2 text-sm leading-relaxed text-agora-muted">{names.join(', ')}</p>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </section>
             </div>
           </div>
         </div>

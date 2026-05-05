@@ -50,3 +50,5 @@ devops/deploy.sh
 # Seed için data/results.seed.json kullanılır; ilk açılışta server kopyalar.
 data/results.json
 data/contacts.txt
+data/recordings/
+data/stage-recordings.json

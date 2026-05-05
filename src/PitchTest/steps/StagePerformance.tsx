@@ -6,9 +6,10 @@
 // Mevcut yapıyı bozmamak için bağımsız bir route (step='stage') olarak eklenir.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX, X as XIcon, ArrowRightLeft, Loader2 } from 'lucide-react';
-import { topScoreboard, type ChoirSection } from '../lib/db';
+import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX, X as XIcon, ArrowRightLeft, Loader2, Mic, Square } from 'lucide-react';
+import { topScoreboard, type ChoirSection, uploadStageRecording } from '../lib/db';
 import { passesChoirThreshold } from '../lib/threshold';
+import { startContinuousRecording, type ContinuousRecording } from '../lib/recorder';
 
 type Row = Awaited<ReturnType<typeof topScoreboard>>[number];
 
@@ -202,6 +203,10 @@ export default function StagePerformance({ onBack }: { onBack: () => void }) {
   const [progressTick, setProgressTick] = useState(0); // playhead için
 
   const engineRef = useRef<Engine | null>(null);
+  const [micRecording, setMicRecording] = useState(false);
+  const [micUploading, setMicUploading] = useState(false);
+  const [micToast, setMicToast] = useState<string | null>(null);
+  const micRecRef = useRef<ContinuousRecording | null>(null);
 
   useEffect(() => {
     topScoreboard(100).then((all) => setRows(all.filter((r) => passesChoirThreshold(r.result))));
@@ -577,6 +582,47 @@ export default function StagePerformance({ onBack }: { onBack: () => void }) {
           {loadError && (
             <span className="text-xs text-red-600">⚠ {loadError} — dosyaları <code className="bg-stone-100 px-1 rounded">public/sounds/stage/lacrimosa/</code> içine koy</span>
           )}
+          <button
+            onClick={async () => {
+              if (micRecording) {
+                const rec = micRecRef.current;
+                if (!rec) return;
+                micRecRef.current = null;
+                setMicRecording(false);
+                setMicUploading(true);
+                try {
+                  const out = await rec.stop();
+                  await uploadStageRecording(out.blob, {
+                    songId: piece.id,
+                    songTitle: piece.title,
+                    composer: piece.composer,
+                    durationSec: out.durationSec.toFixed(1),
+                  });
+                  setMicToast('Kayıt yüklendi');
+                  setTimeout(() => setMicToast(null), 2500);
+                } finally {
+                  setMicUploading(false);
+                }
+              } else {
+                try {
+                  const rec = await startContinuousRecording(180);
+                  micRecRef.current = rec;
+                  setMicRecording(true);
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+            }}
+            disabled={micUploading}
+            title={micRecording ? 'Mikrofon kaydını durdur ve yükle' : 'Sesini kaydet (geliştirme verisi)'}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-colors disabled:opacity-60 ${
+              micRecording ? 'bg-rose-500 text-white hover:bg-rose-600' : 'bg-stone-200 text-agora-dark hover:bg-stone-300'
+            }`}
+          >
+            {micUploading ? <Loader2 size={14} className="animate-spin" /> : micRecording ? <Square size={14} fill="currentColor" /> : <Mic size={14} />}
+            {micUploading ? 'Yükleniyor…' : micRecording ? 'Sesi Bitir' : 'Sesimi Kaydet'}
+          </button>
+          {micToast && <span className="text-xs text-emerald-700">{micToast}</span>}
         </div>
 
         {/* Playhead */}

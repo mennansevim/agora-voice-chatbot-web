@@ -55,12 +55,24 @@ export function abortActiveRecording(): void {
   }
 }
 
+function pickMime(): string {
+  const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+  for (const m of candidates) {
+    if (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(m)) return m;
+  }
+  return '';
+}
+
 export async function recordSamples(durationSec: number): Promise<{ samples: Float32Array; sampleRate: number }> {
+  const r = await recordSamplesWithBlob(durationSec);
+  return { samples: r.samples, sampleRate: r.sampleRate };
+}
+
+export async function recordSamplesWithBlob(durationSec: number): Promise<{ samples: Float32Array; sampleRate: number; blob: Blob; mime: string }> {
   const ctx = getAudioContext();
   const ms = await requestMicrophone();
 
-  const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus']
-    .find((m) => typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(m)) || '';
+  const mime = pickMime();
   const recorder = new MediaRecorder(ms, mime ? { mimeType: mime } : undefined);
   activeRecorder = recorder;
   const chunks: Blob[] = [];
@@ -79,7 +91,46 @@ export async function recordSamples(durationSec: number): Promise<{ samples: Flo
 
   const blob = new Blob(chunks, { type: mime || 'audio/webm' });
   const arrayBuf = await blob.arrayBuffer();
-  const audioBuf = await ctx.decodeAudioData(arrayBuf);
+  // decodeAudioData blob'u tüketiyor; analiz için kopya kullan
+  const decodeBuf = arrayBuf.slice(0);
+  const audioBuf = await ctx.decodeAudioData(decodeBuf);
   const samples = audioBuf.getChannelData(0).slice();
-  return { samples, sampleRate: audioBuf.sampleRate };
+  return { samples, sampleRate: audioBuf.sampleRate, blob, mime: mime || 'audio/webm' };
+}
+
+// Continuous (max-duration) recording — kullanıcı erken durdurabilir.
+export type ContinuousRecording = {
+  stop: () => Promise<{ blob: Blob; mime: string; durationSec: number }>;
+};
+
+export async function startContinuousRecording(maxDurationSec: number): Promise<ContinuousRecording> {
+  const ms = await requestMicrophone();
+  const mime = pickMime();
+  const recorder = new MediaRecorder(ms, mime ? { mimeType: mime } : undefined);
+  activeRecorder = recorder;
+  const chunks: Blob[] = [];
+  const startedAt = Date.now();
+  recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+  const stopped = new Promise<void>((resolve) => { recorder.onstop = () => resolve(); });
+  recorder.start(1000);
+
+  const hardStop = setTimeout(() => {
+    if (recorder.state !== 'inactive') {
+      try { recorder.stop(); } catch { /* noop */ }
+    }
+  }, maxDurationSec * 1000);
+
+  return {
+    stop: async () => {
+      if (recorder.state !== 'inactive') {
+        try { recorder.stop(); } catch { /* noop */ }
+      }
+      await stopped;
+      clearTimeout(hardStop);
+      if (activeRecorder === recorder) activeRecorder = null;
+      const durationSec = (Date.now() - startedAt) / 1000;
+      const blob = new Blob(chunks, { type: mime || 'audio/webm' });
+      return { blob, mime: mime || 'audio/webm', durationSec };
+    },
+  };
 }

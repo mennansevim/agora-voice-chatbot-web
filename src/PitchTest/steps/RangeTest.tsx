@@ -4,9 +4,9 @@ import type { UserInfo, FinalResult } from '..';
 import { initState, currentNote, recordAttempt, skipDirection, getRangeBounds, type RangeMachineState, type AttemptLog } from '../lib/rangeMachine';
 import { getStartNoteForGender, NOTE_FREQUENCIES, noteToTurkish } from '../lib/notes';
 import { playNote, preloadNotes, stopAllPlayback } from '../lib/audioPlayer';
-import { recordSamples, abortActiveRecording } from '../lib/recorder';
+import { recordSamplesWithBlob, abortActiveRecording } from '../lib/recorder';
 import { analyzeBuffer, matchToTarget } from '../lib/pitchDetector';
-import { saveTestSession } from '../lib/db';
+import { saveTestSession, uploadRecording } from '../lib/db';
 import { classifyVoiceType } from '../lib/voiceTypes';
 import { compositeScore } from '../lib/classify';
 
@@ -30,6 +30,16 @@ export default function RangeTest({
   }, []);
 
   const skipRef = useRef(false);
+  type PendingRec = {
+    blob: Blob;
+    noteName: string;
+    targetFreq: number;
+    detectedFreq: number | null;
+    accuracy: number;
+    attemptNumber: number;
+    direction: 'down' | 'up';
+  };
+  const pendingRecsRef = useRef<PendingRec[]>([]);
 
   const handleSkip = () => {
     skipRef.current = true;
@@ -80,7 +90,7 @@ export default function RangeTest({
         }
 
         setPhase('listening');
-        const { samples, sampleRate } = await recordSamples(RECORD_SECONDS);
+        const { samples, sampleRate, blob } = await recordSamplesWithBlob(RECORD_SECONDS);
         if (cancelled) return;
         if (consumeSkip()) {
           if (local.done) break;
@@ -105,7 +115,19 @@ export default function RangeTest({
           voicedRatio: pitchResult.voicedRatio,
         });
 
-        setLastAttempt(local.log[local.log.length - 1]);
+        const justLogged = local.log[local.log.length - 1];
+        if (justLogged) {
+          pendingRecsRef.current.push({
+            blob,
+            noteName: justLogged.noteName,
+            targetFreq: justLogged.targetFreq,
+            detectedFreq: justLogged.detectedFreq,
+            accuracy: justLogged.successRate,
+            attemptNumber: justLogged.attemptNumber,
+            direction: justLogged.direction,
+          });
+        }
+        setLastAttempt(justLogged);
         setState(local);
         setPhase('feedback');
         await sleep(1100);
@@ -211,6 +233,23 @@ export default function RangeTest({
         recordedAt: Date.now(),
       })),
     });
+
+    // Ses kayıtlarını arka planda yükle — kullanıcı akışını bloklamaz.
+    const recsToUpload = pendingRecsRef.current.slice();
+    pendingRecsRef.current = [];
+    void Promise.all(
+      recsToUpload.map((r, idx) =>
+        uploadRecording(sessionId, 'range', r.blob, {
+          idx: `${idx}-${r.noteName}-${r.attemptNumber}`,
+          noteName: r.noteName,
+          targetFreq: r.targetFreq,
+          detectedFreq: r.detectedFreq ?? '',
+          accuracy: r.accuracy.toFixed(2),
+          attemptNumber: r.attemptNumber,
+          direction: r.direction,
+        }),
+      ),
+    );
 
     onComplete({ testResultId: sessionId, userId: sessionId });
   }

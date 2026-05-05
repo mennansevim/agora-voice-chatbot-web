@@ -186,6 +186,50 @@ export async function clearAllData(password: string): Promise<void> {
   });
 }
 
+// Recording uploads — raw audio body + query string metadata.
+// kind: 'range' | 'song'
+export async function uploadRecording(
+  sessionId: number,
+  kind: 'range' | 'song',
+  blob: Blob,
+  meta: Record<string, string | number | boolean | undefined>,
+): Promise<void> {
+  const params = new URLSearchParams({ kind, idx: String(meta.idx ?? Date.now()) });
+  for (const [k, v] of Object.entries(meta)) {
+    if (k === 'idx') continue;
+    if (v === undefined || v === null) continue;
+    params.set(k, String(v));
+  }
+  const res = await fetch(`/api/results/${sessionId}/recordings?${params.toString()}`, {
+    method: 'POST',
+    headers: { 'Content-Type': blob.type || 'audio/webm' },
+    body: blob,
+  });
+  if (!res.ok) {
+    // sessizce yut — kullanıcı akışını bozma, sadece log'la
+    console.warn('recording upload failed', sessionId, kind, res.status);
+  }
+}
+
+export async function uploadStageRecording(
+  blob: Blob,
+  meta: Record<string, string | number | undefined>,
+): Promise<void> {
+  const params = new URLSearchParams();
+  for (const [k, v] of Object.entries(meta)) {
+    if (v === undefined || v === null) continue;
+    params.set(k, String(v));
+  }
+  const res = await fetch(`/api/stage-recordings?${params.toString()}`, {
+    method: 'POST',
+    headers: { 'Content-Type': blob.type || 'audio/webm' },
+    body: blob,
+  });
+  if (!res.ok) {
+    console.warn('stage recording upload failed', res.status);
+  }
+}
+
 // =============================================================================
 // Helpers
 // =============================================================================

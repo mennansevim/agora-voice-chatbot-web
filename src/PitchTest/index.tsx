@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import Intro from './steps/Intro';
+import Consent from './steps/Consent';
 import UserForm from './steps/UserForm';
 import MicCheck from './steps/MicCheck';
 import RangeTest from './steps/RangeTest';
 import Result from './steps/Result';
 import Scoreboard from './steps/Scoreboard';
 import StagePerformance from './steps/StagePerformance';
+import FreeSong from './steps/FreeSong';
 import { releaseMicrophone } from './lib/recorder';
 
 export type Gender = 'male' | 'female';
 export type UserInfo = { firstName: string; lastName: string; gender: Gender };
 export type FinalResult = { testResultId: number; userId: number };
 
-type Step = 'intro' | 'form' | 'mic' | 'test' | 'result' | 'scoreboard' | 'stage';
+type Step = 'intro' | 'consent' | 'form' | 'mic' | 'test' | 'result' | 'freeSong' | 'scoreboard' | 'stage';
 
 export default function PitchTest({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState<Step>('intro');
@@ -52,13 +54,19 @@ export default function PitchTest({ onClose }: { onClose: () => void }) {
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-4 sm:py-6">
           {step === 'intro' && (
             <Intro
-              onStart={() => setStep('form')}
+              onStart={() => setStep('consent')}
               onScoreboard={() => setStep('scoreboard')}
+            />
+          )}
+          {step === 'consent' && (
+            <Consent
+              onAccept={() => setStep('form')}
+              onDecline={handleClose}
             />
           )}
           {step === 'form' && (
             <UserForm
-              onBack={() => setStep('intro')}
+              onBack={() => setStep('consent')}
               onNext={(info) => {
                 setUser(info);
                 setStep('mic');
@@ -84,11 +92,19 @@ export default function PitchTest({ onClose }: { onClose: () => void }) {
             <Result
               testResultId={finalResult.testResultId}
               onScoreboard={() => setStep('scoreboard')}
+              onFreeSong={() => setStep('freeSong')}
               onRestart={() => {
                 setUser(null);
                 setFinalResult(null);
                 setStep('intro');
               }}
+            />
+          )}
+          {step === 'freeSong' && finalResult && (
+            <FreeSong
+              sessionId={finalResult.testResultId}
+              onSkip={() => setStep('scoreboard')}
+              onFinish={() => setStep('scoreboard')}
             />
           )}
           {step === 'scoreboard' && (

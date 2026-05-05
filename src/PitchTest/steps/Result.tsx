@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Award, RefreshCw, Trophy, ChevronRight, CheckCircle2, XCircle, Mail, Phone, Send, Eye, EyeOff } from 'lucide-react';
+import { Award, RefreshCw, Trophy, ChevronRight, CheckCircle2, XCircle, Mail, Phone, Send, Eye, EyeOff, Mic } from 'lucide-react';
 import { getSession, setPublished, type TestResultRow, type ChoirSection, updateChoirSection } from '../lib/db';
 import { noteToTurkish } from '../lib/notes';
 import { getAllVoiceMatches } from '../lib/voiceTypes';
@@ -156,10 +156,12 @@ export default function Result({
   testResultId,
   onScoreboard,
   onRestart,
+  onFreeSong,
 }: {
   testResultId: number;
   onScoreboard: () => void;
   onRestart: () => void;
+  onFreeSong: () => void;
 }) {
   const [result, setResult] = useState<TestResultRow | null>(null);
   const [user, setUser] = useState<UserRow | null>(null);
@@ -326,6 +328,30 @@ export default function Result({
           </div>
         </>
       )}
+
+      {/* Serbest şarkı daveti */}
+      <div className="rounded-2xl p-5 mb-5 border-2 border-rose-200 bg-gradient-to-br from-rose-50 via-amber-50 to-amber-50">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-white shrink-0 shadow">
+            <Mic size={22} />
+          </div>
+          <div className="flex-1">
+            <div className="text-base font-bold text-agora-dark mb-1">İçinizden bir şarkı seslendirir misiniz?</div>
+            <p className="text-xs text-agora-muted leading-relaxed">
+              Test bittikten sonra serbestçe içinizden geçen bir eseri söylemenizi rica ediyoruz —
+              en fazla <strong>2 dakika</strong>, istediğiniz an erken durdurup kaydedebilirsiniz.
+              İsterseniz bu kaydı skor tablosunda paylaşabilirsiniz; her durumda ses tanıma modelimizi
+              geliştirmek için kullanılır.
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={onFreeSong}
+          className="w-full py-3 px-5 rounded-xl font-semibold text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:brightness-105 shadow-md flex items-center justify-center gap-2"
+        >
+          <Mic size={18} /> Evet, Şimdi Söyleyeyim
+        </button>
+      </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
         <button
