@@ -76,8 +76,9 @@ const VOICE_PART_BORDER: Record<keyof typeof KORistler_BY_PART, string> = {
 /** Üretimde: 8 ve 9 Mayıs (yerel saat). Geliştirmede: her açılışta (`import.meta.env.DEV`). */
 function shouldShowConcertInfoPopup(): boolean {
   if (import.meta.env.DEV) return true;
-  const d = new Date();
-  return d.getMonth() === 4 && (d.getDate() === 8 || d.getDate() === 9);
+  // 10 Mayıs 2026 ve sonrasında popup kapanır; öncesinde her zaman açık.
+  const CUTOFF = new Date(2026, 4, 10, 0, 0, 0); // ay 0-index: 4 = Mayıs
+  return new Date() < CUTOFF;
 }
 
 function App() {
