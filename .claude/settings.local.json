@@ -37,7 +37,11 @@
       "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/soprano.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/soprano.mp3)",
       "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/alto.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/alto.mp3)",
       "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/tenor.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/tenor.mp3)",
-      "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/bass.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/bass.mp3)"
+      "Bash(cp \"/Users/sevimm/Documents/Projects/agora-coksesli/sounds/bass.mp3\" /Users/sevimm/Documents/Projects/agoravoiceweb/public/sounds/stage/signore-delle-cime/bass.mp3)",
+      "Bash(git rm *)",
+      "Bash(curl -s https://www.agoravoice.com.tr/api/results -o /tmp/prod-results.json)",
+      "Read(//tmp/**)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(len\\(d\\), 'records'\\); [print\\(r['id'], r.get\\('user',{}\\).get\\('firstName','?'\\), r.get\\('user',{}\\).get\\('lastName','?'\\)\\) for r in d]\")"
     ]
   }
 }

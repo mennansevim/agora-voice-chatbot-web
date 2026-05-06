@@ -903,7 +903,7 @@ function App() {
                 alt=""
                 className="mx-auto h-[4.5rem] w-[4.5rem] rounded-full border-[3px] border-white object-cover shadow-md ring-1 ring-stone-200/80"
               />
-              <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-agora-bronze">Agora Voice</p>
+              <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.35em] text-agora-bronze">AGORA VOICE</p>
               <h3
                 id="concert-info-title"
                 className="font-agoravoice mt-2 text-[1.65rem] font-bold leading-[1.15] tracking-tight text-agora-dark sm:text-4xl sm:leading-[1.1]"
