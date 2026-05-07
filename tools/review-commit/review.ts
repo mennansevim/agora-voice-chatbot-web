@@ -119,21 +119,45 @@ function defaultPlanForKeywords(input: string): Plan | null {
     };
   }
 
+  // Compound: tam zincir — commit + push + deploy (her sıralama, +/-/, ile)
+  const tokens = t.split(/[\s,+\-/]+/).filter(Boolean);
+  const hasCommit = tokens.some((x) => /^(commit|kaydet)$/.test(x));
+  const hasPush = tokens.some((x) => /^(push|pushla|yükle|gönder)$/.test(x));
+  const hasDeploy = tokens.some((x) => /^(deploy|deployla)$/.test(x));
+
+  if (hasCommit && hasPush && hasDeploy) {
+    return {
+      actions: [{ type: "commit" }, { type: "push" }, { type: "deploy" }],
+      rationale: "Tam zincir: commit + push + Pi deploy.",
+    };
+  }
+  if (hasCommit && hasPush) {
+    return {
+      actions: [{ type: "commit" }, { type: "push" }],
+      rationale: "Commit + push.",
+    };
+  }
+  if (hasPush && hasDeploy) {
+    return {
+      actions: [{ type: "push" }, { type: "deploy" }],
+      rationale: "Push + Pi deploy.",
+    };
+  }
+  if (hasCommit && hasDeploy) {
+    return {
+      actions: [{ type: "commit" }, { type: "push" }, { type: "deploy" }],
+      rationale: "Commit + deploy istendi → push da gerekli, tam zincir.",
+    };
+  }
+
   if (
-    /(en son değişiklikleri gönder|hepsini yap|her şeyi gönder|pi'?ye gönder|tam zincir|full deploy)/.test(
+    /(en son değişiklikleri gönder|hepsini yap|her şeyi gönder|pi'?ye gönder|tam zincir|full deploy|ship it)/.test(
       t,
     )
   ) {
     return {
       actions: [{ type: "commit" }, { type: "push" }, { type: "deploy" }],
       rationale: "Tam zincir: commit + push + Pi deploy.",
-    };
-  }
-
-  if (/^(commit.*push|kaydet.*yükle)/.test(t)) {
-    return {
-      actions: [{ type: "commit" }, { type: "push" }],
-      rationale: "Commit + push.",
     };
   }
 
