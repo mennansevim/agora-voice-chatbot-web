@@ -911,7 +911,7 @@ function App() {
                 Konser Dinletisi
               </h3>
               <p className="mx-auto mt-3 max-w-md text-sm italic leading-relaxed text-stone-500">
-                Konser programı ve ses gruplarına göre korist kadromuz.
+                Bugünkü konserimizde seslendirecek eserler ve korist kadromuz.
               </p>
 
               <div className="mx-auto mt-8 max-w-lg border-t border-stone-200/70 pt-6 text-sm">
