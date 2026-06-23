@@ -348,26 +348,3 @@ html {
   from { opacity: 0; transform: translateY(30px) scale(0.95); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
-/* Hero — Konser Dinletisi CTA (dikkat çekici yanıp sönen / nefes) */
-@keyframes concert-info-cta-breath {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow:
-      0 0 0 0 rgba(251, 191, 36, 0.5),
-      0 4px 20px rgba(0, 0, 0, 0.25);
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.88;
-    box-shadow:
-      0 0 0 12px rgba(251, 191, 36, 0),
-      0 4px 28px rgba(254, 243, 199, 0.45);
-    transform: scale(1.03);
-  }
-}
-
-.animate-concert-info-cta {
-  animation: concert-info-cta-breath 2.1s ease-in-out infinite;
-}
