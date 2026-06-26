@@ -55,7 +55,21 @@ const server = http.createServer(async (req, res) => {
 
     const ext = path.extname(filePath).toLowerCase();
     res.setHeader('Content-Type', MIME[ext] || 'application/octet-stream');
-    if (ext === '.wav' || ext === '.webp' || ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
+
+    // Cache stratejisi:
+    // - HTML (SPA giriş noktası / fallback): ASLA cache'leme. Her istekte taze index.html
+    //   dönsün ki yeni build'de değişen hash'li asset isimleri doğru yüklensin. Aksi halde
+    //   tarayıcı eski index.html'i tutar; içindeki eski /assets/index-XXXX.js yeni container'da
+    //   olmadığı için 404 olur → sayfa boş gelir ("ilk açılışta açılmıyor"), yenileyince taze
+    //   HTML çekilince düzelir.
+    // - /assets/ altındaki hash'li dosyalar: içerik değişince dosya adı da değişir → sonsuza
+    //   kadar güvenle cache'lenebilir (immutable).
+    // - Diğer statikler (görsel/ses): kısa süreli cache.
+    if (ext === '.html') {
+      res.setHeader('Cache-Control', 'no-cache');
+    } else if (urlPath.startsWith('/assets/')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (ext === '.wav' || ext === '.webp' || ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
       res.setHeader('Cache-Control', 'public, max-age=86400');
     }
     fs.createReadStream(filePath).pipe(res);
