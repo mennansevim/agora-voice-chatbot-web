@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Lock, LogOut, RefreshCw, Search, Trash2, User, Music2, Mic } from 'lucide-react';
+import { Lock, LogOut, RefreshCw, Search, Trash2, Music2, Mic } from 'lucide-react';
 import {
   adminLogin,
   clearStoredPassword,
@@ -52,6 +52,30 @@ export default function AdminPanel() {
     );
   }, [sessions, search]);
 
+  // Aynı isimli oturumları tek grup altında topla (rahat erişim için).
+  const grouped = useMemo(() => {
+    const map = new Map<string, AdminSession[]>();
+    for (const s of filtered) {
+      const key = `${s.user.firstName} ${s.user.lastName}`.trim().toLowerCase();
+      const arr = map.get(key);
+      if (arr) arr.push(s);
+      else map.set(key, [s]);
+    }
+    const groups = Array.from(map.values()).map((items) => {
+      const sorted = [...items].sort((a, b) => b.createdAt - a.createdAt);
+      return {
+        key: `${sorted[0].user.firstName} ${sorted[0].user.lastName}`.trim().toLowerCase(),
+        name: `${sorted[0].user.firstName} ${sorted[0].user.lastName}`,
+        gender: sorted[0].user.gender,
+        items: sorted,
+        songCount: sorted.reduce((n, it) => n + (it.recordings?.song?.length ?? 0), 0),
+        latest: sorted[0].createdAt,
+      };
+    });
+    groups.sort((a, b) => b.latest - a.latest);
+    return groups;
+  }, [filtered]);
+
   const selected = sessions?.find((s) => s.id === selectedId) ?? null;
 
   return (
@@ -99,36 +123,59 @@ export default function AdminPanel() {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto">
-            {filtered.map((s) => {
-              const active = s.id === selectedId;
-              const recCount = (s.recordings?.range?.length ?? 0) + (s.recordings?.song?.length ?? 0);
+            {grouped.map((g) => {
+              const gs = genderStyle(g.gender);
+              // Tek oturumlu kişi: doğrudan tam satır göster.
+              if (g.items.length === 1) {
+                const s = g.items[0];
+                return (
+                  <SessionRow
+                    key={g.key}
+                    session={s}
+                    active={s.id === selectedId}
+                    onClick={() => setSelectedId(s.id)}
+                  />
+                );
+              }
+              // Birden fazla oturum: isim başlığı + altında her test ayrı satır.
               return (
-                <button
-                  key={s.id}
-                  onClick={() => setSelectedId(s.id)}
-                  className={`w-full text-left px-3 py-2.5 border-b border-stone-100 hover:bg-stone-50 transition-colors ${active ? 'bg-amber-50' : ''}`}
-                >
-                  <div className="flex items-center justify-between gap-2">
+                <div key={g.key} className={`border-b border-stone-200 border-l-4 ${gs.border}`}>
+                  <div className={`flex items-center justify-between gap-2 px-3 py-2 ${gs.bg}`}>
                     <div className="flex items-center gap-2 min-w-0">
-                      <User size={14} className="text-stone-400 shrink-0" />
-                      <span className="text-sm font-medium text-agora-dark truncate">
-                        {s.user.firstName} {s.user.lastName}
-                      </span>
+                      <span className={`w-2 h-2 rounded-full shrink-0 ${gs.dot}`} />
+                      <span className={`text-sm font-semibold truncate ${gs.text}`}>{g.name}</span>
+                      <span className="text-[10px] text-stone-500 shrink-0">{g.items.length} test</span>
                     </div>
-                    <span className="text-[10px] text-stone-500 shrink-0">#{s.id}</span>
+                    {g.songCount > 0 && <SongBadge count={g.songCount} />}
                   </div>
-                  <div className="flex items-center justify-between mt-1 text-[11px] text-stone-500">
-                    <span>{new Date(s.createdAt).toLocaleDateString('tr-TR')}</span>
-                    <span className="flex items-center gap-1">
-                      {recCount > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">🎤 {recCount}</span>}
-                      <span className="text-stone-400">·</span>
-                      <span>skor {Math.round(s.result.compositeScore)}</span>
-                    </span>
-                  </div>
-                </button>
+                  {g.items.map((s) => {
+                    const active = s.id === selectedId;
+                    const songCount = s.recordings?.song?.length ?? 0;
+                    const recCount = (s.recordings?.range?.length ?? 0) + songCount;
+                    return (
+                      <button
+                        key={s.id}
+                        onClick={() => setSelectedId(s.id)}
+                        className={`w-full text-left pl-7 pr-3 py-2 border-t border-stone-100 hover:bg-stone-50 transition-colors ${active ? 'bg-amber-100' : ''}`}
+                      >
+                        <div className="flex items-center justify-between text-[11px] text-stone-500">
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-stone-400">#{s.id}</span>
+                            <span>{new Date(s.createdAt).toLocaleDateString('tr-TR')}</span>
+                          </span>
+                          <span className="flex items-center gap-1">
+                            {songCount > 0 && <SongBadge count={songCount} />}
+                            {recCount > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">🎤 {recCount}</span>}
+                            <span>skor {Math.round(s.result.compositeScore)}</span>
+                          </span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               );
             })}
-            {filtered.length === 0 && <div className="p-6 text-center text-sm text-stone-400">Kayıt yok</div>}
+            {grouped.length === 0 && <div className="p-6 text-center text-sm text-stone-400">Kayıt yok</div>}
           </div>
         </aside>
 
@@ -346,5 +393,51 @@ function Stat({ label, value }: { label: string; value: string | number }) {
       <div className="text-[10px] uppercase tracking-wider text-stone-500">{label}</div>
       <div className="text-lg font-bold text-agora-dark font-mono">{value}</div>
     </div>
+  );
+}
+
+// Cinsiyete göre renk paleti — erkek mavi, kadın pembe/rose.
+function genderStyle(gender: 'male' | 'female') {
+  return gender === 'female'
+    ? { border: 'border-l-rose-400', text: 'text-rose-700', bg: 'bg-rose-50', activeBg: 'bg-rose-100', dot: 'bg-rose-400' }
+    : { border: 'border-l-blue-400', text: 'text-blue-700', bg: 'bg-blue-50', activeBg: 'bg-blue-100', dot: 'bg-blue-400' };
+}
+
+// Serbest şarkı kaydı olduğunu listede gösteren rozet.
+function SongBadge({ count }: { count: number }) {
+  return (
+    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 text-[10px] font-semibold shrink-0">
+      🎵 {count}
+    </span>
+  );
+}
+
+function SessionRow({ session: s, active, onClick }: { session: AdminSession; active: boolean; onClick: () => void }) {
+  const gs = genderStyle(s.user.gender);
+  const songCount = s.recordings?.song?.length ?? 0;
+  const recCount = (s.recordings?.range?.length ?? 0) + songCount;
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full text-left px-3 py-2.5 border-b border-stone-100 border-l-4 ${gs.border} hover:bg-stone-50 transition-colors ${active ? gs.activeBg : gs.bg}`}
+    >
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className={`w-2 h-2 rounded-full shrink-0 ${gs.dot}`} />
+          <span className={`text-sm font-medium truncate ${gs.text}`}>
+            {s.user.firstName} {s.user.lastName}
+          </span>
+        </div>
+        <span className="text-[10px] text-stone-500 shrink-0">#{s.id}</span>
+      </div>
+      <div className="flex items-center justify-between mt-1 text-[11px] text-stone-500">
+        <span>{new Date(s.createdAt).toLocaleDateString('tr-TR')}</span>
+        <span className="flex items-center gap-1">
+          {songCount > 0 && <SongBadge count={songCount} />}
+          {recCount > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">🎤 {recCount}</span>}
+          <span>skor {Math.round(s.result.compositeScore)}</span>
+        </span>
+      </div>
+    </button>
   );
 }
