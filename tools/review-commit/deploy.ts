@@ -35,7 +35,11 @@ export function loadPiConfig(env: NodeJS.ProcessEnv = process.env): PiConfigLoad
   const branch = env.PI_BRANCH?.trim() ?? "main";
   const command =
     env.PI_DEPLOY_CMD?.trim() ??
-    "git pull origin main && docker compose down && docker compose up -d --build";
+    // Not: ayrı `docker compose down` YOK — eski container build bitene kadar
+    // ayakta kalır, böylece site dakikalarca kapalı kalmaz; yeni image hazır
+    // olunca `up -d` container'ı saniyeler içinde yeniler (--remove-orphans
+    // artık compose dosyasında olmayan servisleri temizler).
+    "git pull origin main && docker compose up -d --build --remove-orphans";
   const port = Number(env.PI_PORT ?? 22);
 
   if (!host) missing.push("PI_HOST");

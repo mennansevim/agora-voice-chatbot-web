@@ -86,6 +86,31 @@ async function git(args: string[], opts: { stdio?: "inherit" | "pipe" } = {}): P
   return stdout ?? "";
 }
 
+/** Working tree'de commit'lenmemiş (staged/unstaged/untracked) değişiklik var mı? */
+async function gitHasUncommitted(): Promise<boolean> {
+  const s = await git(["status", "--porcelain"]).catch(() => "");
+  return s.trim().length > 0;
+}
+
+/** HEAD, origin/<branch>'in önünde mi? (push edilmemiş local commit var mı) */
+async function gitHasUnpushed(branch: string): Promise<boolean> {
+  try {
+    const count = await git(["rev-list", "--count", `origin/${branch}..HEAD`]);
+    return Number(count.trim()) > 0;
+  } catch {
+    // origin/<branch> ref'i yoksa (ilk push vs.) → push gerekebilir, güvenli taraf.
+    return true;
+  }
+}
+
+async function currentBranch(): Promise<string> {
+  try {
+    return (await git(["rev-parse", "--abbrev-ref", "HEAD"])).trim() || "main";
+  } catch {
+    return "main";
+  }
+}
+
 // ─── Plan üretimi ──────────────────────────────────────────────────
 
 function defaultPlanForKeywords(input: string): Plan | null {
@@ -227,6 +252,65 @@ async function interpretCommand(input: string): Promise<Plan> {
   return {
     actions: [{ type: "commit" }],
     rationale: "AI parse edilemedi → varsayılan commit'e düşüldü.",
+  };
+}
+
+/**
+ * Planı git durumuna göre güvenli hale getirir. AI/keyword planı eksik veya
+ * tutarsız olsa bile şu değişmezleri (invariant) zorlar:
+ *
+ *  - push veya deploy isteniyorsa ve commit'lenmemiş değişiklik varsa → önce commit.
+ *  - deploy isteniyorsa → önce push (Pi `git pull` ile güncel kodu çeker; push
+ *    edilmemiş commit'ler Pi'ye gitmez, eski kod deploy edilir).
+ *  - Sıralama her zaman commit → push → deploy olur; tekrarlar ayıklanır.
+ *
+ * Böylece yerel küçük model (qwen 3B) "commit"i atlasa bile araç asla
+ * commit'lenmemiş/push'lanmamış kodu deploy etmez.
+ */
+async function normalizePlan(plan: Plan): Promise<Plan> {
+  const wantsDeploy = plan.actions.some((a) => a.type === "deploy");
+  const wantsPush = plan.actions.some((a) => a.type === "push");
+
+  // commit-only plan → dokunma.
+  if (!wantsDeploy && !wantsPush) return plan;
+
+  const pushAction = plan.actions.find((a) => a.type === "push") as
+    | Extract<Action, { type: "push" }>
+    | undefined;
+
+  const notes: string[] = [];
+  let needCommit = plan.actions.some((a) => a.type === "commit");
+  let needPush = wantsPush;
+
+  if (!needCommit && (await gitHasUncommitted())) {
+    needCommit = true;
+    notes.push("commit'lenmemiş değişiklik var → commit eklendi");
+  }
+
+  if (wantsDeploy && !needPush) {
+    const branch = pushAction?.branch ?? (await currentBranch());
+    if (needCommit || (await gitHasUnpushed(branch))) {
+      needPush = true;
+      notes.push("deploy öncesi push gerekli (Pi 'git pull' yapıyor) → push eklendi");
+    }
+  }
+
+  if (needCommit && !needPush) {
+    needPush = true;
+    notes.push("commit sonrası push gerekli → push eklendi");
+  }
+
+  const ordered: Action[] = [];
+  if (needCommit) ordered.push({ type: "commit" });
+  if (needPush) ordered.push({ type: "push", branch: pushAction?.branch });
+  if (wantsDeploy) ordered.push({ type: "deploy" });
+
+  if (notes.length === 0) {
+    return { actions: ordered, rationale: plan.rationale };
+  }
+  return {
+    actions: ordered,
+    rationale: `${plan.rationale} [güvenlik: ${notes.join("; ")}]`,
   };
 }
 
@@ -507,7 +591,8 @@ async function main(): Promise<void> {
     );
   }
 
-  const plan = await interpretCommand(userInput);
+  const rawPlan = await interpretCommand(userInput);
+  const plan = await normalizePlan(rawPlan);
 
   console.log(c("bold", "\n── Plan ──"));
   plan.actions.forEach((a, i) =>
