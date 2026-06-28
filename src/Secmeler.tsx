@@ -1,7 +1,7 @@
 import React from 'react';
-import { Music, Users, Euro, Mail, Instagram, Globe, CheckCircle, Star, MapPin, Calendar } from 'lucide-react';
+import { Music, Users, Euro, Mail, Instagram, Globe, CheckCircle, Star, MapPin, Calendar, Mic } from 'lucide-react';
 
-const Secmeler = () => {
+const Secmeler = ({ onStartPitchTest }: { onStartPitchTest: () => void }) => {
   return (
     <section id="secmeler" className="min-h-screen bg-stone-50 py-20">
       <div className="max-w-6xl mx-auto px-6">
@@ -101,6 +101,24 @@ const Secmeler = () => {
                 <li>Dil, tür ve tarz serbesttir.</li>
               </ul>
             </div>
+          </div>
+
+          {/* Ses denemesi CTA — Ses Aralığı Testi ekranına yönlendirir */}
+          <div className="mt-8 rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-rose-50 p-6 text-center">
+            <p className="text-lg font-semibold text-agora-dark">
+              🎤 Seçmeye gelmeden önce tek bir ses denemesi yapmak ister misiniz?
+            </p>
+            <p className="mt-1 text-sm text-agora-muted">
+              Ücretsiz ses aralığı testimizle hangi ses grubuna uygun olduğunuzu hemen keşfedin.
+            </p>
+            <button
+              type="button"
+              onClick={onStartPitchTest}
+              className="btn-agora-primary mt-4 inline-flex items-center justify-center gap-2 rounded-full py-3 px-6 text-sm font-bold"
+            >
+              <Mic className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+              Ses Aralığı Testini Dene
+            </button>
           </div>
         </div>
 

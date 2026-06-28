@@ -500,7 +500,7 @@ function App() {
         </div>
 
         {/* Seçmeler Section */}
-        <Secmeler />
+        <Secmeler onStartPitchTest={() => setShowPitchTest(true)} />
         {showPitchTest && <PitchTest onClose={() => setShowPitchTest(false)} />}
 
         {/* AI Assistant Section */}
