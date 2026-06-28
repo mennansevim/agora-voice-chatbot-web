@@ -529,10 +529,7 @@ function App() {
         {/* AI Assistant Section */}
         <section id="ai-assistant" className="min-h-screen bg-marble py-20 flex items-center">
           <div className="w-full">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gold-gradient rounded-full mb-6">
-                <Bot className="w-8 h-8 text-white" />
-              </div>
+            <div className="text-center mb-12">
               <h2 className="text-5xl md:text-6xl font-bold text-agora-dark mb-6">
                 <span className="text-agora-gold">AI Asistan</span>
               </h2>
@@ -546,54 +543,23 @@ function App() {
               {!showChatbot ? (
                 /* Welcome screen with main button */
                 <div className="text-center flex flex-col items-center justify-center h-full">
-                  <div className="mb-8">
-                    <button
-                      onClick={() => {
-                        handleFirstInteraction();
-                        toggleChatbot();
-                      }}
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      className="group relative w-50 h-50 md:w-60 md:h-60 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 p-1 hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 transform hover:scale-105"
-                    >
-                      {/* Müzik notaları ve sol anahtarı animasyonu */}
-                      <Music className="hidden group-hover:block absolute left-8 top-8 text-pink-300 opacity-0 group-hover:opacity-80 animate-float-up pointer-events-none" style={{fontSize: '2rem'}} />
-                      <Music2 className="hidden group-hover:block absolute right-8 top-16 text-blue-300 opacity-0 group-hover:opacity-80 animate-float-right pointer-events-none" style={{fontSize: '1.5rem'}} />
-                      <Music3 className="hidden group-hover:block absolute left-16 bottom-8 text-purple-300 opacity-0 group-hover:opacity-80 animate-float-left pointer-events-none" style={{fontSize: '1.8rem'}} />
-                      <Music4 className="hidden group-hover:block absolute right-12 bottom-12 text-yellow-300 opacity-0 group-hover:opacity-80 animate-float-diag pointer-events-none" style={{fontSize: '1.2rem'}} />
-                      <Music className="hidden group-hover:block absolute left-1/2 top-4 text-green-300 opacity-0 group-hover:opacity-80 animate-float-up pointer-events-none" style={{fontSize: '1.7rem'}} />
-                      <Music2 className="hidden group-hover:block absolute right-4 top-1/2 text-pink-200 opacity-0 group-hover:opacity-80 animate-float-right pointer-events-none" style={{fontSize: '1.3rem'}} />
-                      <Music3 className="hidden group-hover:block absolute left-4 bottom-1/2 text-blue-200 opacity-0 group-hover:opacity-80 animate-float-left pointer-events-none" style={{fontSize: '1.5rem'}} />
-                      <Music4 className="hidden group-hover:block absolute left-1/3 top-1/4 text-white opacity-0 group-hover:opacity-80 animate-float-diag pointer-events-none" style={{fontSize: '2.2rem'}} />
-                      {/* Inner button */}
-                      <div className="w-full h-full rounded-full bg-gradient-to-r from-slate-800 to-slate-900 flex items-center justify-center relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-transparent to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div className="absolute inset-4 rounded-full border border-purple-400/30 group-hover:border-purple-400/60 transition-colors duration-500"></div>
-                        <div className="absolute inset-8 rounded-full border border-purple-400/20 group-hover:border-purple-400/40 transition-colors duration-500 animate-pulse"></div>
-                        <div className="relative z-10 text-center">
-                          <div className="mb-4">
-                            <Mic className="w-16 h-16 md:w-20 md:h-20 text-purple-400 mx-auto group-hover:text-white transition-colors duration-300" />
-                          </div>
-                          <div className="text-white">
-                            <div className="text-l md:text-xl font-bold mb-2 group-hover:text-purple-300 transition-colors duration-300">
-                              Agora Voice
-                            </div>
-                            <div className="text-g md:text-l font-light text-slate-300 group-hover:text-white transition-colors duration-300">
-                              Assistant
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-                  <p className="text-slate-400 text-sm md:text-base max-w-md mx-auto leading-relaxed mt-6">
-                    <span className="block text-xl md:text-2xl font-extrabold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-glow animate-pulse-slow mb-2">
-                      Yeni nesil akıllı asistanı deneyimleyin.
-                    </span>
-                    <span className="block text-base md:text-lg font-semibold bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 bg-clip-text text-transparent drop-shadow-glow animate-fade-in">
-                      AI destekli müzik yolculuğunuza başlamak için tıklayın.
-                    </span>
+                  <RobotMascot className="agora-robot h-44 w-40 md:h-52 md:w-48 drop-shadow-2xl" />
+                  <p className="mt-4 text-2xl md:text-3xl font-extrabold text-agora-dark">
+                    Merhaba! 👋
                   </p>
+                  <p className="mt-2 mb-8 max-w-md mx-auto text-base md:text-lg text-agora-muted leading-relaxed">
+                    Agora Voice hakkında aklındaki her şeyi bana sorabilirsin.
+                  </p>
+                  <button
+                    onClick={() => {
+                      handleFirstInteraction();
+                      toggleChatbot();
+                    }}
+                    className="inline-flex items-center gap-2.5 rounded-full bg-violet-600 px-8 py-4 text-base md:text-lg font-semibold text-white shadow-lg shadow-violet-500/30 transition-all hover:-translate-y-0.5 hover:bg-violet-700"
+                  >
+                    <MessageCircle className="h-5 w-5 shrink-0" strokeWidth={2.25} aria-hidden />
+                    Yapay Zeka Asistanına Sor
+                  </button>
                 </div>
               ) : (
                 /* Chatbot area */
