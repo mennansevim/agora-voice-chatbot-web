@@ -240,6 +240,10 @@ const Secmeler = () => {
                   <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">2</div>
                   <p className="text-agora-muted">Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir.</p>
                 </div>
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">3</div>
+                  <p className="text-agora-muted">Ön değerlendirme sonuçları 15–25 Temmuz tarihleri arasında e-posta yoluyla paylaşılacaktır.</p>
+                </div>
               </div>
             </div>
 
