@@ -14,11 +14,11 @@ const Secmeler = () => {
             🎶 <span className="text-agora-bronze">Seçmeler</span>
           </h1>
           <h2 className="text-2xl md:text-3xl font-semibold text-agora-bronze mb-4">
-            Agora Voice 2025 / 2026 – Çok Sesli A Capella Koro Seçmeleri
+            Agora Voice 2026 / 2027 – Çok Sesli A Capella Koro Seçmeleri
           </h2>
           <p className="text-xl text-agora-muted max-w-6xl mx-auto leading-relaxed">
            
-            Başvurular 16 Temmuz -  15 Ağustos 2025 tarihleri arasında yapılacaktır. 
+            Başvurular 16 Temmuz -  15 Ağustos 2026 tarihleri arasında yapılacaktır. 
             Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
             <br />
           
@@ -45,7 +45,7 @@ const Secmeler = () => {
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">2026 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.</p>
+                <p className="text-agora-muted">2027 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.</p>
               </div>
             </div>
             <div className="space-y-4">
