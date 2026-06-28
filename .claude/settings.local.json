@@ -43,7 +43,8 @@
       "Read(//tmp/**)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(len\\(d\\), 'records'\\); [print\\(r['id'], r.get\\('user',{}\\).get\\('firstName','?'\\), r.get\\('user',{}\\).get\\('lastName','?'\\)\\) for r in d]\")",
       "Bash(ssh-add --apple-load-keychain)",
-      "Bash(ssh-add -l)"
+      "Bash(ssh-add -l)",
+      "Bash(git commit -m 'fix\\(seçmeler\\): 2025/2026 → 2026/2027 sezonuna güncelle *)"
     ]
   }
 }

@@ -18,7 +18,7 @@ const Secmeler = () => {
           </h2>
           <p className="text-xl text-agora-muted max-w-6xl mx-auto leading-relaxed">
            
-            Başvurular 16 Temmuz -  15 Ağustos 2026 tarihleri arasında yapılacaktır. 
+            Ön değerlendirme sonuçları 15-25 Temmuz tarihleri arasında e-posta yoluyla sizinle paylaşılacaktır.
             Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
             <br />
           
