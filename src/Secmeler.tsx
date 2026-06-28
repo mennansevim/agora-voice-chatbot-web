@@ -112,7 +112,7 @@ const Secmeler = () => {
               📍 Prova ve Lokasyon Bilgileri
             </h3>
             <div className="space-y-4">
-              <p className="text-agora-muted">MUSTAFA NECATİ KÜLTÜR MERKEZİ<br />Esenlik, 35160 Karabağlar/İzmir.</p>
+              <p className="text-agora-muted"><strong>NARLIDERE ATATÜRK KÜLTÜR MERKEZİ</strong><br />Mithat Paşa Cad. 447/A Narlıdere/İzmir.</p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-agora-terracotta" />
@@ -171,7 +171,7 @@ const Secmeler = () => {
             <div>
               <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Prova</div>
               {[
-                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her pazartesi 19:00–22:00 saatlerinde yapılır. Yer: Çok yakında bilgiler paylaşılacaktır.'},
+                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her pazartesi 19:00–22:00 saatlerinde yapılır. Yer: Narlıdere Atatürk Kültür Merkezi, Mithat Paşa Cad. 447/A Narlıdere/İzmir.'},
                 {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
                 {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
                 {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
