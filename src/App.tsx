@@ -19,11 +19,34 @@ import {
   Music3,
   Music4,
   Instagram,
-  CalendarDays
+  CalendarDays,
+  MessageCircle
 } from 'lucide-react';
 import Secmeler from './Secmeler';
 import PitchTest from './PitchTest';
 import AdminPanel from './Admin';
+
+// AI asistan robot maskotu — tamamen SVG (ekstra dosya yok). Gözler index.css'te kırpışır.
+function RobotMascot({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 130 132" className={className} fill="none" aria-hidden="true">
+      <line x1="65" y1="34" x2="65" y2="17" stroke="#b9a9e8" strokeWidth="3.5" strokeLinecap="round" />
+      <circle cx="65" cy="12" r="6.5" fill="#ffffff" stroke="#cdbff0" strokeWidth="1.5" />
+      <path d="M24 72 Q24 30 65 28 Q106 30 106 72" fill="none" stroke="#1c1830" strokeWidth="7" strokeLinecap="round" />
+      <rect x="26" y="33" width="78" height="62" rx="29" fill="#ffffff" stroke="#ece7f8" strokeWidth="1.5" />
+      <path d="M101 50 q12 4 9 18 q-4 10 -12 9 Z" fill="#7c6fd6" opacity="0.85" />
+      <circle cx="26" cy="66" r="11.5" fill="#241f44" />
+      <circle cx="104" cy="66" r="11.5" fill="#241f44" />
+      <rect x="35" y="47" width="60" height="31" rx="15.5" fill="#15111f" />
+      <circle className="agora-robot-eye" cx="52" cy="62" r="7" fill="#ff8fa3" />
+      <circle className="agora-robot-eye" cx="78" cy="62" r="7" fill="#ff8fa3" />
+      <path d="M26 75 Q27 95 50 91" fill="none" stroke="#241f44" strokeWidth="4.5" strokeLinecap="round" />
+      <circle cx="52" cy="91" r="4.5" fill="#241f44" />
+      <path d="M44 96 q21 11 42 0 l-4 20 q-17 9 -34 0 Z" fill="#f3f0fc" stroke="#e0d9f5" strokeWidth="1.2" />
+      <circle cx="65" cy="108" r="4" fill="#cdbff0" />
+    </svg>
+  );
+}
 
 function App() {
   const [isListening, setIsListening] = useState(false);
@@ -907,22 +930,21 @@ function App() {
                 Ses Testini Dene
               </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  dismissApplyPopup();
-                  setShowChatbot(true);
-                  scrollToSection('ai-assistant');
-                }}
-                className="animate-glow-ai mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full py-3 px-6 text-sm font-bold text-white"
-                style={{
-                  background: 'linear-gradient(45deg, #7c3aed, #6366f1, #2563eb, #8b5cf6)',
-                  backgroundSize: '300% 300%',
-                }}
-              >
-                <Bot className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
-                Tüm sorularınızı Yapay Zeka Asistanımıza sorabilirsiniz
-              </button>
+              <div className="mt-5 flex items-center gap-3 rounded-2xl border border-violet-200 bg-violet-50/70 p-2.5">
+                <RobotMascot className="agora-robot h-16 w-14 shrink-0" />
+                <button
+                  type="button"
+                  onClick={() => {
+                    dismissApplyPopup();
+                    setShowChatbot(true);
+                    scrollToSection('ai-assistant');
+                  }}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-700"
+                >
+                  <MessageCircle className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+                  Yapay Zeka Asistanına Sor
+                </button>
+              </div>
             </div>
           </div>
         </div>
