@@ -906,6 +906,23 @@ function App() {
                 <Mic className="h-4 w-4 shrink-0 text-agora-bronze" strokeWidth={2.25} aria-hidden />
                 Ses Testini Dene
               </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  dismissApplyPopup();
+                  setShowChatbot(true);
+                  scrollToSection('ai-assistant');
+                }}
+                className="animate-glow-ai mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full py-3 px-6 text-sm font-bold text-white"
+                style={{
+                  background: 'linear-gradient(45deg, #7c3aed, #6366f1, #2563eb, #8b5cf6)',
+                  backgroundSize: '300% 300%',
+                }}
+              >
+                <Bot className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+                Tüm sorularınızı Yapay Zeka Asistanımıza sorabilirsiniz
+              </button>
             </div>
           </div>
         </div>

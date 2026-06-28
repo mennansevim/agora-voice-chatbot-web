@@ -197,6 +197,20 @@
   animation: glow 2s ease-in-out infinite;
 }
 
+/* AI asistan butonu için mor/mavi "yanar döner" glow */
+@keyframes glow-ai {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(139, 92, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(139, 92, 246, 0.85), 0 0 34px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.animate-glow-ai {
+  animation: gradientShift 3s ease infinite, glow-ai 2s ease-in-out infinite;
+}
+
 .animate-music-float {
   animation: musicFloat 3s ease-in-out infinite;
 }
