@@ -134,7 +134,7 @@ const Secmeler = ({ onStartPitchTest }: { onStartPitchTest: () => void }) => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-agora-terracotta" />
-                  <span className="text-agora-dark font-semibold">🗓️ Pazartesi 19.00 – 22.00</span>
+                  <span className="text-agora-dark font-semibold">🗓️ Pazartesi ve Cuma günleri 19.00 – 22.00</span>
                 </div>
        
               </div>
@@ -189,7 +189,7 @@ const Secmeler = ({ onStartPitchTest }: { onStartPitchTest: () => void }) => {
             <div>
               <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Prova</div>
               {[
-                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her pazartesi 19:00–22:00 saatlerinde yapılır. Yer: Narlıdere Atatürk Kültür Merkezi, Mithat Paşa Cad. 447/A Narlıdere/İzmir.'},
+                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her pazartesi ve cuma günleri 19:00–22:00 saatlerinde yapılır. Yer: Narlıdere Atatürk Kültür Merkezi, Mithat Paşa Cad. 447/A Narlıdere/İzmir.'},
                 {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
                 {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
                 {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
