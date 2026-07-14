@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Lock, LogOut, RefreshCw, Search, Trash2, Music2, Mic } from 'lucide-react';
+import { Lock, LogOut, RefreshCw, Search, Trash2, Music2, Mic, Users, ListMusic, ArrowDownWideNarrow, ExternalLink } from 'lucide-react';
 import {
   adminLogin,
   clearStoredPassword,
@@ -10,7 +10,19 @@ import {
   recordingUrl,
   stageRecordingUrl,
 } from './api';
-import type { AdminSession, RangeRecordingMeta, StageRecording } from './types';
+import type { AdminSession, RangeRecordingMeta, SongRecordingMeta, StageRecording } from './types';
+
+type View = 'users' | 'songs' | 'stage';
+type GenderFilter = 'all' | 'male' | 'female';
+type SortBy = 'success' | 'score' | 'octave' | 'recent' | 'name';
+
+const SORT_LABELS: Record<SortBy, string> = {
+  success: 'Nota başarısı (yüksek→düşük)',
+  score: 'Skor (yüksek→düşük)',
+  octave: 'Ses aralığı (geniş→dar)',
+  recent: 'En yeni',
+  name: 'İsim (A→Z)',
+};
 
 export default function AdminPanel() {
   const [password, setPassword] = useState<string | null>(getStoredPassword());
@@ -18,6 +30,9 @@ export default function AdminPanel() {
   const [stageRecs, setStageRecs] = useState<StageRecording[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [search, setSearch] = useState('');
+  const [view, setView] = useState<View>('users');
+  const [genderFilter, setGenderFilter] = useState<GenderFilter>('all');
+  const [sortBy, setSortBy] = useState<SortBy>('success');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,18 +54,17 @@ export default function AdminPanel() {
     if (password) void load(password);
   }, [password]);
 
-  if (!password) {
-    return <Login onSuccess={(p) => setPassword(p)} />;
-  }
-
+  // NOT: Tüm hook'lar erken dönüşten (Login) ÖNCE çağrılmalı — aksi halde ilk
+  // girişte hook sayısı değişir ve React panik atarak boş sayfa gösterir.
   const filtered = useMemo(() => {
     if (!sessions) return [];
     const q = search.trim().toLowerCase();
-    if (!q) return sessions;
-    return sessions.filter((s) =>
-      `${s.user.firstName} ${s.user.lastName}`.toLowerCase().includes(q),
-    );
-  }, [sessions, search]);
+    return sessions.filter((s) => {
+      if (genderFilter !== 'all' && s.user.gender !== genderFilter) return false;
+      if (q && !`${s.user.firstName} ${s.user.lastName}`.toLowerCase().includes(q)) return false;
+      return true;
+    });
+  }, [sessions, search, genderFilter]);
 
   // Aynı isimli oturumları tek grup altında topla (rahat erişim için).
   const grouped = useMemo(() => {
@@ -70,13 +84,48 @@ export default function AdminPanel() {
         items: sorted,
         songCount: sorted.reduce((n, it) => n + (it.recordings?.song?.length ?? 0), 0),
         latest: sorted[0].createdAt,
+        // Kişinin en iyi değerleri — sıralama bunlara göre yapılır.
+        bestScore: Math.max(...sorted.map((it) => it.result.compositeScore)),
+        bestSuccess: Math.max(...sorted.map((it) => it.result.successRate)),
+        bestOctave: Math.max(...sorted.map((it) => it.result.octaveRangeWidth)),
       };
     });
-    groups.sort((a, b) => b.latest - a.latest);
+    groups.sort((a, b) => {
+      switch (sortBy) {
+        case 'success': return b.bestSuccess - a.bestSuccess;
+        case 'score': return b.bestScore - a.bestScore;
+        case 'octave': return b.bestOctave - a.bestOctave;
+        case 'name': return a.name.localeCompare(b.name, 'tr');
+        case 'recent':
+        default: return b.latest - a.latest;
+      }
+    });
     return groups;
+  }, [filtered, sortBy]);
+
+  // Tüm serbest şarkı kayıtlarını tek listede topla (kullanıcı bağımsız görünüm).
+  const allSongs = useMemo(() => {
+    const rows: { session: AdminSession; song: SongRecordingMeta }[] = [];
+    for (const s of filtered) {
+      for (const song of s.recordings?.song ?? []) rows.push({ session: s, song });
+    }
+    rows.sort((a, b) => (b.song.recordedAt ?? b.session.createdAt) - (a.song.recordedAt ?? a.session.createdAt));
+    return rows;
   }, [filtered]);
 
+  const totals = useMemo(() => {
+    const src = sessions ?? [];
+    const male = src.filter((s) => s.user.gender === 'male').length;
+    const female = src.filter((s) => s.user.gender === 'female').length;
+    const songs = src.reduce((n, s) => n + (s.recordings?.song?.length ?? 0), 0);
+    return { total: src.length, male, female, songs };
+  }, [sessions]);
+
   const selected = sessions?.find((s) => s.id === selectedId) ?? null;
+
+  if (!password) {
+    return <Login onSuccess={(p) => setPassword(p)} />;
+  }
 
   return (
     <div className="min-h-screen bg-stone-100">
@@ -86,7 +135,9 @@ export default function AdminPanel() {
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center text-white font-bold">A</div>
             <div>
               <div className="font-bold text-agora-dark">Agora Voice — Yönetim</div>
-              <div className="text-xs text-agora-muted">{sessions?.length ?? 0} oturum · {stageRecs.length} sahne kaydı</div>
+              <div className="text-xs text-agora-muted">
+                {totals.total} oturum · <span className="text-blue-600">{totals.male} erkek</span> · <span className="text-rose-600">{totals.female} kadın</span> · {totals.songs} serbest kayıt · {stageRecs.length} sahne
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -105,93 +156,265 @@ export default function AdminPanel() {
             </button>
           </div>
         </div>
+
+        {/* Görünüm sekmeleri */}
+        <div className="max-w-7xl mx-auto px-6 flex items-center gap-1 border-t border-stone-100">
+          <ViewTab active={view === 'users'} onClick={() => setView('users')} icon={<Users size={14} />} label="Kullanıcılar" count={totals.total} />
+          <ViewTab active={view === 'songs'} onClick={() => setView('songs')} icon={<ListMusic size={14} />} label="Serbest Kayıtlar" count={totals.songs} />
+          <ViewTab active={view === 'stage'} onClick={() => setView('stage')} icon={<Music2 size={14} />} label="Sahne Kayıtları" count={stageRecs.length} />
+        </div>
       </header>
 
-      {error && <div className="max-w-7xl mx-auto px-6 mt-3 text-sm text-red-600">{error}</div>}
+      {error && (
+        <div className="max-w-7xl mx-auto px-6 mt-3">
+          <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+            Yükleme hatası: {error} · <button onClick={() => password && load(password)} className="underline font-medium">tekrar dene</button>
+          </div>
+        </div>
+      )}
 
-      <div className="max-w-7xl mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-[320px_1fr] gap-4">
-        <aside className="bg-white rounded-xl border border-stone-200 overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 100px)' }}>
-          <div className="p-3 border-b border-stone-200">
-            <div className="relative">
+      {/* Filtre çubuğu — kullanıcı ve serbest kayıt görünümlerinde */}
+      {view !== 'stage' && (
+        <div className="max-w-7xl mx-auto px-6 pt-4">
+          <div className="bg-white rounded-xl border border-stone-200 p-3 flex flex-wrap items-center gap-3">
+            <div className="relative flex-1 min-w-[200px]">
               <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Kullanıcı ara…"
+                placeholder="İsimle ara…"
                 className="w-full pl-8 pr-2 py-1.5 text-sm rounded-lg border border-stone-200 focus:outline-none focus:border-amber-400"
               />
             </div>
-          </div>
-          <div className="flex-1 overflow-y-auto">
-            {grouped.map((g) => {
-              const gs = genderStyle(g.gender);
-              // Tek oturumlu kişi: doğrudan tam satır göster.
-              if (g.items.length === 1) {
-                const s = g.items[0];
-                return (
-                  <SessionRow
-                    key={g.key}
-                    session={s}
-                    active={s.id === selectedId}
-                    onClick={() => setSelectedId(s.id)}
-                  />
-                );
-              }
-              // Birden fazla oturum: isim başlığı + altında her test ayrı satır.
-              return (
-                <div key={g.key} className={`border-b border-stone-200 border-l-4 ${gs.border}`}>
-                  <div className={`flex items-center justify-between gap-2 px-3 py-2 ${gs.bg}`}>
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className={`w-2 h-2 rounded-full shrink-0 ${gs.dot}`} />
-                      <span className={`text-sm font-semibold truncate ${gs.text}`}>{g.name}</span>
-                      <span className="text-[10px] text-stone-500 shrink-0">{g.items.length} test</span>
-                    </div>
-                    {g.songCount > 0 && <SongBadge count={g.songCount} />}
-                  </div>
-                  {g.items.map((s) => {
-                    const active = s.id === selectedId;
-                    const songCount = s.recordings?.song?.length ?? 0;
-                    const recCount = (s.recordings?.range?.length ?? 0) + songCount;
-                    return (
-                      <button
-                        key={s.id}
-                        onClick={() => setSelectedId(s.id)}
-                        className={`w-full text-left pl-7 pr-3 py-2 border-t border-stone-100 hover:bg-stone-50 transition-colors ${active ? 'bg-amber-100' : ''}`}
-                      >
-                        <div className="flex items-center justify-between text-[11px] text-stone-500">
-                          <span className="flex items-center gap-1.5">
-                            <span className="text-stone-400">#{s.id}</span>
-                            <span>{new Date(s.createdAt).toLocaleDateString('tr-TR')}</span>
-                          </span>
-                          <span className="flex items-center gap-1">
-                            {songCount > 0 && <SongBadge count={songCount} />}
-                            {recCount > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">🎤 {recCount}</span>}
-                            <span>skor {Math.round(s.result.compositeScore)}</span>
-                          </span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            })}
-            {grouped.length === 0 && <div className="p-6 text-center text-sm text-stone-400">Kayıt yok</div>}
-          </div>
-        </aside>
 
-        <main className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-          {selected ? (
-            <SessionDetail session={selected} password={password} onDelete={async () => {
-              if (!confirm(`${selected.user.firstName} ${selected.user.lastName} silinsin mi?`)) return;
-              await deleteSession(selected.id, password);
-              setSelectedId(null);
-              if (password) void load(password);
-            }} />
-          ) : (
+            <Segmented
+              label="Cinsiyet"
+              value={genderFilter}
+              onChange={(v) => setGenderFilter(v as GenderFilter)}
+              options={[
+                { value: 'all', label: `Tümü` },
+                { value: 'male', label: `Erkek (${totals.male})`, cls: 'text-blue-700' },
+                { value: 'female', label: `Kadın (${totals.female})`, cls: 'text-rose-700' },
+              ]}
+            />
+
+            {view === 'users' && (
+              <label className="flex items-center gap-1.5 text-xs text-stone-500">
+                <ArrowDownWideNarrow size={14} />
+                <span className="hidden sm:inline">Sırala</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortBy)}
+                  className="py-1.5 pl-2 pr-6 text-sm rounded-lg border border-stone-200 bg-white focus:outline-none focus:border-amber-400 text-stone-700"
+                >
+                  {(Object.keys(SORT_LABELS) as SortBy[]).map((k) => (
+                    <option key={k} value={k}>{SORT_LABELS[k]}</option>
+                  ))}
+                </select>
+              </label>
+            )}
+
+            {(search || genderFilter !== 'all') && (
+              <button
+                onClick={() => { setSearch(''); setGenderFilter('all'); }}
+                className="text-xs text-stone-500 hover:text-stone-800 underline"
+              >
+                Filtreyi temizle
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Görünümler */}
+      {view === 'users' && (
+        <div className="max-w-7xl mx-auto px-6 py-4 grid grid-cols-1 md:grid-cols-[320px_1fr] gap-4">
+          <aside className="bg-white rounded-xl border border-stone-200 overflow-hidden flex flex-col" style={{ maxHeight: 'calc(100vh - 170px)' }}>
+            <div className="px-3 py-2 border-b border-stone-200 text-[11px] text-stone-500 flex items-center justify-between">
+              <span>{grouped.length} kişi</span>
+              <span className="text-stone-400">{SORT_LABELS[sortBy]}</span>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              {grouped.map((g) => {
+                const gs = genderStyle(g.gender);
+                if (g.items.length === 1) {
+                  const s = g.items[0];
+                  return (
+                    <SessionRow
+                      key={g.key}
+                      session={s}
+                      active={s.id === selectedId}
+                      onClick={() => setSelectedId(s.id)}
+                    />
+                  );
+                }
+                return (
+                  <div key={g.key} className={`border-b border-stone-200 border-l-4 ${gs.border}`}>
+                    <div className={`flex items-center justify-between gap-2 px-3 py-2 ${gs.bg}`}>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className={`w-2 h-2 rounded-full shrink-0 ${gs.dot}`} />
+                        <span className={`text-sm font-semibold truncate ${gs.text}`}>{g.name}</span>
+                        <span className="text-[10px] text-stone-500 shrink-0">{g.items.length} test</span>
+                      </div>
+                      {g.songCount > 0 && <SongBadge count={g.songCount} />}
+                    </div>
+                    {g.items.map((s) => {
+                      const active = s.id === selectedId;
+                      const songCount = s.recordings?.song?.length ?? 0;
+                      const recCount = (s.recordings?.range?.length ?? 0) + songCount;
+                      return (
+                        <button
+                          key={s.id}
+                          onClick={() => setSelectedId(s.id)}
+                          className={`w-full text-left pl-7 pr-3 py-2 border-t border-stone-100 hover:bg-stone-50 transition-colors ${active ? 'bg-amber-100' : ''}`}
+                        >
+                          <div className="flex items-center justify-between text-[11px] text-stone-500">
+                            <span className="flex items-center gap-1.5">
+                              <span className="text-stone-400">#{s.id}</span>
+                              <span>{new Date(s.createdAt).toLocaleDateString('tr-TR')}</span>
+                            </span>
+                            <span className="flex items-center gap-1">
+                              {songCount > 0 && <SongBadge count={songCount} />}
+                              {recCount > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">🎤 {recCount}</span>}
+                              <span className="tabular-nums">%{Math.round(s.result.successRate)} · {Math.round(s.result.compositeScore)}p</span>
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              {grouped.length === 0 && (
+                <div className="p-6 text-center text-sm text-stone-400">
+                  {sessions === null ? 'Yükleniyor…' : (search || genderFilter !== 'all') ? 'Filtreye uyan kayıt yok' : 'Kayıt yok'}
+                </div>
+              )}
+            </div>
+          </aside>
+
+          <main className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+            {selected ? (
+              <SessionDetail session={selected} password={password} onDelete={async () => {
+                if (!confirm(`${selected.user.firstName} ${selected.user.lastName} silinsin mi?`)) return;
+                await deleteSession(selected.id, password);
+                setSelectedId(null);
+                if (password) void load(password);
+              }} />
+            ) : (
+              <div className="p-10 text-center text-sm text-stone-400">
+                Soldan bir kullanıcı seçerek ses analizini ve nota denemelerini görüntüleyin.
+              </div>
+            )}
+          </main>
+        </div>
+      )}
+
+      {view === 'songs' && (
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <SongsOverview
+            rows={allSongs}
+            password={password}
+            empty={sessions === null ? 'Yükleniyor…' : 'Serbest şarkı kaydı bulunamadı.'}
+            onOpenUser={(id) => { setSelectedId(id); setView('users'); }}
+          />
+        </div>
+      )}
+
+      {view === 'stage' && (
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
             <StageOverview recordings={stageRecs} password={password} />
-          )}
-        </main>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ViewTab({ active, onClick, icon, label, count }: { active: boolean; onClick: () => void; icon: React.ReactNode; label: string; count: number }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium border-b-2 transition-colors ${
+        active ? 'border-amber-500 text-agora-dark' : 'border-transparent text-stone-500 hover:text-stone-800'
+      }`}
+    >
+      {icon} {label}
+      <span className={`px-1.5 py-0.5 rounded text-[10px] ${active ? 'bg-amber-100 text-amber-800' : 'bg-stone-100 text-stone-500'}`}>{count}</span>
+    </button>
+  );
+}
+
+function Segmented({ label, value, onChange, options }: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string; cls?: string }[];
+}) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className="text-xs text-stone-500 hidden sm:inline">{label}</span>
+      <div className="flex rounded-lg border border-stone-200 overflow-hidden">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            onClick={() => onChange(o.value)}
+            className={`px-2.5 py-1.5 text-xs font-medium transition-colors ${
+              value === o.value ? 'bg-amber-100 text-amber-900' : `bg-white hover:bg-stone-50 ${o.cls ?? 'text-stone-600'}`
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
       </div>
+    </div>
+  );
+}
+
+function SongsOverview({ rows, password, empty, onOpenUser }: {
+  rows: { session: AdminSession; song: SongRecordingMeta }[];
+  password: string;
+  empty: string;
+  onOpenUser: (id: number) => void;
+}) {
+  const sharedCount = rows.filter((r) => r.song.shareToScoreboard === 'true').length;
+  return (
+    <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+      <div className="p-5 border-b border-stone-200">
+        <h2 className="text-lg font-bold text-agora-dark flex items-center gap-2"><ListMusic size={18} /> Serbest Şarkı Kayıtları</h2>
+        <p className="text-xs text-agora-muted mt-0.5">{rows.length} kayıt · {sharedCount} tanesi skor tablosunda paylaşıldı · en yeniden eskiye</p>
+      </div>
+      {rows.length === 0 ? (
+        <div className="p-10 text-center text-sm text-stone-400">{empty}</div>
+      ) : (
+        <div className="divide-y divide-stone-100">
+          {rows.map(({ session: s, song }, i) => {
+            const gs = genderStyle(s.user.gender);
+            return (
+              <div key={`${s.id}-${song.filename ?? i}`} className={`flex items-center gap-3 px-5 py-3 border-l-4 ${gs.border} hover:bg-stone-50`}>
+                <span className={`w-2 h-2 rounded-full shrink-0 ${gs.dot}`} />
+                <div className="w-44 shrink-0 min-w-0">
+                  <div className={`text-sm font-medium truncate ${gs.text}`}>{s.user.firstName} {s.user.lastName}</div>
+                  <div className="text-[11px] text-stone-500">
+                    {new Date(song.recordedAt ?? s.createdAt).toLocaleDateString('tr-TR')}
+                    {song.duration ? ` · ${parseFloat(song.duration).toFixed(0)}s` : ''}
+                    {song.shareToScoreboard === 'true' && <span className="text-emerald-700"> · paylaşıldı</span>}
+                  </div>
+                </div>
+                <audio src={recordingUrl(s.id, song.filename, password)} controls className="flex-1 min-w-0" preload="none" />
+                <button
+                  onClick={() => onOpenUser(s.id)}
+                  className="flex items-center gap-1 text-xs text-stone-500 hover:text-amber-700 shrink-0"
+                  title="Kullanıcı detayını aç"
+                >
+                  <ExternalLink size={13} /> <span className="hidden sm:inline">Detay</span>
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -256,7 +479,7 @@ function SessionDetail({ session, password, onDelete }: { session: AdminSession;
   }
 
   return (
-    <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+    <div className="overflow-y-auto" style={{ maxHeight: 'calc(100vh - 170px)' }}>
       {/* Header */}
       <div className="p-5 border-b border-stone-200 flex items-start justify-between gap-3">
         <div>
@@ -356,11 +579,11 @@ function SessionDetail({ session, password, onDelete }: { session: AdminSession;
 
 function StageOverview({ recordings, password }: { recordings: StageRecording[]; password: string }) {
   return (
-    <div className="p-5 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+    <div className="p-5 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 170px)' }}>
       <h2 className="text-lg font-bold text-agora-dark mb-1">Sahne Kayıtları</h2>
       <p className="text-xs text-agora-muted mb-4">Stem üstüne söylenen anonim kayıtlar (kullanıcıya bağlı değil)</p>
       {recordings.length === 0 ? (
-        <div className="text-center py-12 text-sm text-stone-400">Henüz sahne kaydı yok. Bir kullanıcı seçin veya Sahneye Çık ekranından kayıt yapılmasını bekleyin.</div>
+        <div className="text-center py-12 text-sm text-stone-400">Henüz sahne kaydı yok. Sahneye Çık ekranından kayıt yapılmasını bekleyin.</div>
       ) : (
         <div className="space-y-2">
           {recordings.map((r) => {
@@ -380,9 +603,6 @@ function StageOverview({ recordings, password }: { recordings: StageRecording[];
           })}
         </div>
       )}
-      <div className="mt-6 p-3 rounded-lg bg-amber-50 border border-amber-200 text-xs text-amber-900">
-        Soldan bir kullanıcı seçerek ses analizini ve nota denemelerini görüntüleyebilirsiniz.
-      </div>
     </div>
   );
 }
@@ -435,7 +655,7 @@ function SessionRow({ session: s, active, onClick }: { session: AdminSession; ac
         <span className="flex items-center gap-1">
           {songCount > 0 && <SongBadge count={songCount} />}
           {recCount > 0 && <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px]">🎤 {recCount}</span>}
-          <span>skor {Math.round(s.result.compositeScore)}</span>
+          <span className="tabular-nums">%{Math.round(s.result.successRate)} · {Math.round(s.result.compositeScore)}p</span>
         </span>
       </div>
     </button>
