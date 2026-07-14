@@ -54,6 +54,20 @@ export default function AdminPanel() {
     if (password) void load(password);
   }, [password]);
 
+  // Aynı anda tek ses çalsın — biri başlayınca diğer tüm audio'ları durdur.
+  // 'play' olayı bubble etmediği için capture fazında dinliyoruz.
+  useEffect(() => {
+    const onPlay = (e: Event) => {
+      const target = e.target;
+      if (!(target instanceof HTMLAudioElement)) return;
+      document.querySelectorAll('audio').forEach((el) => {
+        if (el !== target) el.pause();
+      });
+    };
+    document.addEventListener('play', onPlay, true);
+    return () => document.removeEventListener('play', onPlay, true);
+  }, []);
+
   // NOT: Tüm hook'lar erken dönüşten (Login) ÖNCE çağrılmalı — aksi halde ilk
   // girişte hook sayısı değişir ve React panik atarak boş sayfa gösterir.
   const filtered = useMemo(() => {
