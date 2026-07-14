@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Lock, LogOut, RefreshCw, Search, Trash2, Music2, Mic, Users, ListMusic, ArrowDownWideNarrow, ExternalLink } from 'lucide-react';
 import {
   adminLogin,
@@ -416,7 +416,7 @@ function SongsOverview({ rows, password, empty, onOpenUser }: {
                     {song.shareToScoreboard === 'true' && <span className="text-emerald-700"> · paylaşıldı</span>}
                   </div>
                 </div>
-                <audio src={recordingUrl(s.id, song.filename, password)} controls className="flex-1 min-w-0" preload="none" />
+                <AudioPlayer src={recordingUrl(s.id, song.filename, password)} className="flex-1 min-w-0" />
                 <button
                   onClick={() => onOpenUser(s.id)}
                   className="flex items-center gap-1 text-xs text-stone-500 hover:text-amber-700 shrink-0"
@@ -553,7 +553,7 @@ function SessionDetail({ session, password, onDelete }: { session: AdminSession;
                     <td className="py-1.5 px-2 text-center">{a.isSuccessful ? '✓' : '·'}</td>
                     <td className="py-1.5 px-2">
                       {rec ? (
-                        <audio src={recordingUrl(session.id, rec.filename, password)} controls className="h-7 w-48" preload="none" />
+                        <AudioPlayer src={recordingUrl(session.id, rec.filename, password)} className="h-7 w-48" />
                       ) : (
                         <span className="text-stone-400">—</span>
                       )}
@@ -579,7 +579,7 @@ function SessionDetail({ session, password, onDelete }: { session: AdminSession;
                   {s.duration ? `${parseFloat(s.duration).toFixed(0)}s` : '—'}
                   {s.shareToScoreboard === 'true' && <div className="text-[10px] text-emerald-700">paylaşıldı</div>}
                 </div>
-                <audio src={recordingUrl(session.id, s.filename, password)} controls className="flex-1" preload="none" />
+                <AudioPlayer src={recordingUrl(session.id, s.filename, password)} className="flex-1" />
               </div>
             ))}
           </div>
@@ -611,13 +611,42 @@ function StageOverview({ recordings, password }: { recordings: StageRecording[];
                     {r.durationSec ? ` · ${parseFloat(r.durationSec).toFixed(0)}s` : ''}
                   </div>
                 </div>
-                <audio src={stageRecordingUrl(filename, password)} controls className="flex-1" preload="none" />
+                <AudioPlayer src={stageRecordingUrl(filename, password)} className="flex-1" />
               </div>
             );
           })}
         </div>
       )}
     </div>
+  );
+}
+
+// Native audio sarmalayıcı. MediaRecorder webm dosyalarında süre başlıkta
+// olmadığı için duration=Infinity gelir ve "0:00 / 0:00" görünür. Metadata
+// yüklendiğinde sona sarıp gerçek süreyi hesaplatıp başa dönüyoruz.
+function AudioPlayer({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLAudioElement>(null);
+  function handleLoadedMetadata() {
+    const el = ref.current;
+    if (!el) return;
+    if (el.duration === Infinity || Number.isNaN(el.duration)) {
+      const onTime = () => {
+        el.removeEventListener('timeupdate', onTime);
+        el.currentTime = 0;
+      };
+      el.addEventListener('timeupdate', onTime);
+      el.currentTime = 1e101;
+    }
+  }
+  return (
+    <audio
+      ref={ref}
+      src={src}
+      controls
+      preload="metadata"
+      onLoadedMetadata={handleLoadedMetadata}
+      className={className}
+    />
   );
 }
 
