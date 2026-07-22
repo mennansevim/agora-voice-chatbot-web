@@ -11,7 +11,10 @@ export default function Consent({ onAccept, onDecline }: { onAccept: () => void;
         <p className="text-sm text-agora-muted max-w-xl mx-auto leading-relaxed">
           Test sırasında alınan mikrofon kayıtlarınızı saklıyoruz. Bunlar yalnızca ses tespit
           (pitch detection) algoritmamızı geliştirmek için kullanılacak; üçüncü taraflarla
-          paylaşılmayacak ve herhangi bir reklam amacıyla kullanılmayacaktır.
+          paylaşılmayacak ve herhangi bir reklam amacıyla kullanılmayacaktır.{' '}
+          <a href="/kvkk" target="_blank" rel="noopener noreferrer" className="text-agora-terracotta underline hover:text-agora-bronze">
+            KVKK Aydınlatma Metni
+          </a>
         </p>
       </div>
 

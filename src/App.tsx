@@ -25,6 +25,7 @@ import {
 import Secmeler from './Secmeler';
 import PitchTest from './PitchTest';
 import AdminPanel from './Admin';
+import KvkkPage from './Kvkk';
 
 // AI asistan robot maskotu — tamamen SVG (ekstra dosya yok). Gözler index.css'te kırpışır.
 function RobotMascot({ className = '' }: { className?: string }) {
@@ -161,7 +162,7 @@ function App() {
 
   // Başvuru popup'ı — siteye her girişte gösterilir.
   useEffect(() => {
-    if (typeof window === 'undefined' || window.location.pathname === '/yonetim') return;
+    if (typeof window === 'undefined' || window.location.pathname === '/yonetim' || window.location.pathname === '/kvkk') return;
     const t = setTimeout(() => setShowApplyPopup(true), 700);
     return () => clearTimeout(t);
   }, []);
@@ -175,8 +176,9 @@ function App() {
     return () => document.removeEventListener('keydown', onKey);
   }, [showApplyPopup, dismissApplyPopup]);
 
-  if (typeof window !== 'undefined' && window.location.pathname === '/yonetim') {
-    return <AdminPanel />;
+  if (typeof window !== 'undefined') {
+    if (window.location.pathname === '/yonetim') return <AdminPanel />;
+    if (window.location.pathname === '/kvkk') return <KvkkPage />;
   }
 
   return (
@@ -921,6 +923,11 @@ function App() {
         <div className="max-w-6xl mx-auto px-6 text-center">
           <p className="text-agora-muted text-sm">
             © 2025 Agora Voice. Tüm hakları saklıdır.
+          </p>
+          <p className="text-agora-muted text-sm mt-3">
+            <a href="/kvkk" className="underline hover:text-agora-bronze transition-colors duration-200">
+              KVKK Aydınlatma Metni
+            </a>
           </p>
           <p className="text-agora-terracotta text-sm mt-2">
             Design by <a href="https://instagram.com/mennansevim" target="_blank" rel="noopener noreferrer" className="underline hover:text-agora-bronze transition-colors duration-200">@mennansevim</a>
