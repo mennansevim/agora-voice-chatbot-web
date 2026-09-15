@@ -26,6 +26,7 @@ import Secmeler from './Secmeler';
 import PitchTest from './PitchTest';
 import AdminPanel from './Admin';
 import KvkkPage from './Kvkk';
+import FestivalPlanner from './FestivalPlanner';
 
 // AI asistan robot maskotu — tamamen SVG (ekstra dosya yok). Gözler index.css'te kırpışır.
 function RobotMascot({ className = '' }: { className?: string }) {
@@ -162,7 +163,7 @@ function App() {
 
   // Başvuru popup'ı — siteye her girişte gösterilir.
   useEffect(() => {
-    if (typeof window === 'undefined' || window.location.pathname === '/yonetim' || window.location.pathname === '/kvkk') return;
+    if (typeof window === 'undefined' || window.location.pathname === '/yonetim' || window.location.pathname === '/kvkk' || window.location.pathname === '/festival-ai') return;
     const t = setTimeout(() => setShowApplyPopup(true), 700);
     return () => clearTimeout(t);
   }, []);
@@ -179,6 +180,7 @@ function App() {
   if (typeof window !== 'undefined') {
     if (window.location.pathname === '/yonetim') return <AdminPanel />;
     if (window.location.pathname === '/kvkk') return <KvkkPage />;
+    if (window.location.pathname === '/festival-ai') return <FestivalPlanner />;
   }
 
   return (
@@ -232,6 +234,12 @@ function App() {
               >
                 Ses Testi
               </button>
+              <a
+                href="/festival-ai"
+                className="text-sm font-semibold text-violet-700 hover:text-violet-900 transition-colors"
+              >
+                Festival AI
+              </a>
               <button
                 onClick={() => scrollToSection('gallery')}
                 className={`text-sm font-medium transition-colors ${
@@ -303,6 +311,12 @@ function App() {
                 >
                   Ses Testi
                 </button>
+                <a
+                  href="/festival-ai"
+                  className="text-left text-sm font-semibold text-violet-700 hover:text-violet-900 transition-colors"
+                >
+                  Festival AI
+                </a>
                 <button
                   onClick={() => scrollToSection('gallery')}
                   className={`text-left text-sm font-medium transition-colors ${

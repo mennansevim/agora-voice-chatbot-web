@@ -3,6 +3,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import {
   loadAll,
   addResult,
@@ -21,6 +22,11 @@ import {
 const ROOT = path.resolve(process.cwd());
 const CONTACTS_FILE = path.join(ROOT, 'data', 'contacts.txt');
 const RESET_PASSWORD = process.env.AGORA_RESET_PASSWORD || '945000';
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const FESTIVAL_AI_PASSWORD = process.env.FESTIVAL_AI_PASSWORD || (IS_PRODUCTION ? '' : RESET_PASSWORD);
+const FESTIVAL_AI_SESSION_SECRET = process.env.FESTIVAL_AI_SESSION_SECRET || (IS_PRODUCTION ? '' : `festival-ai:${RESET_PASSWORD}`);
+const FESTIVAL_AUTH_CONFIGURED = Boolean(FESTIVAL_AI_PASSWORD && FESTIVAL_AI_SESSION_SECRET);
+const FESTIVAL_COOKIE = 'agora_festival_ai';
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -59,6 +65,29 @@ function checkPassword(provided) {
   return provided === RESET_PASSWORD;
 }
 
+function safeEqual(left, right) {
+  const a = Buffer.from(String(left || ''));
+  const b = Buffer.from(String(right || ''));
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+function festivalSessionToken() {
+  return crypto.createHmac('sha256', FESTIVAL_AI_SESSION_SECRET).update('agora-festival-ai:v1').digest('hex');
+}
+
+function readCookies(req) {
+  return Object.fromEntries(String(req.headers.cookie || '').split(';').map(part => part.trim().split('=').map(decodeURIComponent)).filter(pair => pair.length === 2));
+}
+
+function hasFestivalAccess(req) {
+  return FESTIVAL_AUTH_CONFIGURED && safeEqual(readCookies(req)[FESTIVAL_COOKIE], festivalSessionToken());
+}
+
+function festivalCookie(value, maxAge) {
+  const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
+  return `${FESTIVAL_COOKIE}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secure}`;
+}
+
 function streamFile(res, filePath, mime) {
   res.statusCode = 200;
   res.setHeader('Content-Type', mime || 'audio/webm');
@@ -73,6 +102,26 @@ export async function handleApi(req, res) {
   if (!pathname.startsWith('/api/')) return false;
 
   try {
+    if (pathname === '/api/festival-auth/status' && req.method === 'GET') {
+      json(res, 200, { ok: hasFestivalAccess(req), configured: FESTIVAL_AUTH_CONFIGURED });
+      return true;
+    }
+
+    if (pathname === '/api/festival-auth/login' && req.method === 'POST') {
+      if (!FESTIVAL_AUTH_CONFIGURED) { json(res, 503, { error: 'festival auth not configured' }); return true; }
+      const body = JSON.parse((await readBody(req)) || '{}');
+      if (!safeEqual(body.password, FESTIVAL_AI_PASSWORD)) { json(res, 403, { error: 'wrong password' }); return true; }
+      res.setHeader('Set-Cookie', festivalCookie(festivalSessionToken(), 8 * 60 * 60));
+      json(res, 200, { ok: true });
+      return true;
+    }
+
+    if (pathname === '/api/festival-auth/logout' && req.method === 'POST') {
+      res.setHeader('Set-Cookie', festivalCookie('', 0));
+      json(res, 200, { ok: true });
+      return true;
+    }
+
     // GET /api/results
     if (pathname === '/api/results' && req.method === 'GET') {
       json(res, 200, loadAll());
