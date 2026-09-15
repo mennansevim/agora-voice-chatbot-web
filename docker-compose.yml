@@ -1,3 +1,5 @@
+name: agora-voice-chatbot-web
+
 services:
   web:
     build: .
@@ -6,3 +8,7 @@ services:
     container_name: agora-voice-chatbot-web-web-1
     volumes:
       - ./data:/app/data
+    environment:
+      FESTIVAL_AI_PASSWORD: ${FESTIVAL_AI_PASSWORD:?Set FESTIVAL_AI_PASSWORD in .env}
+      FESTIVAL_AI_SESSION_SECRET: ${FESTIVAL_AI_SESSION_SECRET:?Set FESTIVAL_AI_SESSION_SECRET in .env}
+    restart: always
