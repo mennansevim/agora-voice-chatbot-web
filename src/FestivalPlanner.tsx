@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle, ArrowLeft, ArrowRight, BookOpenText, BrainCircuit, CalendarClock,
-  CheckCircle, ChevronDown, ExternalLink, FileMusic, Globe2, LayoutDashboard,
+  CheckCircle, ExternalLink, FileMusic, Globe2, LayoutDashboard,
   Lightbulb, LockKeyhole, LogOut, Menu, Music2, Search, ShieldCheck, Sparkles, Swords, Target,
   TrendingUp, Trophy, Users, Wand2, X, Youtube,
 } from 'lucide-react';
@@ -12,22 +12,23 @@ import {
 } from './festivalResearch';
 import { wcg2024WorkIndex } from './wcg2024WorkIndex.generated';
 
-type View = 'festivals' | 'dossier' | 'participations' | 'archive' | 'juries' | 'preparation';
+type View = 'overview' | 'festivals' | 'dossier' | 'participations' | 'archive' | 'juries' | 'preparation';
 
 const navItems = [
-  { id: 'festivals' as View, label: 'Festival keşfi', icon: Globe2 },
-  { id: 'dossier' as View, label: 'Festival dosyası', icon: LayoutDashboard },
-  { id: 'participations' as View, label: 'Katıldığımız festivaller', icon: Trophy },
-  { id: 'archive' as View, label: 'Koro & eser arşivi', icon: BookOpenText },
-  { id: 'juries' as View, label: 'Jüri arşivi', icon: ShieldCheck },
-  { id: 'preparation' as View, label: 'Festivale hazırlık', icon: Sparkles },
+  { id: 'overview' as View, label: 'Başlangıç', icon: LayoutDashboard },
+  { id: 'festivals' as View, label: 'Festival seç', icon: Globe2 },
+  { id: 'dossier' as View, label: 'Festival bilgileri', icon: Target },
+  { id: 'participations' as View, label: 'Katılım geçmişimiz', icon: Trophy },
+  { id: 'archive' as View, label: 'Eser kütüphanesi', icon: BookOpenText },
+  { id: 'juries' as View, label: 'Jüri rehberi', icon: ShieldCheck },
+  { id: 'preparation' as View, label: 'Hazırlık stüdyosu', icon: Sparkles },
 ];
 
 const voiceParts = [
-  { label: 'Soprano', current: 8, readiness: 83, color: '#f39b8d', load: 'İzmir’in Kavakları · üst çizgi' },
-  { label: 'Alto', current: 8, readiness: 86, color: '#f4cf79', load: 'Pirlere · modal merkez/ostinato' },
-  { label: 'Tenor', current: 7, readiness: 74, color: '#9fd7ff', load: 'İzmir’in Kavakları · ritmik çekirdek' },
-  { label: 'Bas', current: 7, readiness: 79, color: '#9ee7c0', load: 'Pirlere · modal temel' },
+  { label: 'Soprano', current: 8, readiness: 83, color: '#c75b68', load: 'İzmir’in Kavakları · üst çizgi' },
+  { label: 'Alto', current: 8, readiness: 86, color: '#c78a3f', load: 'Pirlere · modal merkez/ostinato' },
+  { label: 'Tenor', current: 7, readiness: 74, color: '#4b7a9b', load: 'İzmir’in Kavakları · ritmik çekirdek' },
+  { label: 'Bas', current: 7, readiness: 79, color: '#6f8061', load: 'Pirlere · modal temel' },
 ];
 
 const benchmarkChoirs = [
@@ -145,7 +146,7 @@ function getSimulatorProfile(festival: FestivalRecord) {
 }
 
 function ScoreRing({ score, label, small = false }: { score: number; label: string; small?: boolean }) {
-  return <div className={`fep-score-ring ${small ? 'fep-score-ring--small' : ''}`} style={{ background: `conic-gradient(#b8f2d1 ${score * 3.6}deg, rgba(255,255,255,.08) 0deg)` }}><div className="fep-score-ring__inside"><strong>{score}</strong><span>{label}</span></div></div>;
+  return <div className={`fep-score-ring ${small ? 'fep-score-ring--small' : ''}`} style={{ background: `conic-gradient(var(--fep-terracotta) ${score * 3.6}deg, #eee5dc 0deg)` }}><div className="fep-score-ring__inside"><strong>{score}</strong><span>{label}</span></div></div>;
 }
 
 function Metric({ value, label, detail, tone = 'mint' }: { value: string; label: string; detail: string; tone?: string }) {
@@ -163,8 +164,13 @@ function SourceLink({ href, children = 'Resmî kaynak' }: { href: string; childr
 function Overview({ onNavigate, target }: { onNavigate: (view: View) => void; target: FestivalRecord | null }) {
   return <>
     <section className="fep-research-hero fep-card">
-      <div><span className="fep-eyebrow">2016–2026 · KANITA DAYALI ARAŞTIRMA</span><h1>Dünyanın koro sahnelerinden<br/><em>Agora için tek karar masası.</em></h1><p>25 festival ailesi, resmî program/sonuç arşivleri ve Agora’nın Ohrid 2026 gerçek jüri formları birlikte okunuyor. Gerçek puanlar ile AI tahminleri arayüzde kesin biçimde ayrılır.</p><div className="fep-hero-actions"><button className="fep-primary-button" onClick={() => onNavigate('participations')}><Trophy size={17}/> Ohrid 2026 sonucumuz</button><button className="fep-secondary-button" onClick={() => onNavigate('festivals')}><Globe2 size={17}/> Festivalleri aç</button></div></div>
+      <div><span className="fep-eyebrow">AGORA VOICE · FESTİVAL ARAŞTIRMA PLATFORMU</span><h1>Doğru festivali bulun,<br/><em>koronuzu güvenle hazırlayın.</em></h1><p>Festivalleri karşılaştırın, geçmiş repertuvarları ve jüri beklentilerini inceleyin; ardından 30 kişilik koronuz için anlaşılır bir hazırlık planı oluşturun.</p><div className="fep-hero-actions"><button className="fep-primary-button" onClick={() => onNavigate('festivals')}><Globe2 size={17}/> Festival seçmeye başla</button><button className="fep-secondary-button" onClick={() => onNavigate('participations')}><Trophy size={17}/> Geçmiş sonucumuzu gör</button></div></div>
       <div className="fep-hero-stat"><span>{target ? 'SEÇİLEN FESTİVAL UYUMU' : 'ÖNCE FESTİVAL SEÇİN'}</span>{target ? <ScoreRing score={target.fit} label="simülasyon"/> : <div className="fep-empty-score"><Globe2 size={30}/><b>25</b><small>festival seçeneği</small></div>}<small>{target ? `${target.name} · ${target.country}` : 'Üst menüden veya festival atlasından hedef belirleyin.'}</small></div>
+    </section>
+    <section className="fep-quick-path" aria-label="Kullanım adımları">
+      <button onClick={() => onNavigate('festivals')}><span>1</span><div><b>Festival seç</b><small>Ülke, prestij ve Agora uyumunu karşılaştır.</small></div><ArrowRight size={17}/></button>
+      <button onClick={() => onNavigate(target ? 'dossier' : 'festivals')}><span>2</span><div><b>Festival dosyasını incele</b><small>Kazananlar, repertuvarlar ve jüri ölçütlerini gör.</small></div><ArrowRight size={17}/></button>
+      <button onClick={() => onNavigate(target ? 'preparation' : 'festivals')}><span>3</span><div><b>Hazırlık planı oluştur</b><small>Eser eksiklerini ve prova önceliklerini çıkar.</small></div><ArrowRight size={17}/></button>
     </section>
 
     <section className="fep-metrics-grid">
@@ -416,7 +422,7 @@ function JuryArchiveView() {
 }
 
 function FestivalWorkspace({ onLogout }: { onLogout: () => void }) {
-  const [view,setView]=useState<View>('festivals');
+  const [view,setView]=useState<View>('overview');
   const [mobileOpen,setMobileOpen]=useState(false);
   const [assistantOpen,setAssistantOpen]=useState(false);
   const [target,setTarget]=useState<FestivalRecord|null>(null);
@@ -425,10 +431,10 @@ function FestivalWorkspace({ onLogout }: { onLogout: () => void }) {
   const navigate=(next:View)=>{setView(next);setMobileOpen(false);window.scrollTo({top:0,behavior:'smooth'})};
   const openDossier=(festival:FestivalRecord)=>{setTarget(festival);navigate('dossier')};
   return <div className="fep-shell">
-    <aside className={`fep-sidebar ${mobileOpen?'is-open':''}`}><div className="fep-brand"><img src="/agora.png" alt="Agora Voice"/><div><strong>Agora Voice</strong><span>Festival Intelligence</span></div><button className="fep-sidebar-close" onClick={()=>setMobileOpen(false)}><X size={20}/></button></div><div className="fep-workspace-label">ARAŞTIRMA & HAZIRLIK</div><nav>{navItems.map(item=>{const Icon=item.icon;return <button key={item.id} className={view===item.id?'is-active':''} onClick={()=>navigate(item.id)}><Icon size={18}/><span>{item.label}</span>{view===item.id&&<i/>}</button>})}</nav><div className="fep-sidebar-project"><div className="fep-project-icon"><Music2 size={20}/></div><div><span>AKTİF SENARYO</span><b>{target?target.name:'Festival seçilmedi'}</b><small>30 korist · 2 hazır eser</small></div><ChevronDown size={16}/></div><div className="fep-sidebar-meter"><div><span>Veri güveni</span><b>kaynaklı</b></div><div className="fep-progress"><i style={{width:'88%'}}/></div><small>Kamuya kapalı jüri notları simüle edilir</small></div><a href="/" className="fep-back-link"><ArrowLeft size={17}/> Ana siteye dön</a></aside>
+    <aside className={`fep-sidebar ${mobileOpen?'is-open':''}`}><div className="fep-brand"><img src="/agora.png" alt="Agora Voice"/><div><strong>Agora Voice</strong><span>Festival Rehberi</span></div><button className="fep-sidebar-close" onClick={()=>setMobileOpen(false)}><X size={20}/></button></div><div className="fep-workspace-label">KORO ARAŞTIRMA PLATFORMU</div><nav>{navItems.map(item=>{const Icon=item.icon;return <button key={item.id} className={view===item.id?'is-active':''} onClick={()=>navigate(item.id)}><Icon size={18}/><span>{item.label}</span>{view===item.id&&<i/>}</button>})}</nav><div className="fep-sidebar-project"><div className="fep-project-icon"><Music2 size={20}/></div><div><span>SEÇİLİ FESTİVAL</span><b>{target?target.name:'Henüz seçilmedi'}</b><small>30 korist · 2 hazır eser</small></div></div><div className="fep-sidebar-meter"><div><span>Veri yaklaşımı</span><b>kaynaklı</b></div><small>Gerçek veriler ve AI tahminleri ayrı gösterilir.</small></div><a href="/" className="fep-back-link"><ArrowLeft size={17}/> Ana siteye dön</a></aside>
     {mobileOpen&&<button className="fep-overlay" onClick={()=>setMobileOpen(false)}/>}
-    <main className="fep-main"><header className="fep-topbar"><button className="fep-mobile-menu" onClick={()=>setMobileOpen(true)}><Menu size={22}/></button><div className="fep-breadcrumb"><span>Festival Intelligence</span><i>/</i><strong>{current.label}</strong></div><div className="fep-top-actions"><div className="fep-research-badge"><CheckCircle size={15}/> 2008–2026 araştırma kesiti</div><div className="fep-user"><span>AV</span><div><b>Agora Voice</b><small>Şef çalışma alanı</small></div></div><button className="fep-logout" onClick={onLogout} aria-label="Güvenli çıkış" title="Güvenli çıkış"><LogOut size={17}/></button></div></header><div className="fep-contextbar"><div><span className="fep-context-icon"><Target size={20}/></span><label className="fep-target-picker"><small>FESTİVAL SEÇ · 25 DOSYA</small><select value={target?.name??''} onChange={e=>{const next=festivals.find(f=>f.name===e.target.value);if(next)openDossier(next);else{setTarget(null);navigate('festivals')}}}><option value="">Festival seçin…</option>{festivals.map(f=><option value={f.name} key={f.name}>{f.name} — {f.country}</option>)}</select></label></div><div className="fep-context-meta"><span><BookOpenText size={16}/> {target?'Festival dosyası açık':'Önce festivali tanı'}</span><span><Users size={16}/> Agora · 2 hazır eser</span><span className="fep-context-ready"><CheckCircle size={16}/> {view==='preparation'?'Hazırlık modu':view==='participations'?'Gerçek sonuç modu':'Araştırma modu'}</span></div></div><div className="fep-content">{view==='festivals'&&<FestivalsView target={target} onTarget={openDossier}/>} {view==='dossier'&&<FestivalDossierView target={target} onPreparation={()=>navigate('preparation')} onExplore={()=>navigate('festivals')}/>} {view==='participations'&&<ParticipationsView onPreparation={()=>{setTarget(festivals[0]);navigate('preparation')}}/>} {view==='archive'&&<ArchiveView/>} {view==='juries'&&<JuryArchiveView/>} {view==='preparation'&&<PreparationView target={target} onTarget={setTarget} onExplore={()=>navigate('festivals')}/>}</div></main>
-    <button className="fep-ai-fab" onClick={()=>setAssistantOpen(!assistantOpen)}><BrainCircuit size={21}/><span>Festival AI</span></button>{assistantOpen&&<div className="fep-ai-panel"><div className="fep-ai-panel__head"><div><Sparkles size={18}/><b>Festival AI</b></div><button onClick={()=>setAssistantOpen(false)}><X size={18}/></button></div><div className="fep-ai-message"><BrainCircuit size={19}/><p>{target?`${target.name} dosyası hazır. Önce tarihçe, kazananlar, repertuvar ve jüri verisini okuyun; sonra hazırlık modülüne geçin.`:'Önce 25 uluslararası festival arasından birini seçin. Platform festival dosyasını tek sayfada açacak.'}</p></div><div className="fep-ai-chips"><button onClick={()=>navigate('festivals')}>Festival seç</button><button onClick={()=>navigate('participations')}>Ohrid 2026 sonucumuz</button><button onClick={()=>navigate('dossier')}>Festival dosyası</button><button onClick={()=>navigate('preparation')}>Hazırlığa geç</button></div><small>Prestij ve uygunluk değerleri platform metriğidir; resmî festival puanı değildir.</small></div>}
+    <main className="fep-main"><header className="fep-topbar"><button className="fep-mobile-menu" onClick={()=>setMobileOpen(true)} aria-label="Menüyü aç"><Menu size={22}/></button><div className="fep-breadcrumb"><span>Festival Rehberi</span><i>/</i><strong>{current.label}</strong></div><div className="fep-top-actions"><div className="fep-research-badge"><CheckCircle size={15}/> Kaynaklı araştırma</div><div className="fep-user"><span>AV</span><div><b>Agora Voice</b><small>Şef çalışma alanı</small></div></div><button className="fep-logout" onClick={onLogout} aria-label="Güvenli çıkış" title="Güvenli çıkış"><LogOut size={17}/></button></div></header><div className="fep-contextbar"><div><span className="fep-context-icon"><Target size={20}/></span><label className="fep-target-picker"><small>HEDEF FESTİVAL · 25 SEÇENEK</small><select value={target?.name??''} onChange={e=>{const next=festivals.find(f=>f.name===e.target.value);if(next)openDossier(next);else{setTarget(null);navigate('festivals')}}}><option value="">Bir festival seçin…</option>{festivals.map(f=><option value={f.name} key={f.name}>{f.name} — {f.country}</option>)}</select></label></div><div className="fep-context-meta"><span className={target?'fep-context-ready':''}>{target?<CheckCircle size={16}/>:<Globe2 size={16}/>} {target?'Festival seçildi':'İlk adım: festival seçin'}</span><span><Users size={16}/> 30 korist · 2 hazır eser</span></div></div><div className="fep-content">{view==='overview'&&<Overview onNavigate={navigate} target={target}/>} {view==='festivals'&&<FestivalsView target={target} onTarget={openDossier}/>} {view==='dossier'&&<FestivalDossierView target={target} onPreparation={()=>navigate('preparation')} onExplore={()=>navigate('festivals')}/>} {view==='participations'&&<ParticipationsView onPreparation={()=>{setTarget(festivals[0]);navigate('preparation')}}/>} {view==='archive'&&<ArchiveView/>} {view==='juries'&&<JuryArchiveView/>} {view==='preparation'&&<PreparationView target={target} onTarget={setTarget} onExplore={()=>navigate('festivals')}/>}</div></main>
+    <button className="fep-ai-fab" onClick={()=>setAssistantOpen(!assistantOpen)} aria-expanded={assistantOpen}><BrainCircuit size={21}/><span>AI Rehber</span></button>{assistantOpen&&<div className="fep-ai-panel"><div className="fep-ai-panel__head"><div><Sparkles size={18}/><b>AI Rehber</b></div><button onClick={()=>setAssistantOpen(false)} aria-label="AI rehberi kapat"><X size={18}/></button></div><div className="fep-ai-message"><BrainCircuit size={19}/><p>{target?`${target.name} dosyası hazır. Önce festival bilgilerini inceleyin; sonra hazırlık stüdyosuna geçin.`:'Başlamak için bir festival seçin. Kazananlar, repertuvar ve jüri bilgileri tek dosyada açılacak.'}</p></div><div className="fep-ai-chips"><button onClick={()=>navigate('festivals')}>Festival seç</button><button onClick={()=>navigate('participations')}>Geçmiş sonucumuz</button><button onClick={()=>navigate('dossier')}>Festival bilgileri</button><button onClick={()=>navigate('preparation')}>Hazırlığa geç</button></div><small>AI tahminleri resmî festival puanı değildir; hazırlık senaryosudur.</small></div>}
   </div>;
 }
 
