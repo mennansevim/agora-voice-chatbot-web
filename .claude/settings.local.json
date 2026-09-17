@@ -44,7 +44,17 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(len\\(d\\), 'records'\\); [print\\(r['id'], r.get\\('user',{}\\).get\\('firstName','?'\\), r.get\\('user',{}\\).get\\('lastName','?'\\)\\) for r in d]\")",
       "Bash(ssh-add --apple-load-keychain)",
       "Bash(ssh-add -l)",
-      "Bash(git commit -m 'fix\\(seçmeler\\): 2025/2026 → 2026/2027 sezonuna güncelle *)"
+      "Bash(git commit -m 'fix\\(seçmeler\\): 2025/2026 → 2026/2027 sezonuna güncelle *)",
+      "Bash(git -C /Users/sevimm/Documents/Projects/agoravoiceweb remote -v)",
+      "Bash(git -C /Users/sevimm/Documents/Projects/agoravoiceweb log --oneline -10)",
+      "Bash(find /Users/sevimm/Documents/Projects/agoravoiceweb/.claude -type f; echo \"---\"; find /Users/sevimm/.claude/skills -maxdepth 2 -name 'SKILL.md' 2>/dev/null | grep -iE 'rotori|deploy|commit' | head)",
+      "Bash(mkdir -p /Users/sevimm/Documents/Projects/agoravoiceweb/.claude/skills/agoravoice-commit /Users/sevimm/Documents/Projects/agoravoiceweb/.claude/skills/agoravoice-deploy)",
+      "Bash(rmdir /Users/sevimm/Documents/Projects/agoravoiceweb/.claude/skills/agoravoice-commit /Users/sevimm/Documents/Projects/agoravoiceweb/.claude/skills/agoravoice-deploy /Users/sevimm/Documents/Projects/agoravoiceweb/.claude/skills)",
+      "Bash(mkdir -p /Users/sevimm/.claude/skills/agoravoice-commit /Users/sevimm/.claude/skills/agoravoice-deploy)",
+      "Read(//Users/sevimm/.ssh/**)",
+      "Bash(ssh -o BatchMode=yes -o PreferredAuthentications=publickey -o ConnectTimeout=5 -o StrictHostKeyChecking=no mennano@192.168.1.60 'echo key-auth-ok && pwd')",
+      "Bash(curl -sSI --max-time 10 https://www.agoravoice.com.tr)",
+      "Bash(curl -sSI --max-time 10 http://www.agoravoice.com.tr)"
     ]
   }
 }

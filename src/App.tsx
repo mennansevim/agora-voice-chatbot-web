@@ -28,6 +28,10 @@ import AdminPanel from './Admin';
 import KvkkPage from './Kvkk';
 import FestivalPlanner from './FestivalPlanner';
 
+// Başvuru dönemi kapalı. Yeni dönem açıldığında `true` yapılması yeterli:
+// hero'daki başvuru butonu ve girişteki başvuru popup'ı yeniden görünür olur.
+const APPLICATIONS_OPEN: boolean = false;
+
 // AI asistan robot maskotu — tamamen SVG (ekstra dosya yok). Gözler index.css'te kırpışır.
 function RobotMascot({ className = '' }: { className?: string }) {
   return (
@@ -161,8 +165,9 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Başvuru popup'ı — siteye her girişte gösterilir.
+  // Başvuru popup'ı — siteye her girişte gösterilir (başvurular açıkken).
   useEffect(() => {
+    if (!APPLICATIONS_OPEN) return;
     if (typeof window === 'undefined' || window.location.pathname === '/yonetim' || window.location.pathname === '/kvkk' || window.location.pathname === '/festival-ai') return;
     const t = setTimeout(() => setShowApplyPopup(true), 700);
     return () => clearTimeout(t);
@@ -370,40 +375,47 @@ function App() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <a
-                href="https://forms.gle/Qgw4xp9jMte7y94h7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center font-bold py-4 px-8 rounded-full text-lg text-white text-center overflow-hidden transition-all duration-500 transform hover:scale-110 animate-glow"
-                style={{
-                  background: 'linear-gradient(45deg, #e74c3c, #f39c12, #e67e22, #d35400)',
-                  backgroundSize: '400% 400%',
-                  animation: 'gradientShift 3s ease infinite, glow 2s ease-in-out infinite'
-                }}
-              >
-                {/* Animasyonlu arka plan */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {APPLICATIONS_OPEN ? (
+                <a
+                  href="https://forms.gle/Qgw4xp9jMte7y94h7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center justify-center font-bold py-4 px-8 rounded-full text-lg text-white text-center overflow-hidden transition-all duration-500 transform hover:scale-110 animate-glow"
+                  style={{
+                    background: 'linear-gradient(45deg, #e74c3c, #f39c12, #e67e22, #d35400)',
+                    backgroundSize: '400% 400%',
+                    animation: 'gradientShift 3s ease infinite, glow 2s ease-in-out infinite'
+                  }}
+                >
+                  {/* Animasyonlu arka plan */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-orange-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                {/* Parlama efekti */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  {/* Parlama efekti */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
 
-                {/* Müzik notaları animasyonu */}
-                <Music className="absolute -left-4 -top-4 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '1.2rem'}} />
-                <Music2 className="absolute -right-4 -bottom-4 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '1rem', animationDelay: '0.5s'}} />
-                <Music3 className="absolute -left-2 top-1/2 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '0.8rem', animationDelay: '1s'}} />
-                <Music4 className="absolute -right-2 top-1/2 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '0.9rem', animationDelay: '1.5s'}} />
+                  {/* Müzik notaları animasyonu */}
+                  <Music className="absolute -left-4 -top-4 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '1.2rem'}} />
+                  <Music2 className="absolute -right-4 -bottom-4 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '1rem', animationDelay: '0.5s'}} />
+                  <Music3 className="absolute -left-2 top-1/2 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '0.8rem', animationDelay: '1s'}} />
+                  <Music4 className="absolute -right-2 top-1/2 text-white/80 opacity-0 group-hover:opacity-100 animate-music-float transition-all duration-300" style={{fontSize: '0.9rem', animationDelay: '1.5s'}} />
 
-                {/* İçerik */}
-                <span className="relative z-10 font-bold text-white drop-shadow-lg group-hover:scale-105 transition-transform duration-300">
-                  🎵 Başvuru Formu 🎵
-                </span>
+                  {/* İçerik */}
+                  <span className="relative z-10 font-bold text-white drop-shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    🎵 Başvuru Formu 🎵
+                  </span>
 
-                {/* Hover efekti için ekstra glow */}
-                <div className="absolute inset-0 rounded-full bg-white/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
+                  {/* Hover efekti için ekstra glow */}
+                  <div className="absolute inset-0 rounded-full bg-white/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
 
-                {/* Pulse efekti */}
-                <div className="absolute inset-0 rounded-full border-2 border-white/30 opacity-0 group-hover:opacity-100 animate-ping-slow"></div>
-              </a>
+                  {/* Pulse efekti */}
+                  <div className="absolute inset-0 rounded-full border-2 border-white/30 opacity-0 group-hover:opacity-100 animate-ping-slow"></div>
+                </a>
+              ) : (
+                <div className="inline-flex flex-col items-center gap-1 rounded-2xl border border-stone-600/60 bg-stone-900/60 py-4 px-8 text-center backdrop-blur-sm">
+                  <span className="text-lg font-bold text-stone-100">Başvurularımız tamamlandı</span>
+                  <span className="text-sm text-stone-400">Yeni dönem başvuruları açıldığında buradan duyuracağız.</span>
+                </div>
+              )}
               <button
                 onClick={() => scrollToSection('secmeler')}
                 className="font-semibold py-3 px-7 rounded-full text-stone-900 bg-stone-100 hover:bg-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
@@ -827,7 +839,7 @@ function App() {
       </main>
 
       {/* Başvuru Popup'ı — girişte açılır */}
-      {showApplyPopup && (
+      {APPLICATIONS_OPEN && showApplyPopup && (
         <div
           className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-stone-950/50 backdrop-blur-[2px] animate-[fadeIn_0.3s_ease-out]"
           role="presentation"
