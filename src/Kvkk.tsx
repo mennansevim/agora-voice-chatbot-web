@@ -227,6 +227,52 @@ export default function KvkkPage() {
               bulunmalıdır.
             </p>
           </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-agora-dark mb-3">g) Çerezler ve Üçüncü Taraf İçerikler</h2>
+            <p className="mb-4">
+              İnternet sitemiz, kendi adına reklam veya analitik amaçlı çerez kullanmamaktadır. Ancak sitemizin
+              &quot;Videolar&quot; bölümünde, koromuzun Instagram hesabındaki videolar Instagram&apos;ın resmî
+              gömme (embed) hizmeti aracılığıyla gösterilmektedir.
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-4">
+              <li>
+                Bu bölüme yaklaştığınızda tarayıcınız, videoları yüklemek için doğrudan Instagram&apos;ın
+                (Meta Platforms Ireland Ltd. / Meta Platforms, Inc.) sunucularına bağlanır.
+              </li>
+              <li>
+                Bu bağlantı sırasında Instagram; IP adresiniz, tarayıcı ve cihaz bilgileriniz ile ziyaret
+                ettiğiniz sayfa gibi bilgileri alabilir ve tarayıcınıza kendi çerezlerini yerleştirebilir.
+                Instagram hesabınızda oturumunuz açıksa bu ziyaret hesabınızla ilişkilendirilebilir.
+              </li>
+              <li>
+                Söz konusu veriler Koro tarafından değil, Instagram tarafından kendi gizlilik politikası
+                çerçevesinde işlenir ve yurt dışındaki sunuculara aktarılabilir. Ayrıntılı bilgi için{' '}
+                <a
+                  href="https://privacycenter.instagram.com/policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-agora-terracotta underline hover:text-agora-bronze transition-colors"
+                >
+                  Instagram Gizlilik İlkeleri
+                </a>
+                &apos;ni inceleyebilirsiniz.
+              </li>
+            </ul>
+            <p>
+              Tarayıcınızın ayarlarından üçüncü taraf çerezlerini engelleyebilir veya silebilirsiniz. Bu
+              durumda gömülü videolar görüntülenmeyebilir; videolarımıza{' '}
+              <a
+                href="https://instagram.com/agoravoice"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-agora-terracotta underline hover:text-agora-bronze transition-colors"
+              >
+                @agoravoice
+              </a>{' '}
+              hesabımızdan doğrudan da ulaşabilirsiniz.
+            </p>
+          </section>
         </article>
       </main>
 
