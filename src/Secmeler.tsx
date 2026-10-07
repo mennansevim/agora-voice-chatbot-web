@@ -1,303 +1,283 @@
-import React from 'react';
-import { Music, Users, Euro, Mail, Instagram, Globe, CheckCircle, Star, MapPin, Calendar, Mic } from 'lucide-react';
+import { useState, type CSSProperties } from 'react';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Calendar,
+  CheckCircle2,
+  Drum,
+  Ear,
+  MapPin,
+  MessageCircle,
+  Mic,
+  Music,
+  Sparkles,
+  Star,
+  Users,
+} from 'lucide-react';
+import Reveal from './Reveal';
 
-const Secmeler = ({ onStartPitchTest }: { onStartPitchTest: () => void }) => {
+type FaqItem = { q: string; a: string | string[] };
+
+const FAQ_GROUPS: { label: string; items: FaqItem[] }[] = [
+  {
+    label: 'Başvuru ve Seçme',
+    items: [
+      { q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.' },
+      { q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.' },
+      { q: 'Vize ve pasaport işlemleri nasıl yürütülüyor?', a: 'Pasaport başvurusu bireysel olarak yapılır. Vize işlemleri koro yönetimi tarafından yürütülür.' },
+      { q: 'Vize reddi yaşanırsa ne olur?', a: 'Bu durumda maalesef festivale katılım sağlanamaz. Konsolosluk süreci dış etken olduğu için garanti verilemez.' },
+      { q: 'Sahne kostümleri nasıl belirleniyor?', a: 'Kostüm detayları üyeliğiniz onaylandıktan sonra paylaşılır. Nereden temin edileceği konusunda bilgilendirme yapılır.' },
+      { q: 'Fotoğraf ve videolar nasıl kullanılıyor?', a: 'Tanıtım, sosyal medya ve arşiv amaçlı kullanılabilir. Kullanım için yazılı onay alınır.' },
+    ],
+  },
+  {
+    label: 'Prova',
+    items: [
+      { q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her pazartesi ve cuma günleri 19:00–22:00 saatlerinde yapılır. Yer: Narlıdere Atatürk Kültür Merkezi, Mithat Paşa Cad. 447/A Narlıdere/İzmir.' },
+      { q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.' },
+      { q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.' },
+      { q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.' },
+      { q: 'Konser ve turneler hangi dönemlerde oluyor?', a: 'Genellikle hafta sonlarına ve tatil günlerine denk getirilir.' },
+      { q: 'Yıl içinde takvim nasıl işler?', a: 'Prova ve konser takvimi dönem başında paylaşılır. Resmi tatillerde de çalışma olabilir.' },
+    ],
+  },
+  {
+    label: 'Koro',
+    items: [
+      { q: 'Agora Voice nedir?', a: 'Agora Voice, farklı korolarda deneyim kazanmış koristlerin bir araya gelerek kurduğu, müziğe tutkuyla bağlı bir vokal topluluğudur.' },
+      { q: 'Ne zaman kuruldunuz?', a: 'Koromuz, ilk çalışmasını 27 Ocak 2025 tarihinde gerçekleştirmiştir.' },
+      { q: 'Adınızı nereden alıyorsunuz?', a: 'İzmir’in tarihî ve kültürel simgelerinden biri olan Antik Agora’dan ilham alıyoruz.' },
+      { q: 'Koro şefiniz kimdir?', a: 'Şefimiz, deneyimli müzik eğitimcisi Özlem Varışlı Atçeken’dir.' },
+      { q: 'Korepetitörünüz kimdir?', a: 'Piyanist, aranjör Rıza Atçeken çalışmalarımıza eşlik etmektedir.' },
+      { q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.' },
+      { q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.' },
+      { q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.' },
+      { q: 'Çalışma koşullarınız nelerdir?', a: 'Bütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.' },
+      { q: 'Koristlerin görev ve sorumlulukları nelerdir?', a: ['1- Eserle ilgili verilen ödevi yerine getirir.', '2- Uyarılar doğrultusunda gerekli düzeltmeleri yapar.', '3- Çalışmalara Partisyonunu eksiksiz öğrenerek, hazır gelir.', '4- Korunun sanatsal ve sosyal işleyişinde uygun görülen ekiplerde aktif görev alır.'] },
+    ],
+  },
+];
+
+const STAGES = [
+  { icon: Ear, title: 'Müzik Kulağı Testi', points: ['Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı istenir.', 'Adayın müzik kulağı ölçülür.'] },
+  { icon: Music, title: 'Ezgi Tekrarı', points: ['Verilen iki küçük ezgi piyano ile çalınır.', 'Adayın tekrarı istenir.'] },
+  { icon: Drum, title: 'Ritim Duygusu', points: ['Verilen rehber iki ritmin tekrarı istenir.', 'Adayın ritim duygusu ölçülür.'] },
+  { icon: Mic, title: 'Hazırlanan Eser', points: ['Adayın hazırladığı bir eseri seslendirmesi istenir.', 'Dil, tür ve tarz serbesttir.'] },
+];
+
+// Ses dalgası çubuklarının deterministik yükseklikleri (her render'da aynı).
+const WAVE = Array.from({ length: 34 }, (_, i) => {
+  const h = 22 + Math.round(Math.abs(Math.sin(i * 0.72) * 58 + Math.cos(i * 1.9) * 16));
+  return { h: Math.min(h, 92), dl: `${(i % 9) * -0.17}s` };
+});
+
+const MAPS_URL = 'https://www.google.com/maps/search/?api=1&query=Narl%C4%B1dere+Atat%C3%BCrk+K%C3%BClt%C3%BCr+Merkezi+%C4%B0zmir';
+
+type SecmelerProps = {
+  applicationsOpen: boolean;
+  onStartPitchTest: () => void;
+  onAskAssistant?: () => void;
+};
+
+const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: SecmelerProps) => {
+  const [faqTab, setFaqTab] = useState(0);
+  const group = FAQ_GROUPS[faqTab];
+
   return (
-    <section id="secmeler" className="min-h-screen bg-stone-50 py-20">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-terracotta-gradient rounded-full mb-8">
-            <Music className="w-10 h-10 text-white" />
+    <section id="secmeler" className="av-section av-section--alt" aria-labelledby="secmeler-title">
+      <div className="av-wrap">
+        <Reveal className="av-section-head">
+          <span className="av-chip">Seçmeler</span>
+          <div className="av-section-head__body">
+            <span className="av-eyebrow">Agora Voice 2026 / 2027 – Çok Sesli A Capella Koro Seçmeleri</span>
+            <h2 id="secmeler-title" className="av-display av-h2">
+              Sahnedeki yerin <em>seni bekliyor.</em>
+            </h2>
+            <p className="av-lead" style={{ maxWidth: 760 }}>
+              {applicationsOpen
+                ? 'Ön değerlendirme sonuçları 15-25 Temmuz tarihleri arasında e-posta yoluyla sizinle paylaşılacaktır. '
+                : '2026 – 2027 dönemi seçmelerimiz tamamlandı; yeni dönem başvuruları açıldığında duyuracağız. '}
+              Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır.
+              Katılımcılar, uluslararası bir sahnede çok sesli müziğin coşkusunu paylaşma fırsatı bulacaklardır.
+            </p>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-agora-dark mb-6">
-            🎶 <span className="text-agora-bronze">Seçmeler</span>
-          </h1>
-          <h2 className="text-2xl md:text-3xl font-semibold text-agora-bronze mb-4">
-            Agora Voice 2026 / 2027 – Çok Sesli A Capella Koro Seçmeleri
-          </h2>
-          <p className="text-xl text-agora-muted max-w-6xl mx-auto leading-relaxed">
-           
-            Ön değerlendirme sonuçları 15-25 Temmuz tarihleri arasında e-posta yoluyla sizinle paylaşılacaktır.
-            Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. 
-            <br />
-          
-            Katılımcılar, uluslararası bir sahnede çok sesli müziğin coşkusunu paylaşma fırsatı bulacaklardır.
+        </Reveal>
+
+        {/* Kimler başvurabilir */}
+        <Reveal className="av-card av-spot" style={{ marginBottom: 16 }}>
+          <div className="av-icon"><Users size={22} /></div>
+          <h3>Kimler başvurabilir?</h3>
+          <p>Agora Voice'a katılmak için:</p>
+          <ul className="av-criteria">
+            <li><CheckCircle2 size={20} />20 – 55 yaş aralığında olmalısınız.</li>
+            <li><CheckCircle2 size={20} />Temel düzeyde nota bilgisi ve müzik kulağına sahip olmanız beklenir.</li>
+            <li><CheckCircle2 size={20} />Provalara düzenli katılım sağlayabilmelisiniz.</li>
+            <li className="is-bonus">
+              <Star size={20} />
+              <span>Daha önce çok sesli müzik deneyimi edinmiş olmanız avantajdır ancak zorunlu değildir.<em>Avantaj</em></span>
+            </li>
+            <li><CheckCircle2 size={20} />2027 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.</li>
+          </ul>
+        </Reveal>
+
+        {/* Seçme aşamaları */}
+        <Reveal className="av-section-head__row" style={{ margin: 'clamp(3.5rem, 7vw, 5.5rem) 0 1.6rem' }}>
+          <h3 className="av-display" style={{ fontSize: 'clamp(2.2rem, 4.4vw, 3.8rem)' }}>
+            Seçme <em>aşamaları</em>
+          </h3>
+          <p className="av-lead" style={{ maxWidth: 440 }}>
+            Agora Voice seçmeleri canlı ve birebir yapılır. Aşamalar aşağıdaki gibidir:
           </p>
+        </Reveal>
+        <div className="av-stages">
+          {STAGES.map(({ icon: Icon, title, points }, i) => (
+            <Reveal key={title} className="av-card av-spot av-stage" delay={i * 90}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <span className="av-stage__num">0{i + 1}</span>
+                <div className="av-icon" style={{ marginBottom: 0 }}><Icon size={21} /></div>
+              </div>
+              <h4>{title}</h4>
+              <ul>
+                {points.map((p) => <li key={p}>{p}</li>)}
+              </ul>
+            </Reveal>
+          ))}
         </div>
 
-        {/* Kimler Başvurabilir */}
-        <div className="card-agora rounded-2xl p-8 mb-12">
-          <h3 className="text-3xl font-bold text-agora-dark mb-6 flex items-center">
-            <Users className="w-8 h-8 text-agora-terracotta mr-3" />
-            👥 Kimler Başvurabilir?
-          </h3>
-          <p className="text-lg text-agora-muted mb-6">Agora Voice'a katılmak için:</p>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">20 – 55 yaş aralığında olmalısınız.</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Provalara düzenli katılım sağlayabilmelisiniz.</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">2027 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.</p>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Temel düzeyde nota bilgisi ve müzik kulağına sahip olmanız beklenir.</p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Star className="w-6 h-6 text-agora-gold mt-1 flex-shrink-0" />
-                <p className="text-agora-muted">Daha önce çok sesli müzik deneyimi edinmiş olmanız avantajdır ancak zorunlu değildir.</p>
-              </div>
-            </div>
+        {/* Ses testi bandı */}
+        <Reveal className="av-voiceband">
+          <div>
+            <span className="av-eyebrow">Ücretsiz · 1 dakika</span>
+            <h3>Seçmeye gelmeden önce tek bir ses denemesi yapmak ister misiniz?</h3>
+            <p>Ücretsiz ses aralığı testimizle hangi ses grubuna uygun olduğunuzu hemen keşfedin.</p>
           </div>
-        </div>
-
-        {/* Seçme Aşamaları */}
-        <div className="card-agora rounded-2xl p-8 mb-12">
-          <h3 className="text-3xl font-bold text-agora-dark mb-6 flex items-center">
-            <Music className="w-8 h-8 text-agora-terracotta mr-3" />
-            🧪 Seçme Aşamaları Nelerdir?
-          </h3>
-          <p className="text-lg text-agora-muted mb-8">Agora Voice seçmeleri canlı ve birebir yapılır. Aşamalar aşağıdaki gibidir:</p>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-terracotta/10 bg-stone-100 rounded-xl p-6 border border-terracotta/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">1- Müzik Kulağı Testi</h4>
-              <ul className="text-agora-muted space-y-2">
-                <li>Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı istenir.</li>
-                <li>Adayın müzik kulağı ölçülür.</li>
-              </ul>
+          <div className="av-voiceband__right">
+            <div className="av-wave" aria-hidden="true">
+              {WAVE.map((b, i) => (
+                <i key={i} style={{ '--h': `${b.h}px`, '--dl': b.dl } as CSSProperties} />
+              ))}
             </div>
-
-            <div className="bg-bronze/10 rounded-xl bg-stone-100 p-6 border border-bronze/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">2- Ezgi Tekrarı</h4>
-              <ul className="text-agora-muted space-y-2">
-                <li>Verilen iki küçük ezgi piyano ile çalınır.</li>
-                <li>Adayın tekrarı istenir.</li>
-              </ul>
-            </div>
-
-            <div className="bg-gold/10 rounded-xl bg-stone-100 p-6 border border-gold/20">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">3- Ritim Duygusu</h4>
-              <ul className="text-agora-muted space-y-2">
-                <li>Verilen rehber iki ritmin tekrarı istenir.</li>
-                <li>Adayın ritim duygusu ölçülür.</li>
-              </ul>
-            </div>
-
-            <div className="bg-olive/10 rounded-xl bg-stone-100 p-6 border border-olive/20 ">
-              <h4 className="text-xl font-semibold text-agora-dark mb-3">4- Hazırlanan Eser</h4>
-              <ul className="text-agora-muted space-y-2">
-                <li>Adayın hazırladığı bir eseri seslendirmesi istenir.</li>
-                <li>Dil, tür ve tarz serbesttir.</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Ses denemesi CTA — Ses Aralığı Testi ekranına yönlendirir */}
-          <div className="mt-8 rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-rose-50 p-6 text-center">
-            <p className="text-lg font-semibold text-agora-dark">
-              🎤 Seçmeye gelmeden önce tek bir ses denemesi yapmak ister misiniz?
-            </p>
-            <p className="mt-1 text-sm text-agora-muted">
-              Ücretsiz ses aralığı testimizle hangi ses grubuna uygun olduğunuzu hemen keşfedin.
-            </p>
-            <button
-              type="button"
-              onClick={onStartPitchTest}
-              className="btn-agora-primary mt-4 inline-flex items-center justify-center gap-2 rounded-full py-3 px-6 text-sm font-bold"
-            >
-              <Mic className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+            <button type="button" onClick={onStartPitchTest} className="av-btn av-btn--light">
+              <Mic size={18} strokeWidth={2.25} aria-hidden />
               Ses Aralığı Testini Dene
+              <ArrowRight size={18} className="av-arrow" aria-hidden />
             </button>
           </div>
-        </div>
+        </Reveal>
 
-        {/* Prova Bilgileri */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div className="card-agora rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-agora-dark mb-6 flex items-center">
-              <MapPin className="w-7 h-7 text-agora-terracotta mr-3" />
-              📍 Prova ve Lokasyon Bilgileri
-            </h3>
-            <div className="space-y-4">
-              <p className="text-agora-muted"><strong>NARLIDERE ATATÜRK KÜLTÜR MERKEZİ</strong><br />Mithat Paşa Cad. 447/A Narlıdere/İzmir.</p>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Calendar className="w-5 h-5 text-agora-terracotta" />
-                  <span className="text-agora-dark font-semibold">🗓️ Pazartesi ve Cuma günleri 19.00 – 22.00</span>
-                </div>
-       
-              </div>
+        {/* Prova & ücret */}
+        <div className="av-bento">
+          <Reveal className="av-card av-spot av-span-4">
+            <div className="av-icon"><MapPin size={22} /></div>
+            <span className="av-eyebrow">Prova ve lokasyon bilgileri</span>
+            <p className="av-place__addr" style={{ color: 'var(--av-ink)' }}>
+              Narlıdere Atatürk Kültür Merkezi
+              <br />
+              <span style={{ color: 'var(--av-muted)' }}>Mithat Paşa Cad. 447/A Narlıdere/İzmir.</span>
+            </p>
+            <div className="av-meta-row">
+              <span><Calendar size={16} aria-hidden /> Pazartesi ve Cuma günleri 19.00 – 22.00</span>
+              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                Haritada aç <ArrowUpRight size={16} aria-hidden />
+              </a>
             </div>
-          </div>
-
-          <div className="card-agora rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-agora-dark mb-6 flex items-center">
-              <Euro className="w-7 h-7 text-agora-bronze mr-3" />
-              💸 Başvuru Ücreti
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-500" />
-                <span className="text-agora-muted">Seçmelere katılım ücretsizdir.</span>
-              </div>
-
-            </div>
-          </div>
+          </Reveal>
+          <Reveal className="av-card av-card--terra av-span-2" delay={90}>
+            <div className="av-icon"><Sparkles size={22} /></div>
+            <span className="av-eyebrow" style={{ color: 'rgba(255,255,255,.75)' }}>Başvuru ücreti</span>
+            <p className="av-free" style={{ color: '#fff' }}>Ücretsiz</p>
+            <p>Seçmelere katılım ücretsizdir.</p>
+          </Reveal>
         </div>
 
         {/* SSS */}
-        <div className="card-agora rounded-2xl p-8 mb-12">
-          <h3 className="text-3xl font-bold text-agora-dark mb-8 text-center">❓ Sık Sorulan Sorular</h3>
-          <div className="space-y-6">
-            {/* Başvuru ile ilgili sorular */}
-            <div>
-              <div className="text-xl font-bold text-agora-bronze mb-4">Başvuru ve Seçme</div>
-              {[
-                {q: 'Seçme randevusuna gelemeyeceksem ne yapmalıyım?', a: 'Durumu erken bildirmeniz hâlinde yeni bir gün/saat ayarlayabiliriz. Seçme dönemi sona erdiyse, bir sonraki seçme sürecini beklemeniz gerekebilir.'},
-                {q: 'Seçme saatleri nasıl belirleniyor?', a: 'Katılım durumunuza göre gün ve saat belirlenerek size iletilir. Uymuyorsa lütfen en kısa sürede geri dönüş yapın.'},
-                {q: 'Vize ve pasaport işlemleri nasıl yürütülüyor?', a: 'Pasaport başvurusu bireysel olarak yapılır. Vize işlemleri koro yönetimi tarafından yürütülür.'},
-                {q: 'Vize reddi yaşanırsa ne olur?', a: 'Bu durumda maalesef festivale katılım sağlanamaz. Konsolosluk süreci dış etken olduğu için garanti verilemez.'},
-                {q: 'Sahne kostümleri nasıl belirleniyor?', a: 'Kostüm detayları üyeliğiniz onaylandıktan sonra paylaşılır. Nereden temin edileceği konusunda bilgilendirme yapılır.'},
-                {q: 'Fotoğraf ve videolar nasıl kullanılıyor?', a: 'Tanıtım, sosyal medya ve arşiv amaçlı kullanılabilir. Kullanım için yazılı onay alınır.'},
-              ].map((item, i) => (
-                <div key={i}>
-                  <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
-                  <div className="text-agora-muted text-sm mb-4">
-                    {Array.isArray(item.a) ? (
-                      item.a.map((line, j) => (
-                        <div key={j} className="mb-1">{line}</div>
-                      ))
-                    ) : (
-                      item.a
-                    )}
-                  </div>
-                </div>
+        <div className="av-faq">
+          <Reveal className="av-faq__aside">
+            <span className="av-eyebrow">Merak edilenler</span>
+            <h3 className="av-display">Sık sorulan <em>sorular</em></h3>
+            <p>Aradığınız cevabı bulamadıysanız yapay zeka asistanımıza sorabilir ya da bize e-posta gönderebilirsiniz.</p>
+            {onAskAssistant && (
+              <button type="button" onClick={onAskAssistant} className="av-btn av-btn--ghost av-btn--sm">
+                <MessageCircle size={17} aria-hidden />
+                Asistana sor
+              </button>
+            )}
+          </Reveal>
+          <Reveal delay={120}>
+            <div className="av-tabs" role="tablist" aria-label="Soru kategorileri">
+              {FAQ_GROUPS.map((g, i) => (
+                <button
+                  key={g.label}
+                  type="button"
+                  role="tab"
+                  id={`faq-tab-${i}`}
+                  aria-selected={faqTab === i}
+                  aria-controls="faq-panel"
+                  className="av-tab"
+                  onClick={() => setFaqTab(i)}
+                >
+                  {g.label}
+                  <small>{g.items.length}</small>
+                </button>
               ))}
             </div>
-            {/* Seçme ve Prova ile ilgili sorular */}
-            <div>
-              <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Prova</div>
-              {[
-                {q: 'Provalar nerede ve ne zaman yapılıyor?', a: 'Her pazartesi ve cuma günleri 19:00–22:00 saatlerinde yapılır. Yer: Narlıdere Atatürk Kültür Merkezi, Mithat Paşa Cad. 447/A Narlıdere/İzmir.'},
-                {q: 'Provalar hangi dilde yürütülüyor?', a: 'Provalar Türkçe yürütülür. Farklı dillerdeki eserler için özel telaffuz çalışmaları yapılır.'},
-                {q: 'Her provaya katılım zorunlu mu?', a: 'Evet. Rutin ve ek çalışmalara düzenli katılım beklenir.'},
-                {q: 'Ek prova ya da grup çalışmaları yapılıyor mu?', a: 'Evet, ihtiyaç durumunda ek çalışmalar yapılır. Tarih ve saatler önceden duyurulur.'},
-                {q: 'Konser ve turneler hangi dönemlerde oluyor?', a: 'Genellikle hafta sonlarına ve tatil günlerine denk getirilir.'},
-                {q: 'Yıl içinde takvim nasıl işler?', a: 'Prova ve konser takvimi dönem başında paylaşılır. Resmi tatillerde de çalışma olabilir.'},
-              ].map((item, i) => (
-                <div key={i}>
-                  <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
-                  <div className="text-agora-muted text-sm mb-4">
-                    {Array.isArray(item.a) ? (
-                      item.a.map((line, j) => (
-                        <div key={j} className="mb-1">{line}</div>
-                      ))
-                    ) : (
-                      item.a
-                    )}
+            <div className="av-acc" key={faqTab} id="faq-panel" role="tabpanel" aria-labelledby={`faq-tab-${faqTab}`}>
+              {group.items.map((item) => (
+                <details key={item.q} name="av-faq">
+                  <summary>
+                    {item.q}
+                    <i aria-hidden="true" />
+                  </summary>
+                  <div className="av-acc__answer">
+                    {Array.isArray(item.a) ? item.a.map((line) => <div key={line}>{line}</div>) : item.a}
                   </div>
-                </div>
+                </details>
               ))}
             </div>
-            {/* Koro ve Korist ile ilgili sorular */}
-            <div>
-              <div className="text-xl font-bold text-agora-bronze mb-4 mt-8">Koro</div>
-              {[
-                {q: 'Agora Voice nedir?', a: 'Agora Voice, farklı korolarda deneyim kazanmış koristlerin bir araya gelerek kurduğu, müziğe tutkuyla bağlı bir vokal topluluğudur.'},
-                {q: 'Ne zaman kuruldunuz?', a: 'Koromuz, ilk çalışmasını 27 Ocak 2025 tarihinde gerçekleştirmiştir.'},
-                {q: 'Adınızı nereden alıyorsunuz?', a: 'İzmir’in tarihî ve kültürel simgelerinden biri olan Antik Agora’dan ilham alıyoruz.'},
-                {q: 'Koro şefiniz kimdir?', a: 'Şefimiz, deneyimli müzik eğitimcisi Özlem Varışlı Atçeken’dir.'},
-                {q: 'Korepetitörünüz kimdir?', a: 'Piyanist, aranjör Rıza Atçeken çalışmalarımıza eşlik etmektedir.'},
-                {q: 'Kimlerden oluşuyorsunuz?', a: 'Koromuz, farklı meslek gruplarından gelen, daha önce çeşitli korolarda görev almış, deneyimli koristlerden oluşmaktadır.'},
-                {q: 'Hangi müzik türlerini seslendiriyorsunuz?', a: 'Klasik çok sesli eserlerden çağdaş koro düzenlemelerine kadar geniş bir repertuvar çalışıyoruz.'},
-                {q: 'Hedefiniz nedir?', a: 'Sanatı, sesi ve ortak tutkuyu bir araya getirerek yurt içi ve yurt dışında ülkemizi başarıyla temsil etmektir.'},
-                {q: 'Çalışma koşullarınız nelerdir?', a: 'Bütün sistem birlikte söyleme üzerine kurulu olduğundan, sağlık ve çalışma mesaisi gibi zorunlu ve özel durumlar dışında çalışmalara düzenli ve tam katılım (en az %80) beklenir. Aksi durumda korist çalışmalara katılmaya devam edebilir, fakat ilk etkinlikte yer alamaz. Diğer etkinliklere katılımı ise koristin bireysel çaba ve çalışmaları doğrultusunda şefin vereceği karara bağlıdır. Bu durum online ve partisyon çalışmaları için de geçerlidir.'},
-                {q: 'Koristlerin görev ve sorumlulukları nelerdir?', a: ['1- Eserle ilgili verilen ödevi yerine getirir.', '2- Uyarılar doğrultusunda gerekli düzeltmeleri yapar.', '3- Çalışmalara Partisyonunu eksiksiz öğrenerek, hazır gelir.', '4- Korunun sanatsal ve sosyal işleyişinde uygun görülen ekiplerde aktif görev alır.']},
-              ].map((item, i) => (
-                <div key={i}>
-                  <div className="font-semibold text-agora-dark mb-1">{item.q}</div>
-                  <div className="text-agora-muted text-sm mb-4">
-                    {Array.isArray(item.a) ? (
-                      item.a.map((line, j) => (
-                        <div key={j} className="mb-1">{line}</div>
-                      ))
-                    ) : (
-                      item.a
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          </Reveal>
         </div>
 
-        {/* Başvuru */}
-        <div className="bg-gradient-to-r from-terracotta/10 to-bronze/10 rounded-2xl p-8 mb-12 border border-terracotta/20">
-          <h3 className="text-3xl font-bold text-agora-dark mb-6 text-center">📬 Başvuru Nasıl Yapılır?</h3>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h4 className="text-xl font-semibold text-agora-dark mb-4">Başvuru Süreci:</h4>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">1</div>
-                  <p className="text-agora-muted">Başvuru formunu eksiksiz doldurun.</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">2</div>
-                  <p className="text-agora-muted">Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir.</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-terracotta-gradient rounded-full flex items-center justify-center text-white text-sm font-bold mt-1">3</div>
-                  <p className="text-agora-muted">Ön değerlendirme sonuçları 15–25 Temmuz tarihleri arasında e-posta yoluyla paylaşılacaktır.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-xl font-semibold text-agora-dark mb-4">Seçmelere geldiğinizde:</h4>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">Hafif bir şeyler yiyip gelin.</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">Şarkınızı önceden seçmiş olun.</p>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <p className="text-agora-muted">15 dakika erken gelin.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Unutmayın Notu */}
-          <div className="mt-8 p-6 bg-gradient-to-r">
-            <div className="text-center">
-              <p className="text-xl text-agora-dark font-semibold italic leading-relaxed">
-                Unutmayın!.. <br />
-                Sizleri sınamak için değil aramızda görmek için orada olacağız.
-              </p>
-            </div>
-          </div>
+        {/* Başvuru nasıl yapılır */}
+        <Reveal className="av-section-head__row" style={{ margin: 'clamp(4rem, 8vw, 7rem) 0 1.6rem' }}>
+          <h3 className="av-display" style={{ fontSize: 'clamp(2.2rem, 4.4vw, 3.8rem)' }}>
+            Başvuru <em>nasıl yapılır?</em>
+          </h3>
+        </Reveal>
+        <div className="av-bento">
+          <Reveal className="av-card av-card--ink av-spot av-span-3">
+            <span className="av-eyebrow" style={{ color: 'var(--av-on-ink-muted)' }}>Başvuru süreci</span>
+            <ol className="av-steps">
+              <li><span>1</span><p>Başvuru formunu eksiksiz doldurun.</p></li>
+              <li><span>2</span><p>Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir.</p></li>
+              <li>
+                <span>3</span>
+                <p>
+                  {applicationsOpen
+                    ? 'Ön değerlendirme sonuçları 15–25 Temmuz tarihleri arasında e-posta yoluyla paylaşılacaktır.'
+                    : 'Ön değerlendirme sonuçları, dönem başında duyurulan tarihlerde e-posta yoluyla paylaşılır.'}
+                </p>
+              </li>
+            </ol>
+          </Reveal>
+          <Reveal className="av-card av-spot av-span-3" delay={90}>
+            <span className="av-eyebrow">Seçmelere geldiğinizde</span>
+            <ul className="av-checks">
+              <li><CheckCircle2 size={20} />Hafif bir şeyler yiyip gelin.</li>
+              <li><CheckCircle2 size={20} />Şarkınızı önceden seçmiş olun.</li>
+              <li><CheckCircle2 size={20} />15 dakika erken gelin.</li>
+            </ul>
+          </Reveal>
+          <Reveal className="av-card av-card--terra av-quote av-span-6" delay={120}>
+            <span className="av-eyebrow" style={{ color: 'rgba(255,255,255,.75)' }}>Son bir not</span>
+            <blockquote>
+              <em>Unutmayın!..</em>
+              Sizleri sınamak için değil aramızda görmek için orada olacağız.
+            </blockquote>
+          </Reveal>
         </div>
-
       </div>
     </section>
   );
 };
 
-export default Secmeler; 
+export default Secmeler;

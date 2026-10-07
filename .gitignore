@@ -55,3 +55,6 @@ data/stage-recordings.json
 
 # Felaket kurtarma raporu — altyapı detayı içerir, public repoya gitmemeli.
 docs/FELAKET-KURTARMA.md
+
+# ham yolculuk fotoğrafları (optimize edilmiş halleri public/journey/ altında)
+/journey

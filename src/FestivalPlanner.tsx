@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  AlertCircle, ArrowLeft, ArrowRight, BookOpenText, BrainCircuit, CalendarClock,
+  AlertCircle, ArrowLeft, ArrowRight, BookOpenText, BrainCircuit, CalendarClock, ChevronDown,
   CheckCircle, ExternalLink, FileMusic, Globe2, LayoutDashboard,
   Lightbulb, LockKeyhole, LogOut, Menu, Music2, Search, ShieldCheck, Sparkles, Swords, Target,
   TrendingUp, Trophy, Users, Wand2, X, Youtube,
