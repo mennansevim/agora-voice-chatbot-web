@@ -373,7 +373,7 @@ function Landing() {
       <main>
         {/* Hero */}
         <header id="home" className="av-hero">
-          <div className="av-hero__bg" style={{ backgroundImage: 'url(/gallery/g-41406682108c.jpg)' }} aria-hidden="true" />
+          <div className="av-hero__bg" style={{ backgroundImage: 'url(/hero-aassm.jpg)' }} aria-hidden="true" />
           <div className="av-wrap">
             <button type="button" className="av-award-pill" onClick={() => scrollToSection('journey')}>
               <span><Trophy size={14} aria-hidden /> Ohrid 2026</span>
@@ -774,14 +774,14 @@ function Landing() {
                 <li>
                   <a href={`mailto:${CONTACT_EMAIL}`}>
                     <span className="av-icon"><Mail size={20} /></span>
-                    <span><small>E-posta</small><b>{CONTACT_EMAIL}</b></span>
+                    <span><small>E-posta</small><b>{CONTACT_EMAIL.split('@')[0]}@<wbr />{CONTACT_EMAIL.split('@')[1]}</b></span>
                     <ArrowUpRight size={20} className="av-arrow-diag" aria-hidden />
                   </a>
                 </li>
                 <li>
                   <a href="https://www.agoravoice.com.tr" target="_blank" rel="noopener noreferrer">
                     <span className="av-icon"><Globe size={20} /></span>
-                    <span><small>Web Sitesi</small><b>www.agoravoice.com.tr</b></span>
+                    <span><small>Web Sitesi</small><b>www.<wbr />agoravoice.com.tr</b></span>
                     <ArrowUpRight size={20} className="av-arrow-diag" aria-hidden />
                   </a>
                 </li>

@@ -73,7 +73,29 @@ export default function Journey() {
                 </span>
               </div>
               <h3>{stop.title}</h3>
-              <p>{stop.text}</p>
+              {stop.text.map((para) => (
+                <p key={para}>{para}</p>
+              ))}
+              {stop.credits && (
+                <dl className="av-jr__credits">
+                  {stop.credits.map((c) => (
+                    <div key={c.role}>
+                      <dt>{c.role}</dt>
+                      <dd>{c.name}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              {stop.program && (
+                <div className="av-jr__program">
+                  <span>Seslendirdiğimiz eserler</span>
+                  <ol>
+                    {stop.program.map((work) => (
+                      <li key={work}>{work}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
               {stop.awards && (
                 <div className="av-jr__awards">
                   {stop.awards.map((a) => (
