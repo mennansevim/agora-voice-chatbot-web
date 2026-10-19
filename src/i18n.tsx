@@ -16,9 +16,8 @@ function detectLang(): Lang {
   } catch {
     /* depolama kapalı olabilir */
   }
-  // Tarayıcı dili Türkçe değilse İngilizce aç.
-  const nav = (navigator.languages?.[0] ?? navigator.language ?? 'tr').toLowerCase();
-  return nav.startsWith('tr') ? 'tr' : 'en';
+  // Varsayılan dil Türkçe; İngilizce yalnızca seçiciden ya da ?lang=en ile açılır.
+  return 'tr';
 }
 
 type LangContextValue = {
