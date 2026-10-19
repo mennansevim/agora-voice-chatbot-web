@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Instagram } from 'lucide-react';
+import { useLang } from './i18n';
 
 // Sitede oynatılacak Instagram reels'leri (kısa kod, en yeni başta).
 // Yalnızca "original audio" (kendi ses kaydı) olanlar site içinde oynar;
@@ -15,9 +16,9 @@ declare global {
   }
 }
 
-const embedMarkup = (code: string) =>
+const embedMarkup = (code: string, watchLabel: string) =>
   `<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/${code}/" data-instgrm-version="14">` +
-  `<div class="av-reel__ph"><a href="https://www.instagram.com/reel/${code}/" target="_blank" rel="noopener noreferrer">Videoyu Instagram'da izle</a></div>` +
+  `<div class="av-reel__ph"><a href="https://www.instagram.com/reel/${code}/" target="_blank" rel="noopener noreferrer">${watchLabel}</a></div>` +
   `</blockquote>`;
 
 // Instagram'ın resmî embed betiğini yalnızca bölüm görünüme yaklaşınca bir kez yükler.
@@ -39,6 +40,10 @@ export default function Reels() {
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ start: true, end: false });
+  const { t } = useLang();
+  // Embed işaretlemesi dil değişince yeniden yazılırsa Instagram'ın yerleştirdiği iframe silinir;
+  // bu yüzden yer tutucu metin ilk render'daki dille sabit kalır.
+  const [watchLabel] = useState(() => t("Videoyu Instagram'da izle", 'Watch on Instagram'));
 
   useEffect(() => {
     const el = rootRef.current;
@@ -77,7 +82,7 @@ export default function Reels() {
     <div className="av-reels" ref={rootRef}>
       <div className="av-reels__track" ref={trackRef} onScroll={updateEdges}>
         {REELS.map((code) => (
-          <div key={code} className="av-reel" dangerouslySetInnerHTML={{ __html: embedMarkup(code) }} />
+          <div key={code} className="av-reel" dangerouslySetInnerHTML={{ __html: embedMarkup(code, watchLabel) }} />
         ))}
       </div>
       <div className="av-reels__nav">
@@ -85,14 +90,14 @@ export default function Reels() {
           <span><Instagram size={20} aria-hidden /></span>
           <span>
             @agoravoice
-            <small>Tüm videolar için Instagram'da takip et</small>
+            <small>{t("Tüm videolar için Instagram'da takip et", 'Follow us on Instagram for all videos')}</small>
           </span>
         </a>
         <div className="av-reels__arrows">
-          <button type="button" className="av-round" onClick={() => scrollByCard(-1)} disabled={edges.start} aria-label="Önceki videolar">
+          <button type="button" className="av-round" onClick={() => scrollByCard(-1)} disabled={edges.start} aria-label={t('Önceki videolar', 'Previous videos')}>
             <ChevronLeft size={22} />
           </button>
-          <button type="button" className="av-round" onClick={() => scrollByCard(1)} disabled={edges.end} aria-label="Sonraki videolar">
+          <button type="button" className="av-round" onClick={() => scrollByCard(1)} disabled={edges.end} aria-label={t('Sonraki videolar', 'Next videos')}>
             <ChevronRight size={22} />
           </button>
         </div>

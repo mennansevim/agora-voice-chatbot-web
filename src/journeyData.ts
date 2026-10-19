@@ -11,6 +11,8 @@ export type Stop = {
   credits?: { role: string; name: string }[];
   // Seslendirilen eserler.
   program?: string[];
+  // İngilizce karşılıklar — verilmeyen alanlar Türkçe hâliyle gösterilir.
+  en?: Partial<Omit<Stop, 'en' | 'image' | 'focus'>>;
 };
 
 // Yolculuğumuz — yeni durak eklemek için listeye bir kayıt eklemek yeterli.
@@ -26,6 +28,13 @@ export const STOPS: Stop[] = [
     ],
     image: '/journey/aziz-helena-2025.jpg',
     focus: 'center 62%',
+    en: {
+      date: 'July 2025',
+      title: 'Church of St. Helena',
+      text: [
+        'In our founding year, we met our audience in the historic atmosphere of St. Helena. The first stop of our polyphonic journey.',
+      ],
+    },
   },
   {
     date: 'Mayıs 2026',
@@ -43,6 +52,20 @@ export const STOPS: Stop[] = [
       { role: 'Düzenleme', name: 'Rıza Atçeken' },
       { role: 'Zeybek', name: 'Engin Yümlü (Tenor)' },
     ],
+    en: {
+      date: 'May 2026',
+      title: 'Church of St. Voukolos',
+      text: [
+        'As Agora Voice, we said “hello” in the enchanting atmosphere of the Church of St. Voukolos, which carries the spirit of Izmir. Hearing our voices echo in this historic venue, home to so many voices for centuries, was an indescribable source of pride.',
+        'Endless thanks to everyone who joined us at our first concert and shared our excitement with their applause. This is only the beginning — we hope to meet again with many more songs, in many more places! ✨',
+      ],
+      credits: [
+        { role: 'Work', name: 'İzmir’in Kavakları' },
+        { role: 'Conductor', name: 'Özlem Varışlı Atçeken' },
+        { role: 'Arrangement', name: 'Rıza Atçeken' },
+        { role: 'Zeybek', name: 'Engin Yümlü (Tenor)' },
+      ],
+    },
   },
   {
     date: 'Mayıs 2026',
@@ -62,6 +85,23 @@ export const STOPS: Stop[] = [
       'Let It Be — John Lennon / Paul McCartney (düz. Jose L. Blasco Diez)',
       'Siyahamba — Güney Afrika özgürlük şarkısı',
     ],
+    en: {
+      date: 'May 2026',
+      title: 'Izmir International Polyphonic Choirs Festival',
+      place: 'Ahmed Adnan Saygun Arts Center · Izmir',
+      text: [
+        'We shared the AASSM stage with choirs from Türkiye and abroad. Our performance at the Izmir International Polyphonic Choirs Festival received the “Achievement in Musicality and Musical Dynamics” award.',
+        'All the works we performed will soon be on our YouTube channel. Stay tuned!',
+      ],
+      awards: ['Award for Achievement in Musicality and Musical Dynamics'],
+      program: [
+        'Signore Delle Cime — Giuseppe De Marzi',
+        'Quizas Quizas Quizas — Osvaldo Farrés (arr. Jose L. Blasco)',
+        'Pirlere Niyaz Ederiz — arr. Rıza Atçeken',
+        'Let It Be — John Lennon / Paul McCartney (arr. Jose L. Blasco Diez)',
+        'Siyahamba — South African freedom song',
+      ],
+    },
   },
   {
     date: 'Temmuz 2026',
@@ -77,6 +117,18 @@ export const STOPS: Stop[] = [
       'Koro Eserlerini Yorumlamada Genel ve Teknik İzlenim Başarı Ödülü',
       'Çalgı Eşlikli Koro Eseri İcrasında Mükemmellik Ödülü',
     ],
+    en: {
+      date: 'July 2026',
+      title: 'Çanakkale International Choir Festival',
+      text: [
+        'We earned two awards at the Çanakkale International Choir Festival 2026: the General and Technical Impression Achievement Award for our repertoire choice, stage presentation, intonation, vocal unity and homogeneity, rhythmic structure and balance; and the Excellence Award for our performance of an accompanied work.',
+        'We are delighted and proud to see this journey — built, rehearsed and sung together with the same excitement — crowned with two beautiful awards. Here’s to music, polyphony and singing together! 💙',
+      ],
+      awards: [
+        'General and Technical Impression Achievement Award in Choral Interpretation',
+        'Excellence Award in Accompanied Choral Performance',
+      ],
+    },
   },
   {
     date: 'Ağustos 2026',
@@ -90,7 +142,20 @@ export const STOPS: Stop[] = [
     image: '/journey/ohrid-2026.jpg',
     focus: 'center 55%',
     awards: ['II. Ödül · 85,67 puan', 'En İyi Sahne Performansı Özel Ödülü'],
+    en: {
+      date: 'August 2026',
+      place: 'Ohrid · North Macedonia',
+      text: [
+        'We came back from North Macedonia with two hard-earned awards! At the Ohrid Choir Festival 2026 we finished second in the competition with 85.67 points and won the Special Award for Best Stage Performance.',
+        'We are proud to see months of work, effort, discipline and collaboration pay off. Sharing our music throughout the festival, meeting choirs from many countries on the same stage and representing our country meant a great deal to us.',
+        'Our heartfelt thanks to our main sponsor Commencis for their generous support. 🙏',
+      ],
+      awards: ['2nd Prize · 85.67 points', 'Special Award for Best Stage Performance'],
+    },
   },
 ];
 
-export const JOURNEY_STOPS = STOPS.map((s) => s.title);
+// Seçili dile göre durak — İngilizce alan yoksa Türkçesine düşer.
+export const localizeStop = (stop: Stop, lang: 'tr' | 'en'): Stop => (lang === 'en' && stop.en ? { ...stop, ...stop.en } : stop);
+
+export const journeyStops = (lang: 'tr' | 'en') => STOPS.map((s) => localizeStop(s, lang).title);

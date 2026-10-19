@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Award, MapPin } from 'lucide-react';
-import { STOPS } from './journeyData';
+import { STOPS, localizeStop } from './journeyData';
+import { useLang } from './i18n';
 
 function ColumnMark() {
   return (
@@ -15,6 +16,7 @@ export default function Journey() {
   const listRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(0);
+  const { lang, t } = useLang();
 
   // Kaydırdıkça zaman çizgisini doldur ve geçilen durakları işaretle.
   useEffect(() => {
@@ -49,8 +51,8 @@ export default function Journey() {
         <div className="av-journey__head" />
       </div>
       <ol className="av-journey__list">
-      {STOPS.map((stop, i) => (
-        <li key={stop.title} className={`av-jr${i < active ? ' is-active' : ''}`}>
+      {STOPS.map((s) => localizeStop(s, lang)).map((stop, i) => (
+        <li key={i} className={`av-jr${i < active ? ' is-active' : ''}`}>
           <span className="av-jr__dot" aria-hidden="true" />
           <article className="av-jr__card">
             <div className="av-jr__media">
@@ -88,7 +90,7 @@ export default function Journey() {
               )}
               {stop.program && (
                 <div className="av-jr__program">
-                  <span>Seslendirdiğimiz eserler</span>
+                  <span>{t('Seslendirdiğimiz eserler', 'Works performed')}</span>
                   <ol>
                     {stop.program.map((work) => (
                       <li key={work}>{work}</li>

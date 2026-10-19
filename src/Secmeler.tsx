@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react';
 import Reveal from './Reveal';
+import { useLang } from './i18n';
 
 type FaqItem = { q: string; a: string | string[] };
 
@@ -58,6 +59,53 @@ const FAQ_GROUPS: { label: string; items: FaqItem[] }[] = [
   },
 ];
 
+const FAQ_GROUPS_EN: { label: string; items: FaqItem[] }[] = [
+  {
+    label: 'Application & Audition',
+    items: [
+      { q: 'What if I can’t make my audition appointment?', a: 'If you let us know early, we can arrange a new day/time. If the audition period has ended, you may need to wait for the next audition round.' },
+      { q: 'How are audition times set?', a: 'A day and time are set based on your availability and sent to you. If it doesn’t suit you, please get back to us as soon as possible.' },
+      { q: 'How are visa and passport procedures handled?', a: 'Passport applications are made individually. Visa procedures are handled by the choir management.' },
+      { q: 'What happens if a visa is refused?', a: 'Unfortunately, participation in the festival is then not possible. Since the consular process is an external factor, no guarantee can be given.' },
+      { q: 'How are stage costumes decided?', a: 'Costume details are shared once your membership is confirmed, along with information on where to obtain them.' },
+      { q: 'How are photos and videos used?', a: 'They may be used for promotion, social media and archive purposes. Written consent is obtained for their use.' },
+    ],
+  },
+  {
+    label: 'Rehearsals',
+    items: [
+      { q: 'Where and when are rehearsals held?', a: 'Every Monday and Friday, 19:00–22:00. Venue: Narlıdere Atatürk Cultural Center, Mithat Paşa Cad. 447/A Narlıdere/İzmir.' },
+      { q: 'In which language are rehearsals held?', a: 'Rehearsals are held in Turkish. Special pronunciation work is done for pieces in other languages.' },
+      { q: 'Is attendance at every rehearsal mandatory?', a: 'Yes. Regular attendance at routine and additional sessions is expected.' },
+      { q: 'Are there extra rehearsals or sectionals?', a: 'Yes, additional sessions are held when needed. Dates and times are announced in advance.' },
+      { q: 'When do concerts and tours take place?', a: 'They are usually scheduled on weekends and holidays.' },
+      { q: 'How does the yearly schedule work?', a: 'The rehearsal and concert schedule is shared at the start of the season. Sessions may also take place on public holidays.' },
+    ],
+  },
+  {
+    label: 'The Choir',
+    items: [
+      { q: 'What is Agora Voice?', a: 'Agora Voice is a vocal ensemble passionately devoted to music, founded by choristers who gained experience in various choirs.' },
+      { q: 'When were you founded?', a: 'Our choir held its first rehearsal on 27 January 2025.' },
+      { q: 'Where does your name come from?', a: 'We are inspired by the Ancient Agora, one of Izmir’s historical and cultural landmarks.' },
+      { q: 'Who is your conductor?', a: 'Our conductor is the experienced music educator Özlem Varışlı Atçeken.' },
+      { q: 'Who is your répétiteur?', a: 'Pianist and arranger Rıza Atçeken accompanies our work.' },
+      { q: 'Who are your members?', a: 'Our choir consists of experienced choristers from various professions who have previously sung in different choirs.' },
+      { q: 'What kind of music do you perform?', a: 'We work on a wide repertoire, from classical polyphonic works to contemporary choral arrangements.' },
+      { q: 'What is your goal?', a: 'To successfully represent our country at home and abroad by bringing together art, voice and shared passion.' },
+      { q: 'What are the working conditions?', a: 'Since everything is built on singing together, regular and full attendance (at least 80%) is expected, except for compulsory and special circumstances such as health or work. Otherwise, the chorister may continue attending rehearsals but cannot take part in the first event. Participation in further events depends on the conductor’s decision based on the chorister’s individual effort. This also applies to online and sectional rehearsals.' },
+      { q: 'What are the choristers’ duties and responsibilities?', a: ['1- Completes the assignments given for each piece.', '2- Makes the necessary corrections based on feedback.', '3- Comes to rehearsals prepared, having fully learned their part.', '4- Takes an active role in teams supporting the choir’s artistic and social activities.'] },
+    ],
+  },
+];
+
+const STAGES_EN = [
+  { icon: Ear, title: 'Ear Test', points: ['You are asked to repeat one, two, three and four reference notes played on the piano.', 'This measures your musical ear.'] },
+  { icon: Music, title: 'Melody Repetition', points: ['Two short melodies are played on the piano.', 'You are asked to sing them back.'] },
+  { icon: Drum, title: 'Sense of Rhythm', points: ['You are asked to repeat two reference rhythms.', 'This measures your sense of rhythm.'] },
+  { icon: Mic, title: 'Prepared Piece', points: ['You are asked to sing a piece you have prepared.', 'Language, genre and style are up to you.'] },
+];
+
 const STAGES = [
   { icon: Ear, title: 'Müzik Kulağı Testi', points: ['Piyano ile verilen rehber tek, çift, üç ve dört sesin tekrarı istenir.', 'Adayın müzik kulağı ölçülür.'] },
   { icon: Music, title: 'Ezgi Tekrarı', points: ['Verilen iki küçük ezgi piyano ile çalınır.', 'Adayın tekrarı istenir.'] },
@@ -81,24 +129,29 @@ type SecmelerProps = {
 
 const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: SecmelerProps) => {
   const [faqTab, setFaqTab] = useState(0);
-  const group = FAQ_GROUPS[faqTab];
+  const { lang, t } = useLang();
+  const faqGroups = lang === 'en' ? FAQ_GROUPS_EN : FAQ_GROUPS;
+  const stages = lang === 'en' ? STAGES_EN : STAGES;
+  const group = faqGroups[faqTab];
 
   return (
     <section id="secmeler" className="av-section av-section--alt" aria-labelledby="secmeler-title">
       <div className="av-wrap">
         <Reveal className="av-section-head">
-          <span className="av-chip">Seçmeler</span>
+          <span className="av-chip">{t('Seçmeler', 'Auditions')}</span>
           <div className="av-section-head__body">
-            <span className="av-eyebrow">Agora Voice 2026 / 2027 – Çok Sesli A Capella Koro Seçmeleri</span>
+            <span className="av-eyebrow">{t('Agora Voice 2026 / 2027 – Çok Sesli A Capella Koro Seçmeleri', 'Agora Voice 2026 / 2027 – Polyphonic A Cappella Choir Auditions')}</span>
             <h2 id="secmeler-title" className="av-display av-h2">
-              Sahnedeki yerin <em>seni bekliyor.</em>
+              {t('Sahnedeki yerin', 'Your place on stage')} <em>{t('seni bekliyor.', 'awaits you.')}</em>
             </h2>
             <p className="av-lead" style={{ maxWidth: 760 }}>
               {applicationsOpen
-                ? 'Ön değerlendirme sonuçları 15-25 Temmuz tarihleri arasında e-posta yoluyla sizinle paylaşılacaktır. '
-                : '2026 – 2027 dönemi seçmelerimiz tamamlandı; yeni dönem başvuruları açıldığında duyuracağız. '}
-              Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır.
-              Katılımcılar, uluslararası bir sahnede çok sesli müziğin coşkusunu paylaşma fırsatı bulacaklardır.
+                ? t('Ön değerlendirme sonuçları 15-25 Temmuz tarihleri arasında e-posta yoluyla sizinle paylaşılacaktır. ', 'Preliminary results will be shared with you by email between 15–25 July. ')
+                : t('2026 – 2027 dönemi seçmelerimiz tamamlandı; yeni dönem başvuruları açıldığında duyuracağız. ', 'Our 2026 – 2027 auditions are complete; we will announce when applications for the next season open. ')}
+              {t(
+                "Amacımız yurt içi ve yurt dışı festivallerde ülkemizi ve İzmir'i temsil edecek ekibi oluşturmaktır. Katılımcılar, uluslararası bir sahnede çok sesli müziğin coşkusunu paylaşma fırsatı bulacaklardır.",
+                'Our aim is to build a team that will represent Türkiye and Izmir at festivals at home and abroad. Participants will have the chance to share the joy of polyphonic music on an international stage.',
+              )}
             </p>
           </div>
         </Reveal>
@@ -106,31 +159,31 @@ const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: Secmel
         {/* Kimler başvurabilir */}
         <Reveal className="av-card av-spot" style={{ marginBottom: 16 }}>
           <div className="av-icon"><Users size={22} /></div>
-          <h3>Kimler başvurabilir?</h3>
-          <p>Agora Voice'a katılmak için:</p>
+          <h3>{t('Kimler başvurabilir?', 'Who can apply?')}</h3>
+          <p>{t("Agora Voice'a katılmak için:", 'To join Agora Voice:')}</p>
           <ul className="av-criteria">
-            <li><CheckCircle2 size={20} />20 – 55 yaş aralığında olmalısınız.</li>
-            <li><CheckCircle2 size={20} />Temel düzeyde nota bilgisi ve müzik kulağına sahip olmanız beklenir.</li>
-            <li><CheckCircle2 size={20} />Provalara düzenli katılım sağlayabilmelisiniz.</li>
+            <li><CheckCircle2 size={20} />{t('20 – 55 yaş aralığında olmalısınız.', 'You should be between 20 and 55 years old.')}</li>
+            <li><CheckCircle2 size={20} />{t('Temel düzeyde nota bilgisi ve müzik kulağına sahip olmanız beklenir.', 'Basic music reading skills and a good musical ear are expected.')}</li>
+            <li><CheckCircle2 size={20} />{t('Provalara düzenli katılım sağlayabilmelisiniz.', 'You should be able to attend rehearsals regularly.')}</li>
             <li className="is-bonus">
               <Star size={20} />
-              <span>Daha önce çok sesli müzik deneyimi edinmiş olmanız avantajdır ancak zorunlu değildir.<em>Avantaj</em></span>
+              <span>{t('Daha önce çok sesli müzik deneyimi edinmiş olmanız avantajdır ancak zorunlu değildir.', 'Previous polyphonic singing experience is an advantage but not required.')}<em>{t('Avantaj', 'Bonus')}</em></span>
             </li>
-            <li><CheckCircle2 size={20} />2027 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.</li>
+            <li><CheckCircle2 size={20} />{t('2027 yılında festivale katılımınız için yurt dışı seyahati yapabilecek durumda olmalısınız.', 'You should be able to travel abroad to take part in festivals in 2027.')}</li>
           </ul>
         </Reveal>
 
         {/* Seçme aşamaları */}
         <Reveal className="av-section-head__row" style={{ margin: 'clamp(3.5rem, 7vw, 5.5rem) 0 1.6rem' }}>
           <h3 className="av-display" style={{ fontSize: 'clamp(2.2rem, 4.4vw, 3.8rem)' }}>
-            Seçme <em>aşamaları</em>
+            {t('Seçme', 'Audition')} <em>{t('aşamaları', 'stages')}</em>
           </h3>
           <p className="av-lead" style={{ maxWidth: 440 }}>
-            Agora Voice seçmeleri canlı ve birebir yapılır. Aşamalar aşağıdaki gibidir:
+            {t('Agora Voice seçmeleri canlı ve birebir yapılır. Aşamalar aşağıdaki gibidir:', 'Agora Voice auditions are held live and one-on-one. The stages are as follows:')}
           </p>
         </Reveal>
         <div className="av-stages">
-          {STAGES.map(({ icon: Icon, title, points }, i) => (
+          {stages.map(({ icon: Icon, title, points }, i) => (
             <Reveal key={title} className="av-card av-spot av-stage" delay={i * 90}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <span className="av-stage__num">0{i + 1}</span>
@@ -147,9 +200,9 @@ const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: Secmel
         {/* Ses testi bandı */}
         <Reveal className="av-voiceband">
           <div>
-            <span className="av-eyebrow">Ücretsiz · 1 dakika</span>
-            <h3>Seçmeye gelmeden önce tek bir ses denemesi yapmak ister misiniz?</h3>
-            <p>Ücretsiz ses aralığı testimizle hangi ses grubuna uygun olduğunuzu hemen keşfedin.</p>
+            <span className="av-eyebrow">{t('Ücretsiz · 1 dakika', 'Free · 1 minute')}</span>
+            <h3>{t('Seçmeye gelmeden önce tek bir ses denemesi yapmak ister misiniz?', 'Want to try your voice before the audition?')}</h3>
+            <p>{t('Ücretsiz ses aralığı testimizle hangi ses grubuna uygun olduğunuzu hemen keşfedin.', 'Find out which voice part suits you with our free vocal range test.')}</p>
           </div>
           <div className="av-voiceband__right">
             <div className="av-wave" aria-hidden="true">
@@ -159,7 +212,7 @@ const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: Secmel
             </div>
             <button type="button" onClick={onStartPitchTest} className="av-btn av-btn--light">
               <Mic size={18} strokeWidth={2.25} aria-hidden />
-              Ses Aralığı Testini Dene
+              {t('Ses Aralığı Testini Dene', 'Try the Vocal Range Test')}
               <ArrowRight size={18} className="av-arrow" aria-hidden />
             </button>
           </div>
@@ -169,43 +222,43 @@ const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: Secmel
         <div className="av-bento">
           <Reveal className="av-card av-spot av-span-4">
             <div className="av-icon"><MapPin size={22} /></div>
-            <span className="av-eyebrow">Prova ve lokasyon bilgileri</span>
+            <span className="av-eyebrow">{t('Prova ve lokasyon bilgileri', 'Rehearsal & location')}</span>
             <p className="av-place__addr" style={{ color: 'var(--av-ink)' }}>
-              Narlıdere Atatürk Kültür Merkezi
+              {t('Narlıdere Atatürk Kültür Merkezi', 'Narlıdere Atatürk Cultural Center')}
               <br />
               <span style={{ color: 'var(--av-muted)' }}>Mithat Paşa Cad. 447/A Narlıdere/İzmir.</span>
             </p>
             <div className="av-meta-row">
-              <span><Calendar size={16} aria-hidden /> Pazartesi ve Cuma günleri 19.00 – 22.00</span>
+              <span><Calendar size={16} aria-hidden /> {t('Pazartesi ve Cuma günleri 19.00 – 22.00', 'Mondays and Fridays 19:00 – 22:00')}</span>
               <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
-                Haritada aç <ArrowUpRight size={16} aria-hidden />
+                {t('Haritada aç', 'Open in Maps')} <ArrowUpRight size={16} aria-hidden />
               </a>
             </div>
           </Reveal>
           <Reveal className="av-card av-card--terra av-span-2" delay={90}>
             <div className="av-icon"><Sparkles size={22} /></div>
-            <span className="av-eyebrow" style={{ color: 'rgba(255,255,255,.75)' }}>Başvuru ücreti</span>
-            <p className="av-free" style={{ color: '#fff' }}>Ücretsiz</p>
-            <p>Seçmelere katılım ücretsizdir.</p>
+            <span className="av-eyebrow" style={{ color: 'rgba(255,255,255,.75)' }}>{t('Başvuru ücreti', 'Application fee')}</span>
+            <p className="av-free" style={{ color: '#fff' }}>{t('Ücretsiz', 'Free')}</p>
+            <p>{t('Seçmelere katılım ücretsizdir.', 'Taking part in auditions is free of charge.')}</p>
           </Reveal>
         </div>
 
         {/* SSS */}
         <div className="av-faq">
           <Reveal className="av-faq__aside">
-            <span className="av-eyebrow">Merak edilenler</span>
-            <h3 className="av-display">Sık sorulan <em>sorular</em></h3>
-            <p>Aradığınız cevabı bulamadıysanız yapay zeka asistanımıza sorabilir ya da bize e-posta gönderebilirsiniz.</p>
+            <span className="av-eyebrow">{t('Merak edilenler', 'Good to know')}</span>
+            <h3 className="av-display">{t('Sık sorulan', 'Frequently asked')} <em>{t('sorular', 'questions')}</em></h3>
+            <p>{t('Aradığınız cevabı bulamadıysanız yapay zeka asistanımıza sorabilir ya da bize e-posta gönderebilirsiniz.', 'Can’t find what you’re looking for? Ask our AI assistant or send us an email.')}</p>
             {onAskAssistant && (
               <button type="button" onClick={onAskAssistant} className="av-btn av-btn--ghost av-btn--sm">
                 <MessageCircle size={17} aria-hidden />
-                Asistana sor
+                {t('Asistana sor', 'Ask the assistant')}
               </button>
             )}
           </Reveal>
           <Reveal delay={120}>
-            <div className="av-tabs" role="tablist" aria-label="Soru kategorileri">
-              {FAQ_GROUPS.map((g, i) => (
+            <div className="av-tabs" role="tablist" aria-label={t('Soru kategorileri', 'Question categories')}>
+              {faqGroups.map((g, i) => (
                 <button
                   key={g.label}
                   type="button"
@@ -240,38 +293,38 @@ const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: Secmel
         {/* Başvuru nasıl yapılır */}
         <Reveal className="av-section-head__row" style={{ margin: 'clamp(4rem, 8vw, 7rem) 0 1.6rem' }}>
           <h3 className="av-display" style={{ fontSize: 'clamp(2.2rem, 4.4vw, 3.8rem)' }}>
-            Başvuru <em>nasıl yapılır?</em>
+            {t('Başvuru', 'How to')} <em>{t('nasıl yapılır?', 'apply?')}</em>
           </h3>
         </Reveal>
         <div className="av-bento">
           <Reveal className="av-card av-card--ink av-spot av-span-3">
-            <span className="av-eyebrow" style={{ color: 'var(--av-on-ink-muted)' }}>Başvuru süreci</span>
+            <span className="av-eyebrow" style={{ color: 'var(--av-on-ink-muted)' }}>{t('Başvuru süreci', 'Application process')}</span>
             <ol className="av-steps">
-              <li><span>1</span><p>Başvuru formunu eksiksiz doldurun.</p></li>
-              <li><span>2</span><p>Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir.</p></li>
+              <li><span>1</span><p>{t('Başvuru formunu eksiksiz doldurun.', 'Fill out the application form completely.')}</p></li>
+              <li><span>2</span><p>{t('Size e-posta yoluyla ulaşılacak ve seçme randevusu verilecektir.', 'We will contact you by email and give you an audition appointment.')}</p></li>
               <li>
                 <span>3</span>
                 <p>
                   {applicationsOpen
-                    ? 'Ön değerlendirme sonuçları 15–25 Temmuz tarihleri arasında e-posta yoluyla paylaşılacaktır.'
-                    : 'Ön değerlendirme sonuçları, dönem başında duyurulan tarihlerde e-posta yoluyla paylaşılır.'}
+                    ? t('Ön değerlendirme sonuçları 15–25 Temmuz tarihleri arasında e-posta yoluyla paylaşılacaktır.', 'Preliminary results will be shared by email between 15–25 July.')
+                    : t('Ön değerlendirme sonuçları, dönem başında duyurulan tarihlerde e-posta yoluyla paylaşılır.', 'Preliminary results are shared by email on dates announced at the start of the season.')}
                 </p>
               </li>
             </ol>
           </Reveal>
           <Reveal className="av-card av-spot av-span-3" delay={90}>
-            <span className="av-eyebrow">Seçmelere geldiğinizde</span>
+            <span className="av-eyebrow">{t('Seçmelere geldiğinizde', 'On audition day')}</span>
             <ul className="av-checks">
-              <li><CheckCircle2 size={20} />Hafif bir şeyler yiyip gelin.</li>
-              <li><CheckCircle2 size={20} />Şarkınızı önceden seçmiş olun.</li>
-              <li><CheckCircle2 size={20} />15 dakika erken gelin.</li>
+              <li><CheckCircle2 size={20} />{t('Hafif bir şeyler yiyip gelin.', 'Have a light meal beforehand.')}</li>
+              <li><CheckCircle2 size={20} />{t('Şarkınızı önceden seçmiş olun.', 'Choose your song in advance.')}</li>
+              <li><CheckCircle2 size={20} />{t('15 dakika erken gelin.', 'Arrive 15 minutes early.')}</li>
             </ul>
           </Reveal>
           <Reveal className="av-card av-card--terra av-quote av-span-6" delay={120}>
-            <span className="av-eyebrow" style={{ color: 'rgba(255,255,255,.75)' }}>Son bir not</span>
+            <span className="av-eyebrow" style={{ color: 'rgba(255,255,255,.75)' }}>{t('Son bir not', 'One last note')}</span>
             <blockquote>
-              <em>Unutmayın!..</em>
-              Sizleri sınamak için değil aramızda görmek için orada olacağız.
+              <em>{t('Unutmayın!..', 'Remember!')}</em>
+              {t('Sizleri sınamak için değil aramızda görmek için orada olacağız.', 'We’ll be there not to test you, but because we want to see you among us.')}
             </blockquote>
           </Reveal>
         </div>

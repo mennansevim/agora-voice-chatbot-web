@@ -148,6 +148,10 @@
 .av-nav__link.is-active { color: var(--av-accent); background: var(--av-accent-soft); }
 .av-nav__link b { padding: 2px 6px; border-radius: 99px; background: var(--av-accent); color: #fff; font-size: .58rem; letter-spacing: .04em; }
 .av-nav__right { display: flex; align-items: center; gap: 6px; }
+.av-lang { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--av-accent-soft); }
+.av-lang button { min-width: 38px; height: 32px; padding: 0 9px; border: 0; border-radius: 999px; background: transparent; color: var(--av-muted); font: 700 .74rem/1 var(--av-head); letter-spacing: .06em; cursor: pointer; transition: background-color .25s, color .25s; }
+.av-lang button:hover { color: var(--av-accent); }
+.av-lang button.is-active { background: var(--av-accent); color: #fff; }
 .av-nav__burger { display: none; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--av-accent); color: #fff; cursor: pointer; }
 @media (max-width: 1180px) {
   .av-nav__links, .av-nav__cta { display: none !important; }
