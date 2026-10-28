@@ -248,7 +248,11 @@ const Secmeler = ({ applicationsOpen, onStartPitchTest, onAskAssistant }: Secmel
           <Reveal className="av-faq__aside">
             <span className="av-eyebrow">{t('Merak edilenler', 'Good to know')}</span>
             <h3 className="av-display">{t('Sık sorulan', 'Frequently asked')} <em>{t('sorular', 'questions')}</em></h3>
-            <p>{t('Aradığınız cevabı bulamadıysanız yapay zeka asistanımıza sorabilir ya da bize e-posta gönderebilirsiniz.', 'Can’t find what you’re looking for? Ask our AI assistant or send us an email.')}</p>
+            <p>
+              {onAskAssistant
+                ? t('Aradığınız cevabı bulamadıysanız yapay zeka asistanımıza sorabilir ya da bize e-posta gönderebilirsiniz.', 'Can’t find what you’re looking for? Ask our AI assistant or send us an email.')
+                : t('Aradığınız cevabı bulamadıysanız bize e-posta gönderebilirsiniz.', 'Can’t find what you’re looking for? Send us an email.')}
+            </p>
             {onAskAssistant && (
               <button type="button" onClick={onAskAssistant} className="av-btn av-btn--ghost av-btn--sm">
                 <MessageCircle size={17} aria-hidden />

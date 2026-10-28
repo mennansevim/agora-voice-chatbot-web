@@ -44,6 +44,10 @@ const APPLICATIONS_OPEN: boolean = false;
 // Konser takvimi şimdilik gizli. Takvim kesinleştiğinde `true` yapılır.
 const SHOW_CONCERT_CALENDAR: boolean = false;
 
+// AI sohbet asistanı şimdilik gizli. Yeniden açmak için `true` yapılması yeterli:
+// asistan kartı, menü etiketi, SSS ve başvuru popup'ındaki asistan butonları geri gelir.
+const SHOW_AI_ASSISTANT: boolean = false;
+
 const APPLY_FORM_URL = 'https://forms.gle/Qgw4xp9jMte7y94h7';
 const CHATBOT_URL = 'https://chat.agoravoice.com.tr/chat/7d0SRt4Z3zhUQh8o?theme=dark';
 const CONTACT_EMAIL = 'agoravoiceschoir@gmail.com';
@@ -55,7 +59,9 @@ const NAV_ITEMS = [
   { id: 'journey', label: 'Yolculuğumuz', en: 'Journey' },
   { id: 'secmeler', label: 'Seçmeler', en: 'Auditions' },
   { id: 'reels', label: 'Videolar', en: 'Videos' },
-  { id: 'ai-assistant', label: 'AI Asistan', en: 'AI Assistant' },
+  SHOW_AI_ASSISTANT
+    ? { id: 'ai-assistant', label: 'AI Asistan', en: 'AI Assistant' }
+    : { id: 'ai-assistant', label: 'Dijital Araçlar', en: 'Digital Tools' },
   { id: 'gallery', label: 'Galeri', en: 'Gallery' },
   { id: 'contact', label: 'İletişim', en: 'Contact' },
 ];
@@ -657,7 +663,7 @@ function Landing() {
         </section>
 
         {/* Seçmeler */}
-        <Secmeler applicationsOpen={APPLICATIONS_OPEN} onStartPitchTest={openPitchTest} onAskAssistant={openAssistant} />
+        <Secmeler applicationsOpen={APPLICATIONS_OPEN} onStartPitchTest={openPitchTest} onAskAssistant={SHOW_AI_ASSISTANT ? openAssistant : undefined} />
 
         {/* Videolar */}
         <section id="reels" className="av-section" aria-labelledby="reels-title">
@@ -674,15 +680,24 @@ function Landing() {
         {/* Dijital araçlar — AI Asistan, Ses Testi, Festival AI */}
         <section id="ai-assistant" className="av-section av-dark" aria-labelledby="ai-title">
           <div className="av-wrap">
-            <Reveal className="av-section-head">
-              <span className="av-eyebrow">{t('AI Asistan', 'AI Assistant')}</span>
-              <h2 id="ai-title" className="av-display av-h2">
-                {t('Antik bilgelik,', 'Ancient wisdom,')} <em>{t('modern zeka', 'modern intelligence')}</em>
-              </h2>
-              <p className="av-lead">{t('Antik bilgelik ile modern yapay zekayı buluşturan agora sohbet asistanı', 'The Agora chat assistant, where ancient wisdom meets modern AI')}</p>
-            </Reveal>
+            {SHOW_AI_ASSISTANT ? (
+              <Reveal className="av-section-head">
+                <span className="av-eyebrow">{t('AI Asistan', 'AI Assistant')}</span>
+                <h2 id="ai-title" className="av-display av-h2">
+                  {t('Antik bilgelik,', 'Ancient wisdom,')} <em>{t('modern zeka', 'modern intelligence')}</em>
+                </h2>
+                <p className="av-lead">{t('Antik bilgelik ile modern yapay zekayı buluşturan agora sohbet asistanı', 'The Agora chat assistant, where ancient wisdom meets modern AI')}</p>
+              </Reveal>
+            ) : (
+              <Reveal className="av-section-head">
+                <span className="av-eyebrow">{t('Dijital Araçlar', 'Digital Tools')}</span>
+                <h2 id="ai-title" className="av-display av-h2">
+                  {t('Sesini keşfet,', 'Discover your voice,')} <em>{t('hazırlan', 'get ready')}</em>
+                </h2>
+              </Reveal>
+            )}
 
-            {showChatbot && (
+            {SHOW_AI_ASSISTANT && showChatbot && (
               <div className="av-chat" id="av-chat">
                 <div className="av-chat__bar">
                   <div className="av-chat__who">
@@ -713,8 +728,8 @@ function Landing() {
               </div>
             )}
 
-            <div className={`av-tools${showChatbot ? ' av-tools--row' : ''}`}>
-              {!showChatbot && (
+            <div className={`av-tools${showChatbot || !SHOW_AI_ASSISTANT ? ' av-tools--row' : ''}`}>
+              {SHOW_AI_ASSISTANT && !showChatbot && (
                 <Reveal className="av-tile av-spot av-ai">
                   <div className="av-ai__orb">
                     <span className="av-ai__ring" />
@@ -983,20 +998,22 @@ function Landing() {
               <Mic size={16} strokeWidth={2.25} aria-hidden />
               {t('Ses Testini Dene', 'Try the Voice Test')}
             </button>
-            <div className="av-modal__ai">
-              <RobotMascot className="av-robot" />
-              <button
-                type="button"
-                onClick={() => {
-                  dismissApplyPopup();
-                  openAssistant();
-                }}
-                className="av-btn av-btn--violet av-btn--block av-btn--sm"
-              >
-                <MessageCircle size={16} strokeWidth={2.25} aria-hidden />
-                {t('Yapay Zeka Asistanına Sor', 'Ask the AI Assistant')}
-              </button>
-            </div>
+            {SHOW_AI_ASSISTANT && (
+              <div className="av-modal__ai">
+                <RobotMascot className="av-robot" />
+                <button
+                  type="button"
+                  onClick={() => {
+                    dismissApplyPopup();
+                    openAssistant();
+                  }}
+                  className="av-btn av-btn--violet av-btn--block av-btn--sm"
+                >
+                  <MessageCircle size={16} strokeWidth={2.25} aria-hidden />
+                  {t('Yapay Zeka Asistanına Sor', 'Ask the AI Assistant')}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
